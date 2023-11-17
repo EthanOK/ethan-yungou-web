@@ -1,38 +1,120 @@
-.App {
+.main-app {
   text-align: center;
+  margin: 100px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cta-button {
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  min-width: 250px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+.connect-button {
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  min-width: 180px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.connect-wallet-button {
+  background: rgb(32, 129, 226);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.disconnect-wallet-button {
+  background: rgb(206, 25, 49);
+}
+.disconnect-button {
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  min-width: 180px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.mint-nft-button {
+  background: orange;
+}
+
+.alert {
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+  position: absolute;
+  top: 50px; /* Adjust the top value to position the alert vertically */
+  left: 50%; /* Center the alert horizontally */
+  transform: translateX(-50%); /* Center the alert properly */
+}
+.larger-text {
+  font-size: 30px;
+}
+
+.container {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Change to 'center' to center the elements */
+}
+
+.input-container {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.label {
+  font-size: 20px;
+  margin-right: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.textarea {
+  height: 20px;
+  width: 400px;
+  resize: none; /* Optional: Prevent textarea from being resizable */
+}
+
+.bordered-div {
+  border: 2px solid black; /* Border width set to 2px */
+  padding: 10px; /* Optional: Add some padding to create a gap between the content and the border */
+  border-radius: 5px; /* Optional: Add rounded corners to the border */
+  width: 800px;
+}
+
+.floating-accordion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180px;
+  background-color: transparent;
+  z-index: 1000;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  /* border-bottom: 1px solid #ddd; */
+}
+
+.accordion-icon {
+  transform: rotate(0);
+  transition: transform 0.3s ease;
+}
+
+.accordion-header.open .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }

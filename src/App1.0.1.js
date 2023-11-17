@@ -3,7 +3,6 @@ import "./App.css";
 import contractabi from "./contracts/erc721A.json";
 import { ethers, providers, utils } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { EthereumProvider } from "@walletconnect/ethereum-provider";
 
 // goerli
 const contractAddress = "0x71eE06999F6D5f66AcA3c12e45656362fD9D031f";
@@ -96,25 +95,13 @@ function App() {
   const connectWalletConnectHandler = async () => {
     try {
       //  Create WalletConnect Provider
-      // let provider = new WalletConnectProvider({
-      //   infuraId: "9aa3d95b3bc440fa88ea12eaa4456161",
-      // });
-
-      let provider = await EthereumProvider.init({
-        projectId: "b1d9301aa13bda668b91cb6dd2cad084",
-        chains: [5],
-        showQrModal: true,
-        // rpcMap: {
-        //   1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        //   5: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        // },
+      let provider = new WalletConnectProvider({
+        infuraId: "9aa3d95b3bc440fa88ea12eaa4456161",
       });
       // await provider.connector.killSession();
       //  Enable session (triggers QR Code modal)
-
-      // console.log(provider);
-
       await provider.enable();
+      console.log(provider);
 
       if (provider.chainId !== parseInt(chainIdETH)) {
         console.log("Switching to chainId:", chainIdETH);
