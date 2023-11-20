@@ -50,17 +50,21 @@ const LuckyBabyPage = () => {
   }, [isMounted]);
 
   const configData = async () => {
-    let account = localStorage.getItem("userAddress");
-    setCurrentAccount(account);
+    try {
+      let account = localStorage.getItem("userAddress");
+      setCurrentAccount(account);
 
-    let [currentIssueId_, openState_] = await getCurrentIssueIdOpenState();
-    setCurrentIssueId(currentIssueId_.toString());
-    setOpenState(openState_.toString());
+      let [currentIssueId_, openState_] = await getCurrentIssueIdOpenState();
+      setCurrentIssueId(currentIssueId_.toString());
+      setOpenState(openState_.toString());
 
-    if (parseInt(currentIssueId_) !== 0) {
-      let [currentNumber, allNumber] = await getNumberParticipants();
-      setNumberAllTicket(allNumber.toString());
-      setNumberCurrTicket(currentNumber.toString());
+      if (parseInt(currentIssueId_) !== 0) {
+        let [currentNumber, allNumber] = await getNumberParticipants();
+        setNumberAllTicket(allNumber.toString());
+        setNumberCurrTicket(currentNumber.toString());
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

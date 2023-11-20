@@ -117,9 +117,13 @@ const getChainId = async () => {
 };
 
 const getSigner = async () => {
-  const provider = await getProvider();
-  const signer = provider.getSigner();
-  return signer;
+  try {
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    return signer;
+  } catch (error) {
+    return null;
+  }
 };
 const getSignerAndChainId = async () => {
   try {
@@ -165,13 +169,17 @@ const getTransactionCount = async (account) => {
 };
 
 const getChainIdAndBalanceETHAndTransactionCount = async (account) => {
-  const provider = await getProvider();
-  const network = await provider.getNetwork();
-  const chainId = network.chainId;
-  const balance = await provider.getBalance(account);
-  const balanceETH = ethers.utils.formatEther(balance);
-  const nonce = await provider.getTransactionCount(account);
-  return [chainId, balanceETH, nonce];
+  try {
+    const provider = await getProvider();
+    const network = await provider.getNetwork();
+    const chainId = network.chainId;
+    const balance = await provider.getBalance(account);
+    const balanceETH = ethers.utils.formatEther(balance);
+    const nonce = await provider.getTransactionCount(account);
+    return [chainId, balanceETH, nonce];
+  } catch (error) {
+    return [null, null, null];
+  }
 };
 
 export {

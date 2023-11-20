@@ -85,16 +85,20 @@ function App() {
 
   // config AccountData
   const configAccountData = async (account) => {
-    setCurrentAccount(account);
+    try {
+      setCurrentAccount(account);
 
-    let [chainId, balance_ether, nonce] =
-      await getChainIdAndBalanceETHAndTransactionCount(account);
+      let [chainId, balance_ether, nonce] =
+        await getChainIdAndBalanceETHAndTransactionCount(account);
 
-    setChainId(localStorage.getItem("chainId"));
+      setChainId(localStorage.getItem("chainId"));
 
-    setCurrentAccountBalance(balance_ether);
+      setCurrentAccountBalance(balance_ether);
 
-    setCurrentAccountNonce(nonce);
+      setCurrentAccountNonce(nonce);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const disconnect = async () => {

@@ -47,20 +47,24 @@ const CrossChainBridgePage = () => {
   }, [isMounted]);
 
   const configData = async () => {
-    let account = localStorage.getItem("userAddress");
-    setCurrentAccount(account);
-    let chainId = localStorage.getItem("chainId");
-    setChainId(chainId);
-    if (chainId == 5 || Number(chainId) == 5) {
-      setToChainId(97);
-    } else if (chainId == 97 || Number(chainId) == 97) {
-      setToChainId(5);
-    }
+    try {
+      let account = localStorage.getItem("userAddress");
+      setCurrentAccount(account);
+      let chainId = localStorage.getItem("chainId");
+      setChainId(chainId);
+      if (chainId == 5 || Number(chainId) == 5) {
+        setToChainId(97);
+      } else if (chainId == 97 || Number(chainId) == 97) {
+        setToChainId(5);
+      }
 
-    let _balanceData_T = await getClaimYGIOBalance(97);
-    setBalanceOfCC_T(ethers.utils.formatEther(_balanceData_T.data.balance));
-    let _balanceData_G = await getClaimYGIOBalance(5);
-    setBalanceOfCC_G(ethers.utils.formatEther(_balanceData_G.data.balance));
+      let _balanceData_T = await getClaimYGIOBalance(97);
+      setBalanceOfCC_T(ethers.utils.formatEther(_balanceData_T.data.balance));
+      let _balanceData_G = await getClaimYGIOBalance(5);
+      setBalanceOfCC_G(ethers.utils.formatEther(_balanceData_G.data.balance));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const claimTokenHandler_TBSC = async () => {

@@ -38,46 +38,54 @@ const FaucetTokenPage = () => {
   }, [isMounted]);
 
   const configData = async () => {
-    let account = localStorage.getItem("userAddress");
-    setCurrentAccount(account);
-    await updateBalance();
+    try {
+      let account = localStorage.getItem("userAddress");
+      setCurrentAccount(account);
+      await updateBalance();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateBalance = async () => {
-    let account = localStorage.getItem("userAddress");
-    let chainId = localStorage.getItem("chainId");
-    let ygioAddress;
-    let usdtAddress;
-    let yulpAddress;
-    if (chainId == 5) {
-      ygioAddress = ygio_goerli;
-      usdtAddress = usdt_goerli;
-      yulpAddress = yulp_goerli;
-    } else if (chainId == 97) {
-      ygioAddress = ygio_tbsc;
-      usdtAddress = usdt_tbsc;
-      yulpAddress = yulp_tbsc;
+    try {
+      let account = localStorage.getItem("userAddress");
+      let chainId = localStorage.getItem("chainId");
+      let ygioAddress;
+      let usdtAddress;
+      let yulpAddress;
+      if (chainId == 5) {
+        ygioAddress = ygio_goerli;
+        usdtAddress = usdt_goerli;
+        yulpAddress = yulp_goerli;
+      } else if (chainId == 97) {
+        ygioAddress = ygio_tbsc;
+        usdtAddress = usdt_tbsc;
+        yulpAddress = yulp_tbsc;
+      }
+
+      let contract = await getERC20Contract(ygioAddress);
+      // let ygioBalance = await contract.balanceOf(account, { blockTag: 9926596 });
+      let ygioBalance = await contract.balanceOf(account);
+      let decimals = await contract.decimals();
+      let balanceStandard = getDecimal(ygioBalance, decimals);
+      setMyYgioBalance(balanceStandard);
+
+      let usdtcontract = await getERC20Contract(usdtAddress);
+      let usdtBalance = await usdtcontract.balanceOf(account);
+      let usdtdecimals = await usdtcontract.decimals();
+      let usdtbalanceStandard = getDecimal(usdtBalance, usdtdecimals);
+      setMyUSDTBalance(usdtbalanceStandard);
+
+      let yulpcontract = await getERC20Contract(yulpAddress);
+      let yulpBalance = await yulpcontract.balanceOf(account);
+      let yulpdecimals = await yulpcontract.decimals();
+      let yulpbalanceStandard = getDecimal(yulpBalance, yulpdecimals);
+
+      setMyYULPBalance(yulpbalanceStandard);
+    } catch (error) {
+      console.log(error);
     }
-
-    let contract = await getERC20Contract(ygioAddress);
-    // let ygioBalance = await contract.balanceOf(account, { blockTag: 9926596 });
-    let ygioBalance = await contract.balanceOf(account);
-    let decimals = await contract.decimals();
-    let balanceStandard = getDecimal(ygioBalance, decimals);
-    setMyYgioBalance(balanceStandard);
-
-    let usdtcontract = await getERC20Contract(usdtAddress);
-    let usdtBalance = await usdtcontract.balanceOf(account);
-    let usdtdecimals = await usdtcontract.decimals();
-    let usdtbalanceStandard = getDecimal(usdtBalance, usdtdecimals);
-    setMyUSDTBalance(usdtbalanceStandard);
-
-    let yulpcontract = await getERC20Contract(yulpAddress);
-    let yulpBalance = await yulpcontract.balanceOf(account);
-    let yulpdecimals = await yulpcontract.decimals();
-    let yulpbalanceStandard = getDecimal(yulpBalance, yulpdecimals);
-
-    setMyYULPBalance(yulpbalanceStandard);
   };
   const faucetYGIOHandler = async () => {
     let account = localStorage.getItem("userAddress");
