@@ -44,20 +44,24 @@ const DataDisplayPage = () => {
   }, [isMounted]);
 
   const updatePrices = async () => {
-    let result = await getPriceBaseUSDT();
-    if (result.code == 200) {
-      let data = result.data;
-      setEthPrice(data.ethPrice);
-      setBnbPrice(data.bnbPrice);
-    }
+    try {
+      let result = await getPriceBaseUSDT();
+      if (result.code == 200) {
+        let data = result.data;
+        setEthPrice(data.ethPrice);
+        setBnbPrice(data.bnbPrice);
+      }
+    } catch (error) {}
   };
   const configData = async () => {
-    let account = localStorage.getItem("userAddress");
-    if (account != null) {
-      setCurrentAccount(account);
-    }
-    const data = await getSystemData();
-    setTableData(data);
+    try {
+      let account = localStorage.getItem("userAddress");
+      if (account != null) {
+        setCurrentAccount(account);
+      }
+      const data = await getSystemData();
+      setTableData(data);
+    } catch (error) {}
   };
 
   const PleaseLogin = () => {

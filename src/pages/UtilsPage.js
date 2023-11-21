@@ -29,15 +29,19 @@ const UtilsPage = () => {
   }, [isMounted]);
 
   const configData = async () => {
-    let account = localStorage.getItem("userAddress");
-    if (account != null) {
-      setCurrentAccount(account);
-    }
+    try {
+      let account = localStorage.getItem("userAddress");
+      if (account != null) {
+        setCurrentAccount(account);
+      }
 
-    let result = await getPriceBaseUSDT();
-    if (result.code == 200) {
-      let data = result.data;
-      setEtherPrice(data.ethPrice);
+      let result = await getPriceBaseUSDT();
+      if (result.code == 200) {
+        let data = result.data;
+        setEtherPrice(data.ethPrice);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -63,12 +67,16 @@ const UtilsPage = () => {
 
     console.log(token0Value, token1Value);
 
-    let pairPrice = await getTokenPrice(
-      selectedValue,
-      token0Value,
-      token1Value
-    );
-    setLpTokenPrice(pairPrice);
+    try {
+      let pairPrice = await getTokenPrice(
+        selectedValue,
+        token0Value,
+        token1Value
+      );
+      setLpTokenPrice(pairPrice);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getIPFSURLHandler = async () => {
