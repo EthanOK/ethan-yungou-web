@@ -2,6 +2,7 @@ import { ethers, BigNumber } from "ethers";
 import { getSignerAndChainId, getSigner } from "./GetProvider";
 import faucetABI from "../contracts/faucetABI.json";
 import erc20ABI from "../contracts/erc20ABI.json";
+import erc721ABI from "../contracts/erc721A.json";
 import crossChainABI from "../contracts/crossChainABI.json";
 import { faucet_goerli, ygio_goerli, faucet_tbsc } from "./SystemConfiguration";
 const getContract = async (contractAddress, abi, signer) => {
@@ -29,6 +30,12 @@ const getERC20Contract = async (token) => {
   return contract;
 };
 
+const getERC721Contract = async (token) => {
+  let signer = await getSigner();
+  let contract = new ethers.Contract(token, erc721ABI, signer);
+  return contract;
+};
+
 const getCrossChainContract = async (token) => {
   let signer = await getSigner();
   let contract = new ethers.Contract(token, crossChainABI, signer);
@@ -39,4 +46,5 @@ export {
   getFaucetContract,
   getERC20Contract,
   getCrossChainContract,
+  getERC721Contract,
 };

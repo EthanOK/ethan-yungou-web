@@ -18,6 +18,8 @@ const hashYUNGOU = ethers.utils.id(YUNGOU);
 const YUNGOU_END = hashYUNGOU.slice(0, 10);
 const suffixOfYunGou = "0xba6d2ab1";
 
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 const main_rpc = process.env.REACT_APP_MAINNET_RPC;
 const goerli_rpc = process.env.REACT_APP_GOERLI_RPC;
 
@@ -52,11 +54,15 @@ const yulp_goerli = "0x333FA70Aaf2a9B4979EB59bcfF2B2f846DBD8DE3";
 
 const ygio_goerli = "0xd042eF5cF97c902bF8F53244F4a81ec4f8E465Ab";
 
+const ygme_goerli = "0x28D1bC817DE02C9f105A6986eF85cB04863C3042";
+
 const crossChain_goerli = "0x2817c37eB23FC4F94f1168A94f26befa1F42FF7d";
 
 const crossChain_tbsc = "0x6AAf3B8a8E42BeDc226e2d1F166Dfdc22d4b5182";
 
 const ygio_tbsc = "0x0Fa4640F99f876D78Fc964AFE0DD6649e7C23c4f";
+
+const ygme_tbsc = "0xDb6c494BE6Aae80cc042f9CDA24Ce573aD163A46";
 
 const usdt_goerli = "0x965A558b312E288F5A77F851F7685344e1e73EdF";
 
@@ -105,6 +111,7 @@ export {
   YunGouAggregators_tbsc,
   faucet_goerli,
   ygio_goerli,
+  ygme_goerli,
   crossChain_goerli,
   crossChain_tbsc,
   faucet_tbsc,
@@ -115,4 +122,6 @@ export {
   yulp_goerli,
   EXPIRES_TIME,
   SECRETKEY,
+  ygme_tbsc,
+  ZERO_ADDRESS,
 };

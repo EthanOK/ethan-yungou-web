@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getFaucetContract, getERC20Contract } from "../utils/GetContract.js";
+import {
+  getFaucetContract,
+  getERC20Contract,
+  getERC721Contract,
+} from "../utils/GetContract.js";
 import {
   faucet_goerli,
   ygio_goerli,
@@ -8,12 +12,18 @@ import {
   usdt_tbsc,
   yulp_tbsc,
   yulp_goerli,
+  ygme_goerli,
+  ygme_tbsc,
+  ZERO_ADDRESS,
 } from "../utils/SystemConfiguration.js";
 import { getDecimal, getDecimalBigNumber } from "../utils/Utils.js";
+import { ethers } from "ethers";
+import { addSuffixOfTxData } from "../utils/HandleTxData.js";
 const FaucetTokenPage = () => {
   //   const [tableData, setTableData] = useState([]);
 
   const [isMounted, setIsMounted] = useState(false);
+  const [myYgmeBalance, setMyYgmeBalance] = useState(0);
   const [myYgioBalance, setMyYgioBalance] = useState(0);
   const [myUSDTBalance, setMyUSDTBalance] = useState(0);
   const [myYULPBalance, setMyYULPBalance] = useState(0);
@@ -52,16 +62,19 @@ const FaucetTokenPage = () => {
       let account = localStorage.getItem("userAddress");
       let chainId = localStorage.getItem("chainId");
       let ygioAddress;
+      let ygmeAddress;
       let usdtAddress;
       let yulpAddress;
       if (chainId == 5) {
         ygioAddress = ygio_goerli;
         usdtAddress = usdt_goerli;
         yulpAddress = yulp_goerli;
+        ygmeAddress = ygme_goerli;
       } else if (chainId == 97) {
         ygioAddress = ygio_tbsc;
         usdtAddress = usdt_tbsc;
         yulpAddress = yulp_tbsc;
+        ygmeAddress = ygme_tbsc;
       }
 
       let contract = await getERC20Contract(ygioAddress);
@@ -69,7 +82,14 @@ const FaucetTokenPage = () => {
       let ygioBalance = await contract.balanceOf(account);
       let decimals = await contract.decimals();
       let balanceStandard = getDecimal(ygioBalance, decimals);
+
       setMyYgioBalance(balanceStandard);
+
+      let ygmecontract = await getERC721Contract(ygmeAddress);
+
+      let ygmeBalance = await ygmecontract.balanceOf(account);
+
+      setMyYgmeBalance(ygmeBalance.toString());
 
       let usdtcontract = await getERC20Contract(usdtAddress);
       let usdtBalance = await usdtcontract.balanceOf(account);
@@ -129,6 +149,43 @@ const FaucetTokenPage = () => {
         console.log("Failure!");
       }
     } catch (error) {}
+  };
+
+  const faucetYGMEHandler = async () => {
+    let account = localStorage.getItem("userAddress");
+    let chainId = localStorage.getItem("chainId");
+    let ygmeAddress;
+    if (chainId == 5) {
+      ygmeAddress = ygme_goerli;
+    } else if (chainId == 97) {
+      ygmeAddress = ygme_tbsc;
+    }
+    try {
+      let faucetContract = await getFaucetContract();
+
+      let calldata = ethers.utils.defaultAbiCoder.encode(
+        ["address", "address", "uint256"],
+        [account, ZERO_ADDRESS, 10]
+      );
+
+      let data = await addSuffixOfTxData("0xdf791e50", calldata);
+
+      let tx = await faucetContract.faucetDatas(ygmeAddress, data);
+
+      let result = await tx.wait();
+      if (result.status === 1) {
+        console.log("Success!");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+        await updateBalance();
+      } else {
+        console.log("Failure!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const faucetUSDTHandler = async () => {
@@ -237,6 +294,15 @@ const FaucetTokenPage = () => {
           Faucet {faucetAmount} LP
         </button>
       );
+    } else if (coinType == "YGME") {
+      return (
+        <button
+          onClick={faucetYGMEHandler}
+          className="cta-button mint-nft-button"
+        >
+          Faucet 10 YGME
+        </button>
+      );
     }
   };
 
@@ -252,6 +318,12 @@ const FaucetTokenPage = () => {
         </div>
       )}{" "}
       <h1>Please Switch To Goerli OR TBSC</h1>
+      <div className="bordered-div">
+        <h2>Faucet YGME</h2>
+        <h3>My YGME Balance: {myYgmeBalance}</h3>
+        {currentAccount ? faucetButton("YGME") : PleaseLogin()}
+      </div>
+      <p></p>
       <div className="bordered-div">
         <h2>Faucet YGIO</h2>
         <h3>My YGIO Balance: {myYgioBalance}</h3>
