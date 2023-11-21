@@ -36,12 +36,12 @@ const getProvider = async () => {
       let chainId = await window.ethereum.request({ method: "eth_chainId" });
 
       let chainId_local = localStorage.getItem("chainId");
-      if (chainId !== chainId_local) {
-        let success = await switchChain(chainId_local);
-        if (!success) {
-          return null;
-        }
-      }
+      // if (chainId !== chainId_local) {
+      //   let success = await switchChain(chainId_local);
+      //   if (!success) {
+      //     return null;
+      //   }
+      // }
       provider = new ethers.providers.Web3Provider(window.ethereum);
       let accounts = await provider.send("eth_requestAccounts", []);
       // console.log(accounts);
