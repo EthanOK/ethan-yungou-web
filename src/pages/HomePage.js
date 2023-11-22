@@ -17,6 +17,7 @@ import {
   getProvider,
   getChainIdAndBalanceETHAndTransactionCount,
   getSignerAndChainId,
+  switchChain,
 } from "../utils/GetProvider.js";
 
 import {
@@ -155,6 +156,15 @@ const HomePage = () => {
     }
 
     localStorage.setItem("LoginType", "metamask");
+    let chainId = await window.ethereum.request({ method: "eth_chainId" });
+    let chainId_local = localStorage.getItem("chainId");
+    console.log(chainId_local);
+    if (chainId !== chainId_local) {
+      let success = await switchChain(chainId_local);
+      if (!success) {
+        return null;
+      }
+    }
 
     let [result, account] = await login();
     if (result) {
