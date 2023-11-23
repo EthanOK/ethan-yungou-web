@@ -160,6 +160,12 @@ const caculatePriceBySqrtPriceX96 = (sqrtPriceX96_) => {
   return price_y_x + " or " + price_x_y;
 };
 
+function getAddressCreate(sender, nonce) {
+  // from + nonce
+  let address = ethers.utils.getContractAddress({ from: sender, nonce: nonce });
+  return address;
+}
+
 export {
   equalityStringIgnoreCase,
   getScanURL,
@@ -174,4 +180,5 @@ export {
   getExtractAddress,
   utf8ToHexBytes,
   caculatePriceBySqrtPriceX96,
+  getAddressCreate,
 };

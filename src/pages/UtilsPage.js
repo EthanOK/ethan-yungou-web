@@ -1,7 +1,11 @@
 import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { getPriceBaseUSDT } from "../api/GetData.js";
-import { caculatePriceBySqrtPriceX96 } from "../utils/Utils.js";
+import {
+  caculatePriceBySqrtPriceX96,
+  getAddressCreate,
+  isAddress,
+} from "../utils/Utils.js";
 import { getTokenPrice } from "../utils/GetLpTokenPrice.js";
 
 const UtilsPage = () => {
@@ -11,6 +15,8 @@ const UtilsPage = () => {
   const [transactionFee, setTransactionFee] = useState("");
   const [etherPrice, setEtherPrice] = useState(0);
   const [tokenPrice, setTokenPrice] = useState(null);
+
+  const [contractCreate, setContractCreate] = useState(null);
 
   const [lpTokenPrice, setLpTokenPrice] = useState(null);
   const [selectedValue, setSelectedValue] = useState("1");
@@ -56,6 +62,21 @@ const UtilsPage = () => {
     const sqrtPriceX96Value = sqrtPriceX96Input.value;
     let price = caculatePriceBySqrtPriceX96(sqrtPriceX96Value);
     setTokenPrice(price);
+  };
+
+  const getAddressByCreatHandler = async () => {
+    const accountInput = document.getElementById("account_create");
+    const accountValue = accountInput.value;
+    const nonceInput = document.getElementById("nonce_create");
+    const nonceValue = nonceInput.value;
+    console.log(accountValue, nonceValue);
+
+    if (isAddress(accountValue)) {
+      let address_ = getAddressCreate(accountValue, nonceValue);
+      setContractCreate(address_);
+    } else {
+      console.log("error address");
+    }
   };
 
   const getTokenPriceHandler = async () => {
@@ -120,6 +141,16 @@ const UtilsPage = () => {
     return (
       <button onClick={getPriceHandler} className="cta-button mint-nft-button">
         getPrice
+      </button>
+    );
+  };
+  const getAddressByCreate = () => {
+    return (
+      <button
+        onClick={getAddressByCreatHandler}
+        className="cta-button mint-nft-button"
+      >
+        getContractAddress
       </button>
     );
   };
@@ -274,9 +305,34 @@ const UtilsPage = () => {
             <p>LP Price: &nbsp;&nbsp;{lpTokenPrice}</p>
           </div>
         </div>
+
+        <p></p>
+        <div className="bordered-div">
+          <h3>Get Contract Address(By Create)</h3>
+          <div>
+            <label className="label">Account:</label>
+            <textarea
+              className="textarea"
+              id="account_create"
+              placeholder="0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2"
+              style={{ height: "20px", width: "320px", fontSize: "14px" }}
+            ></textarea>
+            <p></p>
+            <label className="label">Nonce:</label>
+            <textarea
+              className="textarea"
+              id="nonce_create"
+              placeholder="11"
+              style={{ height: "20px", width: "320px", fontSize: "14px" }}
+            ></textarea>
+            <p></p>
+            {currentAccount ? getAddressByCreate() : PleaseLogin()}
+            <p>Contract Address: &nbsp;&nbsp;{contractCreate}</p>
+          </div>
+        </div>
       </div>
       <div>
-        <p></p>{" "}
+        <p></p>
       </div>
     </center>
   );
