@@ -89,4 +89,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## pull
 
-`docker pull ethan01/ethan-yungou`
+`docker pull ethan01/ethan-yungou:v1`
+
+`docker run -p 8080:3000 --name yungou-web ethan01/ethan-yungou:v1`
