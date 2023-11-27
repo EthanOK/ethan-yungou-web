@@ -1,0 +1,7 @@
+version: "3"
+services:
+  web:
+    platform: linux/amd64
+    image: ethan01/ethan-yungou:v2
+    ports:
+      - "8888:3000"

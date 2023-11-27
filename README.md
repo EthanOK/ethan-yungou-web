@@ -1,4 +1,4 @@
-# node -v : v18.14.2
+# node -v : v28.14.2
 
 # Getting Started with Create React App
 
@@ -75,20 +75,26 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## build images
 
-`docker build -t ethan-yungou:v1 .`
+`docker build -t ethan-yungou:v2 .`
 
 ## run container
 
-`docker run -p 8080:3000 --name yungou-web ethan-yungou:v1`
+`docker run -p 8080:3000 --name yungou-web ethan-yungou:v2`
 
 ## push
 
-`docker tag ethan-yungou:v1 ethan01/ethan-yungou:v1`
+`docker tag ethan-yungou:v2 ethan01/ethan-yungou:v2`
 
-`docker push ethan01/ethan-yungou:v1`
+`docker push ethan01/ethan-yungou:v2`
 
 ## pull
 
-`docker pull ethan01/ethan-yungou:v1`
+`docker pull ethan01/ethan-yungou:v2`
 
-`docker run -p 8080:3000 --name yungou-web ethan01/ethan-yungou:v1`
+`docker run -p 8080:3000 --name yungou-web ethan01/ethan-yungou:v2`
+
+## docker-compose
+
+`docker-compose up`
+
+`docker-compose up -d`
