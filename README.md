@@ -1,4 +1,4 @@
-# node -v : v28.14.2
+# node -v : v18.14.2
 
 # Getting Started with Create React App
 
