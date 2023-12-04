@@ -207,19 +207,19 @@ const UtilsPage = () => {
               Please See:
               <p></p>
               <a href={message} target="_blank" rel="noopener noreferrer">
-                {message}
+                {message.substring(0, message.lastIndexOf("/") + 2)}
               </a>
               <p></p>
               <a href={message1} target="_blank" rel="noopener noreferrer">
-                {message1}
+                {message1.substring(0, message1.lastIndexOf("/") + 2)}
               </a>
               <p></p>
               <a href={message2} target="_blank" rel="noopener noreferrer">
-                {message2}
+                {message2.substring(0, message2.lastIndexOf("/") + 2)}
               </a>
               <p></p>
               <a href={message3} target="_blank" rel="noopener noreferrer">
-                {message3}
+                {message3.substring(0, message3.lastIndexOf("/") + 2)}
               </a>
             </h2>
           </div>
