@@ -11,6 +11,9 @@ import { getTokenPrice } from "../utils/GetLpTokenPrice.js";
 const UtilsPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
+  const [message1, setMessage1] = useState("");
+  const [message2, setMessage2] = useState("");
+  const [message3, setMessage3] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
   const [transactionFee, setTransactionFee] = useState("");
   const [etherPrice, setEtherPrice] = useState(0);
@@ -103,8 +106,10 @@ const UtilsPage = () => {
   const getIPFSURLHandler = async () => {
     const contractInput = document.getElementById("cid");
     const contractValue = contractInput.value;
-    let url = "https://ipfs.io/ipfs/" + contractValue;
-    setMessage(url);
+    setMessage("https://ipfs.io/ipfs/" + contractValue);
+    setMessage1("https://dweb.link/ipfs/" + contractValue);
+    setMessage2("https://cloudflare-ipfs.com/ipfs/" + contractValue);
+    setMessage3("https://ipfs.filebase.io/ipfs/" + contractValue);
   };
 
   const calculateTxFeeHandler = async () => {
@@ -203,6 +208,18 @@ const UtilsPage = () => {
               <p></p>
               <a href={message} target="_blank" rel="noopener noreferrer">
                 {message}
+              </a>
+              <p></p>
+              <a href={message1} target="_blank" rel="noopener noreferrer">
+                {message1}
+              </a>
+              <p></p>
+              <a href={message2} target="_blank" rel="noopener noreferrer">
+                {message2}
+              </a>
+              <p></p>
+              <a href={message3} target="_blank" rel="noopener noreferrer">
+                {message3}
               </a>
             </h2>
           </div>
