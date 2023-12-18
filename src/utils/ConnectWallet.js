@@ -1,4 +1,4 @@
-import { getSignerAndChainId } from "./GetProvider.js";
+import { getAccount, getSignerAndChainId } from "./GetProvider.js";
 import { signEIP712Message } from "./SignFunc.js";
 import { getUserToken } from "../api/GetData.js";
 const login = async () => {
@@ -16,8 +16,8 @@ const login = async () => {
     return [params.signature, params.message.userAddress];
   } catch (error) {
     console.log(error);
-
-    return [null, null];
+    const account = await getAccount();
+    return [true, account];
   }
 };
 export { login };

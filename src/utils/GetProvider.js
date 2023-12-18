@@ -125,6 +125,17 @@ const getSigner = async () => {
     return null;
   }
 };
+
+const getAccount = async () => {
+  try {
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    const account = await signer.getAddress();
+    return account;
+  } catch (error) {
+    return null;
+  }
+};
 const getSignerAndChainId = async () => {
   try {
     const provider = await getProvider();
@@ -194,4 +205,5 @@ export {
   getChainIdAndBalanceETHAndTransactionCount,
   getSignerAndAccountAndChainId,
   switchChain,
+  getAccount,
 };
