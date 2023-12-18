@@ -48,6 +48,8 @@ const faucet_goerli = "0xC1f60B81c6dAb5BE517a53983708488F9978D0Eb";
 
 const faucet_tbsc = "0x1ef1b1405dCda2375Fc8430DE5560016F0D8DBe0";
 
+const faucet_sepolia = "0xaD1dA61611ca6764c8C87806Bb39C66AF212F560";
+
 const yulp_tbsc = "0x21DEf0EeF658237579f40603164Eb86c3453ad97";
 
 const yulp_goerli = "0x333FA70Aaf2a9B4979EB59bcfF2B2f846DBD8DE3";
@@ -65,6 +67,8 @@ const ygio_tbsc = "0x0Fa4640F99f876D78Fc964AFE0DD6649e7C23c4f";
 const ygme_tbsc = "0xDb6c494BE6Aae80cc042f9CDA24Ce573aD163A46";
 
 const usdt_goerli = "0x965A558b312E288F5A77F851F7685344e1e73EdF";
+
+const usdt_sepolia = "0x590dcA422b660071F978E5A69851A18529B45415";
 
 const usdt_tbsc = "0xa52770d379e6276e8f798143032442b29D47b567";
 
@@ -110,6 +114,7 @@ export {
   YunGouAggregators_goerli,
   YunGouAggregators_tbsc,
   faucet_goerli,
+  faucet_sepolia,
   ygio_goerli,
   ygme_goerli,
   crossChain_goerli,
@@ -117,6 +122,7 @@ export {
   faucet_tbsc,
   ygio_tbsc,
   usdt_goerli,
+  usdt_sepolia,
   usdt_tbsc,
   yulp_tbsc,
   yulp_goerli,

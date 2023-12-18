@@ -674,6 +674,9 @@ const HomePage = () => {
             <option value="5" style={{ textAlign: "center" }}>
               Goerli
             </option>
+            <option value="11155111" style={{ textAlign: "center" }}>
+              Sepolia
+            </option>
             <option value="56" style={{ textAlign: "center" }}>
               BSC
             </option>

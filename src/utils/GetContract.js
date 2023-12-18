@@ -4,7 +4,12 @@ import faucetABI from "../contracts/faucetABI.json";
 import erc20ABI from "../contracts/erc20ABI.json";
 import erc721ABI from "../contracts/erc721A.json";
 import crossChainABI from "../contracts/crossChainABI.json";
-import { faucet_goerli, ygio_goerli, faucet_tbsc } from "./SystemConfiguration";
+import {
+  faucet_goerli,
+  ygio_goerli,
+  faucet_tbsc,
+  faucet_sepolia,
+} from "./SystemConfiguration";
 const getContract = async (contractAddress, abi, signer) => {
   let contract = new ethers.Contract(contractAddress, abi, signer);
   return contract;
@@ -18,6 +23,8 @@ const getFaucetContract = async () => {
     contractAddress = faucet_goerli;
   } else if (chainId == 97) {
     contractAddress = faucet_tbsc;
+  } else if (chainId == 11155111) {
+    contractAddress = faucet_sepolia;
   }
 
   let contract = new ethers.Contract(contractAddress, faucetABI, signer);

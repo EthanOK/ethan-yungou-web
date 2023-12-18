@@ -15,6 +15,8 @@ import {
   ygme_goerli,
   ygme_tbsc,
   ZERO_ADDRESS,
+  faucet_sepolia,
+  usdt_sepolia,
 } from "../utils/SystemConfiguration.js";
 import { getDecimal, getDecimalBigNumber } from "../utils/Utils.js";
 import { ethers } from "ethers";
@@ -75,34 +77,42 @@ const FaucetTokenPage = () => {
         usdtAddress = usdt_tbsc;
         yulpAddress = yulp_tbsc;
         ygmeAddress = ygme_tbsc;
+      } else if (chainId == 11155111) {
+        usdtAddress = usdt_sepolia;
+      }
+      if (ygioAddress) {
+        let contract = await getERC20Contract(ygioAddress);
+        // let ygioBalance = await contract.balanceOf(account, { blockTag: 9926596 });
+        let ygioBalance = await contract.balanceOf(account);
+        let decimals = await contract.decimals();
+        let balanceStandard = getDecimal(ygioBalance, decimals);
+
+        setMyYgioBalance(balanceStandard);
+      }
+      if (ygmeAddress) {
+        let ygmecontract = await getERC721Contract(ygmeAddress);
+
+        let ygmeBalance = await ygmecontract.balanceOf(account);
+
+        setMyYgmeBalance(ygmeBalance.toString());
       }
 
-      let contract = await getERC20Contract(ygioAddress);
-      // let ygioBalance = await contract.balanceOf(account, { blockTag: 9926596 });
-      let ygioBalance = await contract.balanceOf(account);
-      let decimals = await contract.decimals();
-      let balanceStandard = getDecimal(ygioBalance, decimals);
+      if (usdtAddress) {
+        let usdtcontract = await getERC20Contract(usdtAddress);
+        let usdtBalance = await usdtcontract.balanceOf(account);
+        let usdtdecimals = await usdtcontract.decimals();
+        let usdtbalanceStandard = getDecimal(usdtBalance, usdtdecimals);
+        setMyUSDTBalance(usdtbalanceStandard);
+      }
 
-      setMyYgioBalance(balanceStandard);
+      if (yulpAddress) {
+        let yulpcontract = await getERC20Contract(yulpAddress);
+        let yulpBalance = await yulpcontract.balanceOf(account);
+        let yulpdecimals = await yulpcontract.decimals();
+        let yulpbalanceStandard = getDecimal(yulpBalance, yulpdecimals);
 
-      let ygmecontract = await getERC721Contract(ygmeAddress);
-
-      let ygmeBalance = await ygmecontract.balanceOf(account);
-
-      setMyYgmeBalance(ygmeBalance.toString());
-
-      let usdtcontract = await getERC20Contract(usdtAddress);
-      let usdtBalance = await usdtcontract.balanceOf(account);
-      let usdtdecimals = await usdtcontract.decimals();
-      let usdtbalanceStandard = getDecimal(usdtBalance, usdtdecimals);
-      setMyUSDTBalance(usdtbalanceStandard);
-
-      let yulpcontract = await getERC20Contract(yulpAddress);
-      let yulpBalance = await yulpcontract.balanceOf(account);
-      let yulpdecimals = await yulpcontract.decimals();
-      let yulpbalanceStandard = getDecimal(yulpBalance, yulpdecimals);
-
-      setMyYULPBalance(yulpbalanceStandard);
+        setMyYULPBalance(yulpbalanceStandard);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -202,6 +212,10 @@ const FaucetTokenPage = () => {
       accountFrom = "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2";
       usdtAddress = usdt_tbsc;
       amount = getDecimalBigNumber(faucetAmount, 18);
+    } else if (chainId == 11155111) {
+      accountFrom = "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2";
+      usdtAddress = usdt_sepolia;
+      amount = getDecimalBigNumber(faucetAmount, 6);
     }
     try {
       let faucetContract = await getFaucetContract();
@@ -317,7 +331,7 @@ const FaucetTokenPage = () => {
           <h1>Claim Successful!</h1>
         </div>
       )}{" "}
-      <h1>Please Switch To Goerli OR TBSC</h1>
+      <h1>Please Switch To Goerli OR Sepolia OR TBSC</h1>
       <div className="bordered-div">
         <h2>Faucet YGME</h2>
         <h3>My YGME Balance: {myYgmeBalance}</h3>
