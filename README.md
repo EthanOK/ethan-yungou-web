@@ -111,3 +111,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 <!-- build and push -->
 
 `docker buildx build -t ethan01/ethan-yungou:v2.0.1 . --platform linux/amd64,linux/arm64 --push`
+
+<!-- Windows -->
+
+`docker buildx build -t ethan01/ethan-yungou:v2.0.3 . --platform linux/amd64 --push`
