@@ -4,8 +4,13 @@ import base58 from "bs58";
 
 import { PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { LOGIN_SOLANA_MESSAGE } from "../utils/SystemConfiguration";
-import { signSolanaMessage } from "../utils/SignFunc";
+
 import { getPhantomProvider } from "../utils/GetPhantomProvider";
+import {
+  signSolanaMessage,
+  verifySolanaSignature,
+  verifySolanaSignatureV2,
+} from "../utils/SolanaSignAndVerify";
 
 const SolanaLoginPage = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -82,6 +87,7 @@ const SolanaLoginPage = () => {
       account_Address +
       "\nLoginTime: " +
       loginTime;
+
     const signature_string = await signSolanaMessage(provider, message);
 
     if (signature_string == null) {
@@ -89,6 +95,24 @@ const SolanaLoginPage = () => {
       alert("User rejected the signature.");
     } else {
       setMessage(signature_string);
+
+      console.log(signature_string.length);
+
+      const verifyR = await verifySolanaSignature(
+        signature_string,
+        message,
+        account_Address
+      );
+
+      console.log(verifyR);
+
+      const verifyR2 = await verifySolanaSignatureV2(
+        signature_string,
+        message,
+        account_Address
+      );
+
+      console.log(verifyR2);
     }
   };
   const disConnectHandler = async () => {
