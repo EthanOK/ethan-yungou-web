@@ -20,6 +20,7 @@ import TransferNativePage from "./pages/TransferNativePage";
 import UtilsPage from "./pages/UtilsPage";
 import BurnTokenPage from "./pages/BurnTokenPage";
 import CrossChainBridgePage from "./pages/CrossChainBridgePage";
+import SolanaLoginPage from "./pages/SolanaLoginPage";
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -141,6 +142,7 @@ function App() {
           {isExpanded && (
             <div>
               <AccordionItem title="Login DApp" linkTo="/" />
+              <AccordionItem title="Login Solana" linkTo="/loginSolana" />
               <AccordionItem title="Transfer Native" linkTo="/transfer" />
               <AccordionItem title="Faucet Token" linkTo="/faucet" />
               <AccordionItem title="Burn Token" linkTo="/burn" />
@@ -180,6 +182,7 @@ function App() {
         {/* 使用 <Routes> 包含所有的路由 */}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/loginSolana" element={<SolanaLoginPage />} />
           <Route path="/display" element={<DataDisplayPage />} />
           <Route path="/ens" element={<ENSPage />} />
           <Route path="/mintnft" element={<MintNFTPage />} />

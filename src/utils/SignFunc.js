@@ -16,6 +16,7 @@ import {
   getSignerAndAccountAndChainId,
 } from "./GetProvider";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
+import base58 from "bs58";
 
 const signEIP712Message = async (signer, chainId) => {
   try {
@@ -446,6 +447,18 @@ const getSystemSignature = async (orderSignature, data) => {
     return false;
   }
 };
+
+const signSolanaMessage = async (provider_solana, message_string) => {
+  try {
+    const message_Uint8Array = new TextEncoder().encode(message_string);
+    const signResult = await provider_solana.signMessage(message_Uint8Array);
+    const signature_string = base58.encode(signResult.signature);
+    return signature_string;
+  } catch (error) {
+    return null;
+  }
+};
+
 export {
   signEIP712Message,
   signStringMessage,
@@ -453,4 +466,5 @@ export {
   getSystemSignature,
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
+  signSolanaMessage,
 };

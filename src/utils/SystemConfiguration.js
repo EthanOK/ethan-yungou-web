@@ -82,6 +82,7 @@ const DefaultChainId = "97";
 
 const EXPIRES_TIME = "7d";
 const SECRETKEY = "y0Gv3jsn8CnT!^4t$U2c9A@kR6*%PqLpQAWER";
+const LOGIN_SOLANA_MESSAGE = "Welcome to ethan-yungou.vercel.app!";
 
 export {
   PancakeRouter,
@@ -130,4 +131,5 @@ export {
   SECRETKEY,
   ygme_tbsc,
   ZERO_ADDRESS,
+  LOGIN_SOLANA_MESSAGE,
 };
