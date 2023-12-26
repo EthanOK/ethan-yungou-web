@@ -11,10 +11,14 @@ const SolanaLoginPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
+  const [currentSolanaAccount, setCurrentSolanaAccount] = useState(null);
 
   useEffect(() => {
     setIsMounted(true);
+    const intervalId = setInterval(updateShowData, 2000);
+
     return () => {
+      clearInterval(intervalId);
       setIsMounted(false);
     };
   }, []);
@@ -31,6 +35,19 @@ const SolanaLoginPage = () => {
     if (account != null) {
       setCurrentAccount(account);
     }
+    try {
+      const provider = await getPhantomProvider();
+
+      localStorage.setItem(
+        "currentSolanaAccount",
+        provider.publicKey.toBase58()
+      );
+    } catch (error) {
+      localStorage.setItem("currentSolanaAccount", "");
+    }
+  };
+  const updateShowData = async () => {
+    setCurrentSolanaAccount(localStorage.getItem("currentSolanaAccount"));
   };
 
   const PleaseLogin = () => {
@@ -53,6 +70,8 @@ const SolanaLoginPage = () => {
       "Connected to Phantom wallet. Public key:",
       publicKey.toBase58()
     );
+
+    localStorage.setItem("currentSolanaAccount", account_Address);
 
     console.log(provider);
     const loginTime = new Date().toLocaleString();
@@ -109,9 +128,11 @@ const SolanaLoginPage = () => {
     <center>
       <div>
         <h2>Login Solana</h2>
+        Solana Account: {currentSolanaAccount}
+        <p></p>
+        <p></p>
         {currentAccount ? loginSolanaButton() : PleaseLogin()}
         <p></p>
-
         {currentAccount ? disConnectButton() : PleaseLogin()}
       </div>
       <div>
