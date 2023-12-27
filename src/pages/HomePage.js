@@ -55,18 +55,15 @@ const HomePage = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    // const intervalId = setInterval(updateData, 2000);
+    const intervalId = setInterval(updateData, 2000);
     return () => {
-      // clearInterval(intervalId);
+      clearInterval(intervalId);
       setIsMounted(false);
     };
   }, []);
   const updateData = () => {
     let chainId_ = localStorage.getItem("chainId");
-    if (chainId !== chainId_) {
-      localStorage.setItem("chainId", chainId_);
-      setChainId(chainId_);
-    }
+    setChainId(chainId_);
     let currentAccount_ = localStorage.getItem("userAddress");
     if (currentAccount != currentAccount_) {
       configAccountData(currentAccount_);
