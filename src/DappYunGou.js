@@ -58,12 +58,13 @@ function App() {
       if (account != null) {
         configAccountData(account);
       }
+      if (window.ethereum) {
+        window.ethereum.on("accountsChanged", async (accounts) => {
+          let account = accounts[0];
 
-      window.ethereum.on("accountsChanged", async (accounts) => {
-        let account = accounts[0];
-
-        localStorage.setItem("userAddress", account);
-      });
+          localStorage.setItem("userAddress", account);
+        });
+      }
     }
   }, [isMounted]);
 

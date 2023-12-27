@@ -82,23 +82,26 @@ const HomePage = () => {
         localStorage.setItem("chainId", DefaultChainId);
       }
 
-      window.ethereum.on("chainChanged", async (chainId) => {
-        let chainId_ = Number.parseInt(chainId);
-        localStorage.setItem("chainId", chainId_.toString());
+      if (window.ethereum) {
+        window.ethereum.on("chainChanged", async (chainId) => {
+          let chainId_ = Number.parseInt(chainId);
+          localStorage.setItem("chainId", chainId_.toString());
 
-        let account = localStorage.getItem("userAddress");
-        await configAccountData(account);
-      });
+          let account = localStorage.getItem("userAddress");
+          await configAccountData(account);
+        });
 
-      window.ethereum.on("accountsChanged", async (accounts) => {
-        let account = accounts[0];
+        window.ethereum.on("accountsChanged", async (accounts) => {
+          let account = accounts[0];
 
-        localStorage.setItem("userAddress", account);
-        // await login();
-        await configAccountData(account);
-      });
-      if (account != null) {
-        configAccountData(account);
+          localStorage.setItem("userAddress", account);
+          // await login();
+          await configAccountData(account);
+        });
+
+        if (account != null) {
+          configAccountData(account);
+        }
       }
     }
   }, [isMounted]);
