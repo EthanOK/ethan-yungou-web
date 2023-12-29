@@ -43,6 +43,10 @@
   background: orange;
 }
 
+.unlogin-nft-button {
+  background: rgba(20, 20, 20, 0.646);
+}
+
 .alert {
   background-color: #4caf50;
   color: white;

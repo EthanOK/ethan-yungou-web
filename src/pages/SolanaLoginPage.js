@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as buffer from "buffer";
 
 import base58 from "bs58";
 
@@ -6,6 +7,8 @@ import {
   LAMPORTS_PER_SOL,
   PublicKey,
   SYSVAR_RENT_PUBKEY,
+  SystemProgram,
+  Transaction,
   clusterApiUrl,
 } from "@solana/web3.js";
 import { LOGIN_SOLANA_MESSAGE } from "../utils/SystemConfiguration";
@@ -18,6 +21,7 @@ import {
 } from "../utils/SolanaSignAndVerify";
 import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
+import { sendTransactionOfPhantom } from "../utils/PhantomSendTransaction";
 
 const SolanaLoginPage = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -80,7 +84,9 @@ const SolanaLoginPage = () => {
   };
 
   const PleaseLogin = () => {
-    return <h2>UnLogin, Please Login</h2>;
+    return (
+      <button className="cta-button unlogin-nft-button">PleaseLogin</button>
+    );
   };
 
   const signSolanaMessageHandler = async () => {
@@ -185,6 +191,65 @@ const SolanaLoginPage = () => {
     }
   };
 
+  const transferSOLHandler = async () => {
+    if (!window.solana) {
+      alert("Please install Phantom wallet to use this app");
+      return;
+    }
+    if (currentSolanaAccount == "" || currentSolanaAccount == null) {
+      return;
+    }
+    const toSolAddressInput = document.getElementById("toSolAddress");
+    const toSolAddressInputValue = toSolAddressInput.value;
+
+    if (toSolAddressInputValue.length != 44) {
+      alert("To address is not valid");
+      return;
+    }
+
+    try {
+      const provider = await getPhantomProvider();
+
+      const connection = getDevConnection();
+      console.log(provider);
+      console.log(provider.publicKey.toString());
+      window.Buffer = buffer.Buffer;
+
+      const transaction = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: provider.publicKey,
+          toPubkey: new PublicKey(toSolAddressInputValue),
+          lamports: 0.5 * LAMPORTS_PER_SOL,
+        })
+      );
+
+      const signature = await sendTransactionOfPhantom(
+        connection,
+        provider,
+        transaction
+      );
+
+      console.log(signature);
+      if (signature == null) {
+        setAlertMessage("send Sol Failure!");
+      } else {
+        setAlertMessage("send Sol Success!");
+      }
+
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setAlertMessage("send Sol Failure!");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    }
+  };
+
   const loginSolanaButton = () => {
     return (
       <button
@@ -203,6 +268,17 @@ const SolanaLoginPage = () => {
         className="cta-button mint-nft-button"
       >
         disConnect
+      </button>
+    );
+  };
+
+  const transferSOLButton = () => {
+    return (
+      <button
+        onClick={transferSOLHandler}
+        className="cta-button mint-nft-button"
+      >
+        transfer 0.5 SOL
       </button>
     );
   };
@@ -247,6 +323,19 @@ const SolanaLoginPage = () => {
             style={{ width: "1200px", height: "100px" }}
           ></textarea>
         </h2>
+      </div>
+
+      <div>
+        <h2>Transfer SOL</h2>
+        <label className="label">ToSolAddress:</label>
+        <textarea
+          className="textarea"
+          id="toSolAddress"
+          placeholder="3c5MLawkv9DY4C4zh39xHMic8MCTfBLVEZRSG4cWjjiH"
+        ></textarea>
+
+        <p></p>
+        {currentSolanaAccount ? transferSOLButton() : PleaseLogin()}
       </div>
     </center>
   );
