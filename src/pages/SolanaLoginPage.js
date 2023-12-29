@@ -25,6 +25,8 @@ const SolanaLoginPage = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [currentSolanaAccount, setCurrentSolanaAccount] = useState(null);
   const [accountSOLBalance, setAccountSOLBalance] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -68,8 +70,8 @@ const SolanaLoginPage = () => {
         return;
       }
 
-      const connnection = getDevConnection();
-      const balance = await getSolBalance(connnection, accountSolana);
+      const connection = getDevConnection();
+      const balance = await getSolBalance(connection, accountSolana);
 
       setAccountSOLBalance(balance / LAMPORTS_PER_SOL);
     } catch (error) {
@@ -137,6 +139,7 @@ const SolanaLoginPage = () => {
       console.log(verifyR2);
     }
   };
+
   const disConnectHandler = async () => {
     if (!window.solana) {
       alert("Please install Phantom wallet to use this app");
@@ -150,6 +153,38 @@ const SolanaLoginPage = () => {
     setAccountSOLBalance(0);
   };
 
+  const airDropHandler = async () => {
+    if (!window.solana) {
+      alert("Please install Phantom wallet to use this app");
+      return;
+    }
+    if (currentSolanaAccount == "" || currentSolanaAccount == null) {
+      return;
+    }
+
+    const connection = getDevConnection();
+
+    try {
+      const signature = await connection.requestAirdrop(
+        new PublicKey(currentSolanaAccount),
+        2 * LAMPORTS_PER_SOL
+      );
+      console.log(signature);
+      setAlertMessage("AIRDROP Success!");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setAlertMessage("AIRDROP Failure!");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    }
+  };
+
   const loginSolanaButton = () => {
     return (
       <button
@@ -160,6 +195,7 @@ const SolanaLoginPage = () => {
       </button>
     );
   };
+
   const disConnectButton = () => {
     return (
       <button
@@ -171,9 +207,22 @@ const SolanaLoginPage = () => {
     );
   };
 
+  const airDropButton = () => {
+    return (
+      <button onClick={airDropHandler} className="cta-button mint-nft-button">
+        airDrop 2 Sol
+      </button>
+    );
+  };
+
   return (
     <center>
       <div>
+        {showAlert && (
+          <div className="alert">
+            <h2>{alertMessage}</h2>
+          </div>
+        )}
         <h2>Login Solana</h2>
         Solana Account: {currentSolanaAccount}
         <p></p>
@@ -181,6 +230,9 @@ const SolanaLoginPage = () => {
         <p></p>
         <p></p>
         {currentAccount ? loginSolanaButton() : PleaseLogin()}
+        <p></p>
+        {currentAccount ? airDropButton() : PleaseLogin()}
+        <p></p>
         <p></p>
         {currentAccount ? disConnectButton() : PleaseLogin()}
       </div>

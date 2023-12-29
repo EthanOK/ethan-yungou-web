@@ -2,7 +2,7 @@ const { Connection, clusterApiUrl } = require("@solana/web3.js");
 const { SOLANA_DEV_RPC } = require("./SystemConfiguration");
 
 const getDevConnection = () => {
-  const connection = new Connection(SOLANA_DEV_RPC, "confirmed");
+  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
   return connection;
 };
 
