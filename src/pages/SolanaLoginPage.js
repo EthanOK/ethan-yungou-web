@@ -267,7 +267,7 @@ const SolanaLoginPage = () => {
         onClick={disConnectHandler}
         className="cta-button mint-nft-button"
       >
-        disConnect
+        DisConnect
       </button>
     );
   };
@@ -286,7 +286,7 @@ const SolanaLoginPage = () => {
   const airDropButton = () => {
     return (
       <button onClick={airDropHandler} className="cta-button mint-nft-button">
-        airDrop 2 Sol
+        AirDrop 2 SOL
       </button>
     );
   };
@@ -327,7 +327,7 @@ const SolanaLoginPage = () => {
 
       <div>
         <h2>Transfer SOL</h2>
-        <label className="label">ToSolAddress:</label>
+        <label className="label">ToAddress:</label>
         <textarea
           className="textarea"
           id="toSolAddress"
