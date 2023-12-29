@@ -84,6 +84,8 @@ const EXPIRES_TIME = "7d";
 const SECRETKEY = "y0Gv3jsn8CnT!^4t$U2c9A@kR6*%PqLpQAWER";
 const LOGIN_SOLANA_MESSAGE = "Welcome to ethan-yungou.vercel.app!";
 
+const SOLANA_DEV_RPC = "https://rpc.ankr.com/solana_devnet";
+
 export {
   PancakeRouter,
   UniswapRouter,
@@ -132,4 +134,5 @@ export {
   ygme_tbsc,
   ZERO_ADDRESS,
   LOGIN_SOLANA_MESSAGE,
+  SOLANA_DEV_RPC,
 };

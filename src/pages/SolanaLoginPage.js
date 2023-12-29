@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 
 import base58 from "bs58";
 
-import { PublicKey, clusterApiUrl } from "@solana/web3.js";
+import {
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  SYSVAR_RENT_PUBKEY,
+  clusterApiUrl,
+} from "@solana/web3.js";
 import { LOGIN_SOLANA_MESSAGE } from "../utils/SystemConfiguration";
 
 import { getPhantomProvider } from "../utils/GetPhantomProvider";
@@ -11,16 +16,19 @@ import {
   verifySolanaSignature,
   verifySolanaSignatureV2,
 } from "../utils/SolanaSignAndVerify";
+import { getDevConnection } from "../utils/GetSolanaConnection";
+import { getSolBalance } from "../utils/SolanaGetBalance";
 
 const SolanaLoginPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
   const [currentSolanaAccount, setCurrentSolanaAccount] = useState(null);
+  const [accountSOLBalance, setAccountSOLBalance] = useState(null);
 
   useEffect(() => {
     setIsMounted(true);
-    const intervalId = setInterval(updateShowData, 2000);
+    const intervalId = setInterval(updateShowData, 3000);
 
     return () => {
       clearInterval(intervalId);
@@ -52,7 +60,21 @@ const SolanaLoginPage = () => {
     }
   };
   const updateShowData = async () => {
-    setCurrentSolanaAccount(localStorage.getItem("currentSolanaAccount"));
+    try {
+      let accountSolana = localStorage.getItem("currentSolanaAccount");
+      setCurrentSolanaAccount(accountSolana);
+
+      if (accountSolana == "" || accountSolana == null) {
+        return;
+      }
+
+      const connnection = getDevConnection();
+      const balance = await getSolBalance(connnection, accountSolana);
+
+      setAccountSOLBalance(balance / LAMPORTS_PER_SOL);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const PleaseLogin = () => {
@@ -125,6 +147,7 @@ const SolanaLoginPage = () => {
     await provider.disconnect();
 
     setMessage("");
+    setAccountSOLBalance(0);
   };
 
   const loginSolanaButton = () => {
@@ -153,6 +176,8 @@ const SolanaLoginPage = () => {
       <div>
         <h2>Login Solana</h2>
         Solana Account: {currentSolanaAccount}
+        <p></p>
+        Balance(DEV): {accountSOLBalance} SOL
         <p></p>
         <p></p>
         {currentAccount ? loginSolanaButton() : PleaseLogin()}
