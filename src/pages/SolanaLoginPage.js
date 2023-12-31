@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as buffer from "buffer";
 
-import base58 from "bs58";
+// import base58 from "bs58";
 
 import {
   LAMPORTS_PER_SOL,
@@ -22,8 +22,10 @@ import {
 import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
 import { sendTransactionOfPhantom } from "../utils/PhantomSendTransaction";
+import { stringToArray } from "../utils/Utils";
 
 const SolanaLoginPage = () => {
+  window.Buffer = buffer.Buffer;
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -201,11 +203,17 @@ const SolanaLoginPage = () => {
     }
     const toSolAddressInput = document.getElementById("toSolAddress");
     const toSolAddressInputValue = toSolAddressInput.value;
-
-    if (toSolAddressInputValue.length != 44) {
-      alert("To address is not valid");
+    const addressArray = stringToArray(toSolAddressInputValue);
+    if (addressArray.length == 0) {
+      alert("To address is null");
       return;
     }
+    addressArray.forEach((address) => {
+      if (address.length != 44) {
+        alert("To address is not valid");
+        return;
+      }
+    });
 
     try {
       const provider = await getPhantomProvider();
@@ -213,15 +221,19 @@ const SolanaLoginPage = () => {
       const connection = getDevConnection();
       console.log(provider);
       console.log(provider.publicKey.toString());
-      window.Buffer = buffer.Buffer;
 
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: provider.publicKey,
-          toPubkey: new PublicKey(toSolAddressInputValue),
-          lamports: 0.5 * LAMPORTS_PER_SOL,
-        })
-      );
+      const items = [];
+      addressArray.forEach((toAddress) => {
+        items.push(
+          SystemProgram.transfer({
+            fromPubkey: provider.publicKey,
+            toPubkey: new PublicKey(toAddress),
+            lamports: 0.5 * LAMPORTS_PER_SOL,
+          })
+        );
+      });
+
+      const transaction = new Transaction().add(...items);
 
       const signature = await sendTransactionOfPhantom(
         connection,
@@ -278,7 +290,7 @@ const SolanaLoginPage = () => {
         onClick={transferSOLHandler}
         className="cta-button mint-nft-button"
       >
-        transfer 0.5 SOL
+        Everyone transfer 0.5 SOL
       </button>
     );
   };
@@ -326,12 +338,13 @@ const SolanaLoginPage = () => {
       </div>
 
       <div>
-        <h2>Transfer SOL</h2>
+        <h2>Batch Transfer SOL</h2>
         <label className="label">ToAddress:</label>
         <textarea
           className="textarea"
           id="toSolAddress"
-          placeholder="3c5MLawkv9DY4C4zh39xHMic8MCTfBLVEZRSG4cWjjiH"
+          placeholder="[3c5MLawkv9DY4C4zh39xHMic8MCTfBLVEZRSG4cWjjiH,AQAMLqdN3LSvaHx5tCVeWZWDRTGqL7QuvNgojCb3pS6Z]"
+          style={{ width: "400px", height: "100px" }}
         ></textarea>
 
         <p></p>
