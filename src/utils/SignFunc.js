@@ -17,7 +17,6 @@ import {
 } from "./GetProvider";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 
-
 const signEIP712Message = async (signer, chainId) => {
   try {
     const [signer_, chainId_] = await getSignerAndChainId();
@@ -448,7 +447,35 @@ const getSystemSignature = async (orderSignature, data) => {
   }
 };
 
- 
+const signBlurLoginMessage = async (signer, messageString) => {
+  console.log(messageString);
+
+  try {
+    const signatureM = await signer.signMessage(messageString);
+    console.log(signatureM);
+
+    const recoveredAddressString = ethers.utils.verifyMessage(
+      messageString,
+      signatureM
+    );
+    const signerAddress = await signer.getAddress();
+    if (recoveredAddressString === signerAddress) {
+      console.log("签名验证成功！");
+    } else {
+      console.log("签名验证失败！");
+    }
+    return signatureM;
+  } catch (error) {
+    console.log(error);
+    if (equalityStringIgnoreCase(error.code, "ACTION_REJECTED")) {
+      alert("User Rejected Transaction");
+    }
+    if (error.code == -32000) {
+      alert(error.message);
+    }
+    return null;
+  }
+};
 
 export {
   signEIP712Message,
@@ -457,5 +484,5 @@ export {
   getSystemSignature,
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
-  
+  signBlurLoginMessage,
 };

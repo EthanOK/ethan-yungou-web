@@ -291,6 +291,68 @@ const getPriceBaseUSDT = async () => {
   return result_json;
 };
 
+const getBlurLoginMessage = async (userAddress) => {
+  const postURL =
+    "https://api.nftgo.io/api/v1/nft-aggregator/blur/auth/challenge";
+  const data = { address: userAddress };
+  try {
+    // Make the POST request using the fetch API
+    const response = await fetch(postURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // console.log(response);
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.errorCode != 0) {
+        return null;
+      }
+      const data = responseData.data;
+      return data;
+    } else {
+      console.log(response.status);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const getBlurAccessToken = async (requestData) => {
+  const postURL = "https://api.nftgo.io/api/v1/nft-aggregator/blur/auth/login";
+  const data = requestData;
+  try {
+    // Make the POST request using the fetch API
+    const response = await fetch(postURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // console.log(response);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      if (responseData.errorCode != 0) {
+        return null;
+      }
+      const blurAccessToken = responseData.data.blurAuth;
+      return blurAccessToken;
+    } else {
+      console.log(response.status);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export {
   getSystemData,
   getClaimYGIOBalance,
@@ -306,4 +368,6 @@ export {
   getENSByTokenId,
   getPriceBaseUSDT,
   getCrossChainSignature,
+  getBlurLoginMessage,
+  getBlurAccessToken,
 };
