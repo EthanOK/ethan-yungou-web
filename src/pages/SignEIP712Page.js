@@ -64,6 +64,9 @@ const SignEIP712Page = () => {
       alert("获取登陆信息是失败");
       return;
     }
+    // 获取本地时间
+    const localTime = new Date(loginData.expiresOn).toLocaleString();
+    console.log(localTime);
     // message: "",
     // walletAddress: '0xc675897bb91797eaea7584f025a5533dbb13a000',
     // expiresOn: '2024-01-03T09:17:09.199Z',
@@ -71,6 +74,7 @@ const SignEIP712Page = () => {
     const messageString = loginData.message;
     let result = await signBlurLoginMessage(signer, messageString);
 
+    console.log(localTime);
     const requestData = {
       message: loginData.message,
       walletAddress: loginData.walletAddress,
@@ -78,6 +82,7 @@ const SignEIP712Page = () => {
       hmac: loginData.hmac,
       signature: result,
     };
+
     const blurAccessToken = await getBlurAccessToken(requestData);
     console.log(blurAccessToken);
     localStorage.setItem("blurAccessToken", blurAccessToken);
