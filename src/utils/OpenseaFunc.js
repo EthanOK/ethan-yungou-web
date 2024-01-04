@@ -124,7 +124,8 @@ const fulfillBasicOrder = async (contract_, tokenId_, currentAccount) => {
     return [null, null];
   }
 };
-// // TODO:fulfillOrder
+
+// TODO:fulfillOrder
 const fulfillOrder = async (contract_, tokenId_, currentAccount) => {
   const providerWeb3 = await getProvider();
   const signer = providerWeb3.getSigner();

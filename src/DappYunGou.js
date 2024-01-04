@@ -21,6 +21,7 @@ import UtilsPage from "./pages/UtilsPage";
 import BurnTokenPage from "./pages/BurnTokenPage";
 import CrossChainBridgePage from "./pages/CrossChainBridgePage";
 import SolanaLoginPage from "./pages/SolanaLoginPage";
+import BuyBlurNFTPage from "./pages/BuyBlurNFTPage";
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -55,6 +56,11 @@ function App() {
       if (chainId == null) {
         localStorage.setItem("chainId", DefaultChainId);
       }
+      let loginType = localStorage.getItem("LoginType");
+      if (loginType == null) {
+        localStorage.setItem("LoginType", "metamask");
+      }
+
       if (account != null) {
         configAccountData(account);
       }
@@ -153,6 +159,7 @@ function App() {
               <AccordionItem title="Sign EIP712" linkTo="/signEIP712" />
               <AccordionItem title="Get OpenSeaData" linkTo="/getOpenSeaData" />
               <AccordionItem title="Buy NFT (Y,O)" linkTo="/buyNFT" />
+              <AccordionItem title="Buy Blur NFT" linkTo="/buyBlurNFT" />
               {/* <AccordionItem title="Get IPFS" linkTo="/getIPFS" /> */}
               <AccordionItem title="Lucky Baby" linkTo="/luckyBaby" />
               <AccordionItem title="Utils" linkTo="/utils" />
@@ -190,6 +197,7 @@ function App() {
           <Route path="/signEIP712" element={<SignEIP712Page />} />
           <Route path="/getOpenSeaData" element={<GetOpenSeaDataPage />} />
           <Route path="/buyNFT" element={<BuyNFTPage />} />
+          <Route path="/buyBlurNFT" element={<BuyBlurNFTPage />} />
           <Route path="/getIPFS" element={<GetIPFSPage />} />
           <Route path="/luckyBaby" element={<LuckyBabyPage />} />
           <Route path="/faucet" element={<FaucetTokenPage />} />

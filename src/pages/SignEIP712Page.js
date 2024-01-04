@@ -137,7 +137,7 @@ const SignEIP712Page = () => {
         {currentAccount ? signTypedDataOpenSeaButton() : PleaseLogin()}
 
         <p></p>
-        {currentAccount ? signLoginBlurButton() : PleaseLogin()}
+        {/* {currentAccount ? signLoginBlurButton() : PleaseLogin()} */}
       </div>
       <div>
         <h2>
