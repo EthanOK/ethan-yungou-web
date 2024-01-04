@@ -69,6 +69,7 @@ function App() {
           let account = accounts[0];
 
           localStorage.setItem("userAddress", account);
+          localStorage.removeItem("blurAccessToken");
         });
       }
     }

@@ -36,9 +36,8 @@ const BuyBlurNFTPage = () => {
       setCurrentAccount(account);
     }
     let blurAccessToken = localStorage.getItem("blurAccessToken");
-    if (blurAccessToken != null) {
-      setBlurAccessToken(blurAccessToken);
-    }
+
+    setBlurAccessToken(blurAccessToken);
   };
 
   const configData = async () => {
@@ -82,6 +81,7 @@ const BuyBlurNFTPage = () => {
     };
 
     const blurAccessToken = await getBlurAccessToken(requestData);
+    console.log(blurAccessToken);
 
     localStorage.setItem("userAddress", account);
     localStorage.setItem("chainId", chainId);
