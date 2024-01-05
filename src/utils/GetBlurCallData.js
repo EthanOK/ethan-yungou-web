@@ -1,3 +1,6 @@
+const { logDOM } = require("@testing-library/react");
+const { getBalanceETH } = require("./GetProvider");
+
 const getBlurCalldata = async (
   tokenAddress,
   tokenId,
@@ -9,6 +12,21 @@ const getBlurCalldata = async (
   const blurOrderInfos = await getNFTGoBlurOrderInfos(tokenAddress, tokenId);
   if (blurOrderInfos.length == 0) return null;
   const orderInfos = [blurOrderInfos[0]];
+  // 遍历 orderInfos 计算tokenPrice
+  let tokenPrice = 0;
+  for (let i = 0; i < orderInfos.length; i++) {
+    const orderInfo = orderInfos[i];
+
+    tokenPrice += orderInfo.tokenPrice;
+  }
+  // 查询 buyerAddress的eth余额
+  const balance = await getBalanceETH(buyerAddress);
+  console.log(tokenPrice, balance);
+  if (Number(tokenPrice) > Number(balance)) {
+    alert(`User ETH Insufficient, Need ${tokenPrice} ETH`);
+    return 0;
+  }
+
   const data = {
     orderInfos: orderInfos,
     buyer: buyerAddress,
@@ -76,6 +94,7 @@ const getNFTGoBlurOrderInfos = async (contractAddress, tokenId) => {
               maker: order.maker,
               orderId: order.id,
               tokenId: order.tokenId,
+              tokenPrice: order.tokenPrice,
             };
             orderInfos.push(orderInfo);
           }

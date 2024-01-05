@@ -22,10 +22,11 @@ const onlyBuyBlurNFT = async (
     userAddress,
     blurAccessToken
   );
+
   if (blurData == null) {
     alert("Blur Order Data is NULL");
     return [null, null];
-  }
+  } else if (blurData == 0) return [null, null];
   try {
     // 修改前缀
     let inputData = blurData.data;
