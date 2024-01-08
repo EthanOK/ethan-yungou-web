@@ -95,12 +95,12 @@ const BuyBlurNFTPage = () => {
       hmac: loginData.hmac,
       signature: result,
     };
-    // TODO:getBlurAccessTokenByNFTGO
-    const blurAccessToken = await getBlurAccessTokenByOpensea(requestData);
-    console.log(blurAccessToken);
     // // TODO:getBlurAccessTokenByNFTGO
-    //     const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
-    //     console.log(blurAccessToken);
+    // const blurAccessToken = await getBlurAccessTokenByOpensea(requestData);
+    // console.log(blurAccessToken);
+    // TODO:getBlurAccessTokenByNFTGO
+    const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
+    console.log(blurAccessToken);
 
     localStorage.setItem("userAddress", account);
     localStorage.setItem("chainId", chainId);
