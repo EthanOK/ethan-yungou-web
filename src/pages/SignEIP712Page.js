@@ -7,7 +7,12 @@ import {
   signBlurLoginMessage,
 } from "../utils/SignFunc.js";
 import { getSignerAndChainId } from "../utils/GetProvider.js";
-import { getBlurAccessToken, getBlurLoginMessage } from "../api/GetData.js";
+import {
+  getBlurAccessToken,
+  getBlurAccessTokenByNFTGO,
+  getBlurLoginMessage,
+  getBlurLoginMessageByNFTGO,
+} from "../api/GetData.js";
 
 const SignEIP712Page = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -59,7 +64,9 @@ const SignEIP712Page = () => {
   // TODO:signLoginBlurHandler
   const signLoginBlurHandler = async () => {
     const [signer, chainId] = await getSignerAndChainId();
-    const loginData = await getBlurLoginMessage(await signer.getAddress());
+    const loginData = await getBlurLoginMessageByNFTGO(
+      await signer.getAddress()
+    );
     if (loginData == null) {
       alert("获取登陆信息是失败");
       return;
@@ -83,7 +90,7 @@ const SignEIP712Page = () => {
       signature: result,
     };
 
-    const blurAccessToken = await getBlurAccessToken(requestData);
+    const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
     console.log(blurAccessToken);
     localStorage.setItem("blurAccessToken", blurAccessToken);
 

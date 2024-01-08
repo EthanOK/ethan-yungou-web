@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { isAddress, stringToArray } from "../utils/Utils.js";
-import { getBlurAccessToken, getBlurLoginMessage } from "../api/GetData.js";
+import {
+  getBlurAccessTokenByNFTGO,
+  getBlurAccessTokenByOpensea,
+  getBlurLoginMessageByNFTGO,
+  getBlurLoginMessageByOpensea,
+} from "../api/GetData.js";
 import { signBlurLoginMessage } from "../utils/SignFunc.js";
 import {
   getSignerAndAccountAndChainId,
@@ -56,7 +61,16 @@ const BuyBlurNFTPage = () => {
   // TODO:loginBlurHandler
   const loginBlurHandler = async () => {
     const [signer, account, chainId] = await getSignerAndAccountAndChainId();
-    const loginData = await getBlurLoginMessage(await signer.getAddress());
+    // TODO: getBlurLoginMessageByOpensea;
+    const loginData = await getBlurLoginMessageByOpensea(
+      await signer.getAddress()
+    );
+    // TODO: getBlurLoginMessageByOpensea
+    // const loginData = await getBlurLoginMessageByNFTGO(
+    //   await signer.getAddress()
+    // );
+
+    console.log(loginData);
     if (loginData == null) {
       alert("获取登陆信息是失败");
       return;
@@ -71,6 +85,8 @@ const BuyBlurNFTPage = () => {
     const messageString = loginData.message;
     let result = await signBlurLoginMessage(signer, messageString);
 
+    if (result == null) return;
+
     console.log(localTime);
     const requestData = {
       message: loginData.message,
@@ -79,9 +95,12 @@ const BuyBlurNFTPage = () => {
       hmac: loginData.hmac,
       signature: result,
     };
-
-    const blurAccessToken = await getBlurAccessToken(requestData);
+    // TODO:getBlurAccessTokenByNFTGO
+    const blurAccessToken = await getBlurAccessTokenByOpensea(requestData);
     console.log(blurAccessToken);
+    // // TODO:getBlurAccessTokenByNFTGO
+    //     const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
+    //     console.log(blurAccessToken);
 
     localStorage.setItem("userAddress", account);
     localStorage.setItem("chainId", chainId);

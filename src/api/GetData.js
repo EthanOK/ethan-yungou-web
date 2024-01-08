@@ -291,7 +291,38 @@ const getPriceBaseUSDT = async () => {
   return result_json;
 };
 
-const getBlurLoginMessage = async (userAddress) => {
+const getBlurLoginMessageByOpensea = async (userAddress) => {
+  const postURL = "https://api.pro.opensea.io/blur/auth/challenge";
+  const data = { address: userAddress };
+  try {
+    // Make the POST request using the fetch API
+    const response = await fetch(postURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // console.log(response);
+    if (response.ok) {
+      const responseData = await response.json();
+      // console.log(responseData);
+      if (responseData.data.toLowerCase() != "Success".toLowerCase()) {
+        return null;
+      }
+
+      return responseData;
+    } else {
+      console.log(response.status);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const getBlurLoginMessageByNFTGO = async (userAddress) => {
   const postURL =
     "https://api.nftgo.io/api/v1/nft-aggregator/blur/auth/challenge";
   const data = { address: userAddress };
@@ -322,7 +353,38 @@ const getBlurLoginMessage = async (userAddress) => {
   }
 };
 
-const getBlurAccessToken = async (requestData) => {
+const getBlurAccessTokenByOpensea = async (requestData) => {
+  const postURL = "https://api.pro.opensea.io/blur/auth/login";
+  const data = requestData;
+  try {
+    // Make the POST request using the fetch API
+    const response = await fetch(postURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // console.log(response);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(responseData);
+      if (responseData.data.toLowerCase() != "Success".toLowerCase()) {
+        return null;
+      }
+      const blurAccessToken = responseData.accessToken;
+      return blurAccessToken;
+    } else {
+      console.log(response.status);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const getBlurAccessTokenByNFTGO = async (requestData) => {
   const postURL = "https://api.nftgo.io/api/v1/nft-aggregator/blur/auth/login";
   const data = requestData;
   try {
@@ -368,6 +430,8 @@ export {
   getENSByTokenId,
   getPriceBaseUSDT,
   getCrossChainSignature,
-  getBlurLoginMessage,
-  getBlurAccessToken,
+  getBlurLoginMessageByNFTGO,
+  getBlurAccessTokenByNFTGO,
+  getBlurLoginMessageByOpensea,
+  getBlurAccessTokenByOpensea,
 };
