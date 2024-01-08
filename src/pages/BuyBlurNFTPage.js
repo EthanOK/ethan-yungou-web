@@ -102,6 +102,11 @@ const BuyBlurNFTPage = () => {
     const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
     console.log(blurAccessToken);
 
+    if (blurAccessToken == null) {
+      alert("登陆失败");
+      return;
+    }
+
     localStorage.setItem("userAddress", account);
     localStorage.setItem("chainId", chainId);
     localStorage.setItem("blurAccessToken", blurAccessToken);
