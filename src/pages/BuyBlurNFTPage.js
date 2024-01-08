@@ -61,14 +61,14 @@ const BuyBlurNFTPage = () => {
   // TODO:loginBlurHandler
   const loginBlurHandler = async () => {
     const [signer, account, chainId] = await getSignerAndAccountAndChainId();
-    // TODO: getBlurLoginMessageByOpensea;
-    const loginData = await getBlurLoginMessageByOpensea(
-      await signer.getAddress()
-    );
     // TODO: getBlurLoginMessageByOpensea
-    // const loginData = await getBlurLoginMessageByNFTGO(
+    // const loginData = await getBlurLoginMessageByOpensea(
     //   await signer.getAddress()
     // );
+    // TODO: getBlurLoginMessageByNFTGO
+    const loginData = await getBlurLoginMessageByNFTGO(
+      await signer.getAddress()
+    );
 
     console.log(loginData);
     if (loginData == null) {

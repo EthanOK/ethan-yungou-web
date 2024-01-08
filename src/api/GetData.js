@@ -292,6 +292,7 @@ const getPriceBaseUSDT = async () => {
 };
 
 const getBlurLoginMessageByOpensea = async (userAddress) => {
+  // 必须 后台访问，前端有跨域限制
   const postURL = "https://api.pro.opensea.io/blur/auth/challenge";
   const data = { address: userAddress };
   try {
