@@ -78,7 +78,7 @@ const UniswapRouter = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const React_Serve_Back = "http://localhost:3001";
 
-const DefaultChainId = "97";
+const DefaultChainId = "5";
 
 const EXPIRES_TIME = "7d";
 const SECRETKEY = "y0Gv3jsn8CnT!^4t$U2c9A@kR6*%PqLpQAWER";
