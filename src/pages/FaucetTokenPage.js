@@ -21,6 +21,8 @@ import {
 import { getDecimal, getDecimalBigNumber } from "../utils/Utils.js";
 import { ethers } from "ethers";
 import { addSuffixOfTxData } from "../utils/HandleTxData.js";
+import { switchChain } from "../utils/GetProvider.js";
+import { login } from "../utils/ConnectWallet.js";
 const FaucetTokenPage = () => {
   //   const [tableData, setTableData] = useState([]);
 
@@ -46,6 +48,18 @@ const FaucetTokenPage = () => {
   useEffect(() => {
     if (isMounted) {
       configData();
+      if (window.ethereum) {
+        window.ethereum.on("chainChanged", async (chainId) => {
+          let chainId_ = Number.parseInt(chainId);
+          localStorage.setItem("chainId", chainId_.toString());
+        });
+
+        window.ethereum.on("accountsChanged", async (accounts) => {
+          let account = accounts[0];
+
+          localStorage.setItem("userAddress", account);
+        });
+      }
     }
   }, [isMounted]);
 
@@ -320,8 +334,67 @@ const FaucetTokenPage = () => {
     }
   };
 
+  const checkWalletIsConnected = async () => {
+    const { ethereum } = window;
+    try {
+      if (!ethereum) {
+        alert("Please install Metamask");
+        console.log("Make sure you have Metamask installed!");
+        console.log("`````````````");
+        return false;
+      } else {
+        console.log("Wallet exists! let's go!");
+
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const connectandsign = async () => {
+    let connect = await checkWalletIsConnected();
+    if (!connect) {
+      return;
+    }
+
+    localStorage.setItem("LoginType", "metamask");
+    let chainId = await window.ethereum.request({ method: "eth_chainId" });
+    let chainId_local = localStorage.getItem("chainId");
+    console.log(chainId_local);
+    if (chainId !== chainId_local) {
+      let success = await switchChain(chainId_local);
+      if (!success) {
+        return null;
+      }
+    }
+
+    let [result, account] = await login();
+    if (result) {
+      // configAccountData(account);
+
+      localStorage.setItem("userAddress", account);
+
+      setCurrentAccount(account);
+
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    }
+  };
+
   const PleaseLogin = () => {
-    return <h2>UnLogin, Please Login</h2>;
+    // return <h2>UnLogin, Please Login</h2>;
+    return (
+      <button
+        onClick={connectandsign}
+        className="cta-button connect-wallet-button"
+      >
+        Metamask Login
+      </button>
+    );
   };
 
   return (
