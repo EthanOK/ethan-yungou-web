@@ -104,12 +104,13 @@ const signStringMessage = async (signer) => {
     return false;
   }
 };
-const signHexDataMessage = async (signer) => {
+const signHexDataMessage = async (signer, hexData) => {
   // TODO: signMessage 十六进制数据
   console.log("signMessage Hex data");
   // 将十六进制数据转换为字节数组
-  const hexData =
-    "0xf6896007477ab25a659f87c4f8c5e3baac32547bf305e77aa57743046e10578b";
+  console.log(hexData);
+  // const hexData =
+  //   "0xf6896007477ab25a659f87c4f8c5e3baac32547bf305e77aa57743046e10578b";
   const data = ethers.utils.arrayify(hexData);
 
   try {
@@ -122,7 +123,7 @@ const signHexDataMessage = async (signer) => {
     } else {
       console.log("签名验证失败！");
     }
-    return true;
+    return signatureHex;
   } catch (error) {
     console.log(error);
     if (equalityStringIgnoreCase(error.code, "ACTION_REJECTED")) {
@@ -131,7 +132,7 @@ const signHexDataMessage = async (signer) => {
     if (error.code == -32000) {
       alert(error.message);
     }
-    return false;
+    return null;
   }
 };
 const signEIP712YunGouMessage = async (signer, chainId) => {

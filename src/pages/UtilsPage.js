@@ -7,10 +7,13 @@ import {
   isAddress,
 } from "../utils/Utils.js";
 import { getTokenPrice } from "../utils/GetLpTokenPrice.js";
+import { signHexDataMessage } from "../utils/SignFunc.js";
+import { getSigner } from "../utils/GetProvider.js";
 
 const UtilsPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
+  const [signatureHex, setSignatureHex] = useState("");
   const [message1, setMessage1] = useState("");
   const [message2, setMessage2] = useState("");
   const [message3, setMessage3] = useState("");
@@ -111,6 +114,18 @@ const UtilsPage = () => {
     setMessage2("https://cloudflare-ipfs.com/ipfs/" + contractValue);
     setMessage3("https://ipfs.filebase.io/ipfs/" + contractValue);
   };
+  const getSignatureHandler = async () => {
+    const contractInput = document.getElementById("hexData");
+    const contractValue = contractInput.value;
+    const signer = await getSigner();
+    try {
+      const signatureHex_ = await signHexDataMessage(signer, contractValue);
+      setSignatureHex(signatureHex_);
+    } catch (error) {
+      console.log(error);
+      alert("INVALID_ARGUMENT");
+    }
+  };
 
   const calculateTxFeeHandler = async () => {
     const gasUsedInput = document.getElementById("gasUsed");
@@ -138,6 +153,17 @@ const UtilsPage = () => {
         className="cta-button mint-nft-button"
       >
         getIPFSURL
+      </button>
+    );
+  };
+
+  const getSignatureButton = () => {
+    return (
+      <button
+        onClick={getSignatureHandler}
+        className="cta-button mint-nft-button"
+      >
+        Sign Hex Data
       </button>
     );
   };
@@ -186,7 +212,32 @@ const UtilsPage = () => {
     <center>
       <div>
         <h2>Utils</h2>
-
+        <div className="bordered-div">
+          <h3>Sign Hex Data</h3>
+          <div className="container">
+            <div className="input-container">
+              <label className="label">Hex Data:</label>
+              <textarea
+                className="textarea"
+                id="hexData"
+                placeholder="0xc0e8f831a90406f3a15e808f3f1ec26ea4bc214cfb986cdb4b0623b22bbf8ed3"
+                style={{ height: "20px", width: "500px", fontSize: "14px" }}
+              ></textarea>
+            </div>
+          </div>
+          <p></p>
+          {currentAccount ? getSignatureButton() : PleaseLogin()}
+          <div>
+            Signature:
+            <textarea
+              type="text"
+              value={signatureHex}
+              readOnly
+              style={{ width: "400px", height: "60px" }}
+            ></textarea>
+          </div>
+        </div>
+        <p></p>
         <div className="bordered-div">
           <h3>IPFS</h3>
           <div className="container">
