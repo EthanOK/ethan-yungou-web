@@ -22,7 +22,7 @@ import {
 import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
 import { sendTransactionOfPhantom } from "../utils/PhantomSendTransaction";
-import { stringToArray } from "../utils/Utils";
+import { getAssociatedAddress, stringToArray } from "../utils/Utils";
 
 const SolanaLoginPage = () => {
   window.Buffer = buffer.Buffer;
@@ -262,6 +262,15 @@ const SolanaLoginPage = () => {
     }
   };
 
+  const getAssociatedAddressHandler = async () => {
+    const ownerAddress = document.getElementById("ownerAddress").value;
+    const mintAddress = document.getElementById("mintAddress").value;
+
+    const associatedAddress = getAssociatedAddress(mintAddress, ownerAddress);
+
+    console.log(associatedAddress);
+  };
+
   const loginSolanaButton = () => {
     return (
       <button
@@ -291,6 +300,17 @@ const SolanaLoginPage = () => {
         className="cta-button mint-nft-button"
       >
         Everyone transfer 0.5 SOL
+      </button>
+    );
+  };
+
+  const getAssociatedAddressButton = () => {
+    return (
+      <button
+        onClick={getAssociatedAddressHandler}
+        className="cta-button mint-nft-button"
+      >
+        getAssociatedAddress
       </button>
     );
   };
@@ -349,6 +369,27 @@ const SolanaLoginPage = () => {
 
         <p></p>
         {currentSolanaAccount ? transferSOLButton() : PleaseLogin()}
+      </div>
+      <div>
+        <h2>Batch Transfer SOL</h2>
+        <label className="label">account:</label>
+        <textarea
+          className="textarea"
+          id="ownerAddress"
+          placeholder="2xuEyZoSkiiNBAgL21XobUCraojPUZ82GHuWpCPgpyXF"
+          style={{ width: "450px", height: "16px" }}
+        ></textarea>
+        <p></p>
+        <label className="label">tokenAccount:</label>
+        <textarea
+          className="textarea"
+          id="mintAddress"
+          placeholder="2xuEyZoSkiiNBAgL21XobUCraojPUZ82GHuWpCPgpyXF"
+          style={{ width: "450px", height: "16px" }}
+        ></textarea>
+
+        <p></p>
+        {getAssociatedAddressButton()}
       </div>
     </center>
   );
