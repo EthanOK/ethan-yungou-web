@@ -34,6 +34,8 @@ const SolanaLoginPage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const [associatedAddress, setAssociatedAddress] = useState("");
+
   useEffect(() => {
     setIsMounted(true);
     const intervalId = setInterval(updateShowData, 3000);
@@ -266,9 +268,13 @@ const SolanaLoginPage = () => {
     const ownerAddress = document.getElementById("ownerAddress").value;
     const mintAddress = document.getElementById("mintAddress").value;
 
-    const associatedAddress = getAssociatedAddress(mintAddress, ownerAddress);
+    const associatedAddress = await getAssociatedAddress(
+      mintAddress,
+      ownerAddress
+    );
 
     console.log(associatedAddress);
+    setAssociatedAddress(associatedAddress);
   };
 
   const loginSolanaButton = () => {
@@ -372,7 +378,7 @@ const SolanaLoginPage = () => {
       </div>
       <div>
         <h2>Batch Transfer SOL</h2>
-        <label className="label">account:</label>
+        <label className="label">ownerAddress:</label>
         <textarea
           className="textarea"
           id="ownerAddress"
@@ -380,16 +386,17 @@ const SolanaLoginPage = () => {
           style={{ width: "450px", height: "16px" }}
         ></textarea>
         <p></p>
-        <label className="label">tokenAccount:</label>
+        <label className="label">mintAddress:</label>
         <textarea
           className="textarea"
           id="mintAddress"
           placeholder="2xuEyZoSkiiNBAgL21XobUCraojPUZ82GHuWpCPgpyXF"
           style={{ width: "450px", height: "16px" }}
         ></textarea>
-
         <p></p>
         {getAssociatedAddressButton()}
+        <p></p>
+        Associated Address: {associatedAddress}
       </div>
     </center>
   );

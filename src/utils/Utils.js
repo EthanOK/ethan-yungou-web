@@ -15,7 +15,7 @@ import {
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { BigNumber, ethers, providers, utils } from "ethers";
 import { Decimal } from "decimal.js";
-import { getAssociatedTokenAddressSync } from "@solana/spl-token";
+import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 
 const equalityStringIgnoreCase = (string1, string2) => {
@@ -168,10 +168,12 @@ function getAddressCreate(sender, nonce) {
   return address;
 }
 
-function getAssociatedAddress(mintAddress, ownerAddress) {
-  return getAssociatedTokenAddressSync(
-    new PublicKey(mintAddress),
-    new PublicKey(ownerAddress)
+async function getAssociatedAddress(mintAddress, ownerAddress) {
+  return (
+    await getAssociatedTokenAddress(
+      new PublicKey(mintAddress),
+      new PublicKey(ownerAddress)
+    )
   ).toString();
 }
 
