@@ -56,13 +56,17 @@ const yulp_goerli = "0x333FA70Aaf2a9B4979EB59bcfF2B2f846DBD8DE3";
 
 const ygio_goerli = "0xd042eF5cF97c902bF8F53244F4a81ec4f8E465Ab";
 
+const ygio_tbsc = "0x0Fa4640F99f876D78Fc964AFE0DD6649e7C23c4f";
+
+const ygio_sepolia = "0x5Bb9dE881543594D17a7Df91D62459024c4EEf02";
+
 const ygme_goerli = "0x28D1bC817DE02C9f105A6986eF85cB04863C3042";
+
+const ygme_sepolia = "0x709B78B36b7208f668A3823c1d1992C0805E4f4d";
 
 const crossChain_goerli = "0x2817c37eB23FC4F94f1168A94f26befa1F42FF7d";
 
 const crossChain_tbsc = "0x6AAf3B8a8E42BeDc226e2d1F166Dfdc22d4b5182";
-
-const ygio_tbsc = "0x0Fa4640F99f876D78Fc964AFE0DD6649e7C23c4f";
 
 const ygme_tbsc = "0xDb6c494BE6Aae80cc042f9CDA24Ce573aD163A46";
 
@@ -135,4 +139,6 @@ export {
   ZERO_ADDRESS,
   LOGIN_SOLANA_MESSAGE,
   SOLANA_DEV_RPC,
+  ygme_sepolia,
+  ygio_sepolia,
 };

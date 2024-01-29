@@ -17,6 +17,8 @@ import {
   ZERO_ADDRESS,
   faucet_sepolia,
   usdt_sepolia,
+  ygme_sepolia,
+  ygio_sepolia,
 } from "../utils/SystemConfiguration.js";
 import { getDecimal, getDecimalBigNumber } from "../utils/Utils.js";
 import { ethers } from "ethers";
@@ -93,6 +95,8 @@ const FaucetTokenPage = () => {
         ygmeAddress = ygme_tbsc;
       } else if (chainId == 11155111) {
         usdtAddress = usdt_sepolia;
+        ygmeAddress = ygme_sepolia;
+        ygioAddress = ygio_sepolia;
       }
       if (ygioAddress) {
         let contract = await getERC20Contract(ygioAddress);
@@ -142,6 +146,9 @@ const FaucetTokenPage = () => {
     } else if (chainId == 97) {
       accountFrom = "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2";
       ygioAddress = ygio_tbsc;
+    } else if (chainId == 11155111) {
+      accountFrom = "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2";
+      ygioAddress = ygio_sepolia;
     }
     try {
       let faucetContract = await getFaucetContract();
@@ -183,6 +190,8 @@ const FaucetTokenPage = () => {
       ygmeAddress = ygme_goerli;
     } else if (chainId == 97) {
       ygmeAddress = ygme_tbsc;
+    } else if (chainId == 11155111) {
+      ygmeAddress = ygme_sepolia;
     }
     try {
       let faucetContract = await getFaucetContract();
