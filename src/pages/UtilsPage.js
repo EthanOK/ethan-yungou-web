@@ -247,7 +247,7 @@ const UtilsPage = () => {
                 className="textarea"
                 id="cid"
                 placeholder="QmSFZ84W8uNjoZJMkGkVDuJR5PBNtsHorDBmcHCjzACdXY"
-                style={{ height: "20px", width: "360px", fontSize: "14px" }}
+                style={{ height: "20px", width: "460px", fontSize: "14px" }}
               ></textarea>
             </div>
           </div>
