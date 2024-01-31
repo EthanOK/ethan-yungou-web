@@ -17,6 +17,7 @@ const UtilsPage = () => {
   const [message1, setMessage1] = useState("");
   const [message2, setMessage2] = useState("");
   const [message3, setMessage3] = useState("");
+  const [message4, setMessage4] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
   const [transactionFee, setTransactionFee] = useState("");
   const [etherPrice, setEtherPrice] = useState(0);
@@ -110,9 +111,10 @@ const UtilsPage = () => {
     const contractInput = document.getElementById("cid");
     const contractValue = contractInput.value;
     setMessage("https://ipfs.io/ipfs/" + contractValue);
-    setMessage1("https://dweb.link/ipfs/" + contractValue);
+    setMessage1("https://gateway.pinata.cloud/ipfs/" + contractValue);
     setMessage2("https://cloudflare-ipfs.com/ipfs/" + contractValue);
-    setMessage3("https://ipfs.filebase.io/ipfs/" + contractValue);
+    setMessage3("https://dweb.link/ipfs/" + contractValue);
+    setMessage4("https://ipfs.filebase.io/ipfs/" + contractValue);
   };
   const getSignatureHandler = async () => {
     const contractInput = document.getElementById("hexData");
@@ -271,6 +273,10 @@ const UtilsPage = () => {
               <p></p>
               <a href={message3} target="_blank" rel="noopener noreferrer">
                 {message3.substring(0, message3.lastIndexOf("/") + 2)}
+              </a>
+              <p></p>
+              <a href={message4} target="_blank" rel="noopener noreferrer">
+                {message4.substring(0, message4.lastIndexOf("/") + 2)}
               </a>
             </h2>
           </div>
