@@ -52,7 +52,16 @@ const TransferNativePage = () => {
       alert("To address is not valid");
       return;
     }
-    const hexInputData = utf8ToHexBytes(inputDataValue);
+
+    let hexInputData;
+    // 如果是0x前缀
+    if (inputDataValue.startsWith("0x")) {
+      hexInputData = inputDataValue;
+    } else {
+      hexInputData = utf8ToHexBytes(inputDataValue);
+    }
+
+    console.log(hexInputData);
 
     try {
       const signer = await getSigner();
