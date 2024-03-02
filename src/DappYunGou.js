@@ -22,6 +22,7 @@ import BurnTokenPage from "./pages/BurnTokenPage";
 import CrossChainBridgePage from "./pages/CrossChainBridgePage";
 import SolanaLoginPage from "./pages/SolanaLoginPage";
 import BuyBlurNFTPage from "./pages/BuyBlurNFTPage";
+import ERC6551Page from "./pages/ERC6551Page";
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -167,8 +168,8 @@ function App() {
               <AccordionItem
                 title="Cross-Chain Bridge"
                 linkTo="/crossChainBridge"
-              />
-
+              />{" "}
+              <AccordionItem title="ERC6551" linkTo="/erc6551" />
               {/* ...添加更多的折叠项 */}
             </div>
           )}
@@ -206,6 +207,7 @@ function App() {
           <Route path="/transfer" element={<TransferNativePage />} />
           <Route path="/utils" element={<UtilsPage />} />
           <Route path="/crossChainBridge" element={<CrossChainBridgePage />} />
+          <Route path="/erc6551" element={<ERC6551Page />} />
         </Routes>
       </div>
     </Router>
