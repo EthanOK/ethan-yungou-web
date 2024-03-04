@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { isAddress, isContract, stringToArray } from "../utils/Utils.js";
+import {
+  getScanURL,
+  isAddress,
+  isContract,
+  stringToArray,
+} from "../utils/Utils.js";
 
 import {
   getSigner,
@@ -18,6 +23,8 @@ const ERC6551Page = () => {
   const [tbAccount, setTbAccount] = useState(null);
   const [created, setCreated] = useState(null);
   const [srcIframe, setSrcIframe] = useState(null);
+  const [txHash, setTxHash] = useState(null);
+  const [hashURL, setHashURL] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -85,37 +92,86 @@ const ERC6551Page = () => {
       });
 
       setTbAccount(account);
-      const is = await isContract(signer.provider, account);
-      setCreated(String(is));
-      if (is) {
-        // https://iframe-tokenbound.vercel.app/0x709B78B36b7208f668A3823c1d1992C0805E4f4d/10/11155111
-        url_iframe =
+      const isCreate = await tokenboundClient.checkAccountDeployment({
+        accountAddress: account,
+      });
+      setCreated(String(isCreate));
+
+      if (isCreate) {
+        const iframe =
           url_iframe + "/" + contract + "/" + tokenId + "/" + chainId;
 
-        setSrcIframe(url_iframe);
+        setSrcIframe(iframe);
+      } else {
+        setSrcIframe(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createHandler = async () => {
+    const contract = document.getElementById("contract_create").value;
+    const tokenId = document.getElementById("tokenId_create").value;
+    if (!isAddress(contract)) {
+      alert("contract is not address");
+      return;
+    }
+    if (tokenId == "") {
+      alert("tokenId is empty");
+      return;
+    }
+    try {
+      const [signer, chainId] = await getSignerAndChainId();
+
+      const tokenboundClient = await getTokenboundClient(signer, chainId);
+      console.log(tokenboundClient);
+
+      const account = tokenboundClient.getAccount({
+        tokenContract: contract,
+        tokenId: tokenId,
+      });
+
+      setTbAccount(account);
+      const isCreate = await tokenboundClient.checkAccountDeployment({
+        accountAddress: account,
+      });
+
+      setCreated(String(isCreate));
+
+      if (isCreate) {
+        alert("Account is already created");
+        const iframe =
+          url_iframe + "/" + contract + "/" + tokenId + "/" + chainId;
+
+        setSrcIframe(iframe);
+        return;
       } else {
         setSrcIframe(null);
       }
 
-      // const data = await tokenboundClient.prepareCreateAccount({
-      //   tokenContract: contract,
-      //   tokenId: tokenId,
-      // });
+      const multiCallTx_data = await tokenboundClient.prepareCreateAccount({
+        tokenContract: contract,
+        tokenId: tokenId,
+      });
 
-      // console.log(data);
+      const tx = await tokenboundClient.signer.sendTransaction(
+        multiCallTx_data
+      );
+      console.log(tx);
 
-      // const tx = await tokenboundClient.signer.sendTransaction(data);
-      // console.log(tx);
-
-      // if (tx.hash != null) {
-      //   setMessage(tx.hash);
-      //   let rsult = await tx.wait();
-      //   if (rsult.status === 1) {
-      //     console.log("Success!");
-      //   } else {
-      //     console.log("Failure!");
-      //   }
-      // }
+      if (tx.hash != null) {
+        setTxHash(tx.hash);
+        let etherscanURL = await getScanURL();
+        let message = `${etherscanURL}/tx/${tx.hash}`;
+        setHashURL(message);
+        let rsult = await tx.wait();
+        if (rsult.status === 1) {
+          console.log("Success!");
+        } else {
+          console.log("Failure!");
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -125,6 +181,14 @@ const ERC6551Page = () => {
     return (
       <button onClick={getTBAHandler} className="cta-button mint-nft-button">
         get TBA
+      </button>
+    );
+  };
+
+  const createTBAButton = () => {
+    return (
+      <button onClick={createHandler} className="cta-button mint-nft-button">
+        Create TBA
       </button>
     );
   };
@@ -173,6 +237,48 @@ const ERC6551Page = () => {
           <div className="container">Created: {created}</div>
         </div>
 
+        <p></p>
+        <p></p>
+
+        <div className="bordered-div">
+          <div className="container">
+            <div className="input-container">
+              <label className="label" htmlFor="contract">
+                contract:
+              </label>
+              <textarea
+                className="textarea"
+                id="contract_create"
+                placeholder="0x11400ee484355c7bdf804702bf3367ebc7667e54"
+              ></textarea>
+            </div>
+
+            <div className="input-container">
+              <label className="label" htmlFor="tokenId">
+                tokenId:
+              </label>
+              <textarea
+                className="textarea"
+                id="tokenId_create"
+                placeholder="1053"
+              ></textarea>
+            </div>
+          </div>
+          <p></p>
+          {currentAccount ? createTBAButton() : PleaseLogin()}
+
+          <div className="container">TB Account: {tbAccount}</div>
+          <div className="container">Created: {created}</div>
+          {txHash && (
+            <div className="container" style={{ display: "inline" }}>
+              TxHash:{" "}
+              <a href={hashURL} target="_blank" rel="noopener noreferrer">
+                {txHash}
+              </a>
+            </div>
+          )}
+        </div>
+        <p></p>
         <div>
           {srcIframe != null && (
             <iframe

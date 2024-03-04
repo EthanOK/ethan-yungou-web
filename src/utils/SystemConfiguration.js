@@ -7,6 +7,7 @@ const chainName_TBSC = "bsctestnet";
 
 const main_url = "https://etherscan.io";
 const goerli_url = "https://goerli.etherscan.io";
+const sepolia_url = "https://sepolia.etherscan.io";
 const tbsc_url = "https://testnet.bscscan.com";
 const bsc_url = "https://bscscan.com";
 
@@ -111,6 +112,7 @@ export {
   nftMint_goerli,
   main_url,
   goerli_url,
+  sepolia_url,
   tbsc_url,
   bsc_url,
   React_Serve_Back,

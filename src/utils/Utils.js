@@ -11,6 +11,7 @@ import {
   YunGouAggregators_main,
   YunGouAggregators_tbsc,
   YunGouAggregators_goerli,
+  sepolia_url,
 } from "./SystemConfiguration";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { BigNumber, ethers, providers, utils } from "ethers";
@@ -36,6 +37,8 @@ const getScanURL = async () => {
     scanurl = tbsc_url;
   } else if (chainId == 56) {
     scanurl = bsc_url;
+  } else if (chainId == 11155111) {
+    scanurl = sepolia_url;
   }
   return scanurl;
 };
