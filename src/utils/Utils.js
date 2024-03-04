@@ -110,6 +110,12 @@ const isAddress = (address) => {
   return utils.isAddress(address);
 };
 
+const isContract = async (provider, address) => {
+  // 判断一个地址是不是合约地址
+  const code = await provider.getCode(address);
+  return code.length > 2 ? true : false;
+};
+
 // 将一个字符串解池化为一个数组 “[1,2,3]” => [1,2,3]
 
 const stringToArray = (string) => {
@@ -193,4 +199,5 @@ export {
   caculatePriceBySqrtPriceX96,
   getAddressCreate,
   getAssociatedAddress,
+  isContract,
 };

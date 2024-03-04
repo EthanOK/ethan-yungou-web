@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
-import { isAddress, stringToArray } from "../utils/Utils.js";
+import { isAddress, isContract, stringToArray } from "../utils/Utils.js";
+
 import {
-  getBlurAccessTokenByNFTGO,
-  getBlurAccessTokenByOpensea,
-  getBlurLoginMessageByNFTGO,
-  getBlurLoginMessageByOpensea,
-} from "../api/GetData.js";
-import { signBlurLoginMessage } from "../utils/SignFunc.js";
-import {
+  getSigner,
   getSignerAndAccountAndChainId,
   getSignerAndChainId,
 } from "../utils/GetProvider.js";
-import { getBlurCalldata } from "../utils/GetBlurCallData.js";
-import { onlyBuyBlurNFT } from "../utils/BlurFunc.js";
+
+import { TokenboundClient } from "@tokenbound/sdk";
+
+let url_iframe = "https://iframe-tokenbound.vercel.app";
 
 const ERC6551Page = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [message, setMessage] = useState("");
   const [currentAccount, setCurrentAccount] = useState(null);
-  const [blurAccessToken, setBlurAccessToken] = useState(null);
+  const [tbAccount, setTbAccount] = useState(null);
+  const [created, setCreated] = useState(null);
+  const [srcIframe, setSrcIframe] = useState(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -35,14 +34,17 @@ const ERC6551Page = () => {
     }
   }, [isMounted]);
 
+  const getTokenboundClient = async (signer, chainId) => {
+    const tokenboundClient = new TokenboundClient({ signer, chainId });
+
+    return tokenboundClient;
+  };
+
   const updateData = async () => {
     let account = localStorage.getItem("userAddress");
     if (account != null) {
       setCurrentAccount(account);
     }
-    let blurAccessToken = localStorage.getItem("blurAccessToken");
-
-    setBlurAccessToken(blurAccessToken);
   };
 
   const configData = async () => {
@@ -54,69 +56,13 @@ const ERC6551Page = () => {
 
   const PleaseLogin = () => {
     return (
-      <button className="cta-button unlogin-nft-button">PleaseLoginBlur</button>
+      <button className="cta-button unlogin-nft-button">
+        Please Login DApp
+      </button>
     );
   };
 
-  // TODO:loginBlurHandler
-  const loginBlurHandler = async () => {
-    const [signer, account, chainId] = await getSignerAndAccountAndChainId();
-    // TODO: getBlurLoginMessageByOpensea
-    // const loginData = await getBlurLoginMessageByOpensea(
-    //   await signer.getAddress()
-    // );
-    // TODO: getBlurLoginMessageByNFTGO
-    const loginData = await getBlurLoginMessageByNFTGO(
-      await signer.getAddress()
-    );
-
-    console.log(loginData);
-    if (loginData == null) {
-      alert("获取登陆信息是失败");
-      return;
-    }
-    // 获取本地时间
-    const localTime = new Date(loginData.expiresOn).toLocaleString();
-    console.log(localTime);
-    // message: "",
-    // walletAddress: '0xc675897bb91797eaea7584f025a5533dbb13a000',
-    // expiresOn: '2024-01-03T09:17:09.199Z',
-    // hmac: '5989537f3e232e8fb66661eb60a605b4cc2d4a6c047b02686c7d6eb274bbc0d4'
-    const messageString = loginData.message;
-    let result = await signBlurLoginMessage(signer, messageString);
-
-    if (result == null) return;
-
-    console.log(localTime);
-    const requestData = {
-      message: loginData.message,
-      walletAddress: loginData.walletAddress,
-      expiresOn: loginData.expiresOn,
-      hmac: loginData.hmac,
-      signature: result,
-    };
-    // // TODO:getBlurAccessTokenByNFTGO
-    // const blurAccessToken = await getBlurAccessTokenByOpensea(requestData);
-    // console.log(blurAccessToken);
-    // TODO:getBlurAccessTokenByNFTGO
-    const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);
-    console.log(blurAccessToken);
-
-    if (blurAccessToken == null) {
-      alert("登陆失败");
-      return;
-    }
-
-    localStorage.setItem("userAddress", account);
-    localStorage.setItem("chainId", chainId);
-    localStorage.setItem("blurAccessToken", blurAccessToken);
-
-    if (result != false) {
-      setMessage(JSON.stringify(result, null, "\t"));
-    }
-  };
-
-  const buyBlurNFTHandler = async () => {
+  const getTBAHandler = async () => {
     const contract = document.getElementById("contract").value;
     const tokenId = document.getElementById("tokenId").value;
     if (!isAddress(contract)) {
@@ -128,42 +74,57 @@ const ERC6551Page = () => {
       return;
     }
     try {
-      let blurAccessToken = localStorage.getItem("blurAccessToken");
-      const [message_, tx] = await onlyBuyBlurNFT(
-        contract,
-        tokenId,
-        currentAccount,
-        blurAccessToken
-      );
-      if (message_ != null) {
-        setMessage(message_);
-        let rsult = await tx.wait();
-        if (rsult.status === 1) {
-          console.log("Success!");
-        } else {
-          console.log("Failure!");
-        }
+      const [signer, chainId] = await getSignerAndChainId();
+
+      const tokenboundClient = await getTokenboundClient(signer, chainId);
+      console.log(tokenboundClient);
+
+      const account = tokenboundClient.getAccount({
+        tokenContract: contract,
+        tokenId: tokenId,
+      });
+
+      setTbAccount(account);
+      const is = await isContract(signer.provider, account);
+      setCreated(String(is));
+      if (is) {
+        // https://iframe-tokenbound.vercel.app/0x709B78B36b7208f668A3823c1d1992C0805E4f4d/10/11155111
+        url_iframe =
+          url_iframe + "/" + contract + "/" + tokenId + "/" + chainId;
+
+        setSrcIframe(url_iframe);
+      } else {
+        setSrcIframe(null);
       }
+
+      // const data = await tokenboundClient.prepareCreateAccount({
+      //   tokenContract: contract,
+      //   tokenId: tokenId,
+      // });
+
+      // console.log(data);
+
+      // const tx = await tokenboundClient.signer.sendTransaction(data);
+      // console.log(tx);
+
+      // if (tx.hash != null) {
+      //   setMessage(tx.hash);
+      //   let rsult = await tx.wait();
+      //   if (rsult.status === 1) {
+      //     console.log("Success!");
+      //   } else {
+      //     console.log("Failure!");
+      //   }
+      // }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const loginBlurButton = () => {
+  const getTBAButton = () => {
     return (
-      <button onClick={loginBlurHandler} className="cta-button mint-nft-button">
-        Login Blur
-      </button>
-    );
-  };
-
-  const buyBlurNFTButton = () => {
-    return (
-      <button
-        onClick={buyBlurNFTHandler}
-        className="cta-button mint-nft-button"
-      >
-        Buy One NFT
+      <button onClick={getTBAHandler} className="cta-button mint-nft-button">
+        get TBA
       </button>
     );
   };
@@ -172,12 +133,16 @@ const ERC6551Page = () => {
     <center>
       <div>
         <h2>ERC6551</h2>
-        <div>
-          <p></p>
-        </div>
+        <h3>
+          <a
+            href="https://docs.tokenbound.org/contracts/deployments"
+            target="_blank"
+          >
+            tokenbound v0.3.1
+          </a>
+        </h3>
 
         <div className="bordered-div">
-          <h4>Buy One NFT</h4>
           <div className="container">
             <div className="input-container">
               <label className="label" htmlFor="contract">
@@ -202,14 +167,19 @@ const ERC6551Page = () => {
             </div>
           </div>
           <p></p>
-          {buyBlurNFTButton()}
+          {currentAccount ? getTBAButton() : PleaseLogin()}
+
+          <div className="container">TB Account: {tbAccount}</div>
+          <div className="container">Created: {created}</div>
         </div>
 
         <div>
-          <iframe
-            style={{ width: "600px", height: "600px" }}
-            src="https://iframe-tokenbound.vercel.app/0x709B78B36b7208f668A3823c1d1992C0805E4f4d/10/11155111"
-          ></iframe>
+          {srcIframe != null && (
+            <iframe
+              style={{ width: "600px", height: "600px" }}
+              src={srcIframe}
+            ></iframe>
+          )}
         </div>
       </div>
 
