@@ -22,7 +22,11 @@ import BurnTokenPage from "./pages/BurnTokenPage";
 import CrossChainBridgePage from "./pages/CrossChainBridgePage";
 import SolanaLoginPage from "./pages/SolanaLoginPage";
 import BuyBlurNFTPage from "./pages/BuyBlurNFTPage";
+<<<<<<< HEAD
 import ERC6551Page from "./pages/ERC6551Page";
+=======
+import EstimateTxFeePage from "./pages/EstimateTxFeePage";
+>>>>>>> a770054 (	new file:   src/pages/EstimateTxFeePage.js)
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -152,6 +156,7 @@ function App() {
             <div>
               <AccordionItem title="Login DApp" linkTo="/" />
               <AccordionItem title="Login Solana" linkTo="/loginSolana" />
+              <AccordionItem title="Estimate TxFee" linkTo="/estimateTxFee" />
               <AccordionItem title="Transfer Native" linkTo="/transfer" />
               <AccordionItem title="Faucet Token" linkTo="/faucet" />
               <AccordionItem title="Burn Token" linkTo="/burn" />
@@ -207,7 +212,11 @@ function App() {
           <Route path="/transfer" element={<TransferNativePage />} />
           <Route path="/utils" element={<UtilsPage />} />
           <Route path="/crossChainBridge" element={<CrossChainBridgePage />} />
+<<<<<<< HEAD
           <Route path="/erc6551" element={<ERC6551Page />} />
+=======
+          <Route path="/estimateTxFee" element={<EstimateTxFeePage />} />
+>>>>>>> a770054 (	new file:   src/pages/EstimateTxFeePage.js)
         </Routes>
       </div>
     </Router>
