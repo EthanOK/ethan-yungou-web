@@ -129,7 +129,7 @@ const EstimateTxFeePage = () => {
         <h2>
           Please See:
           <p></p>
-          <a href={message} target="_blank" rel="noopener noreferrer">
+          <a target="_blank" rel="noopener noreferrer">
             {message}
           </a>
         </h2>

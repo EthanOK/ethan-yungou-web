@@ -16,7 +16,7 @@ import LuckyBabyPage from "./pages/LuckyBabyPage";
 import ENSPage from "./pages/ENSPage";
 import FaucetTokenPage from "./pages/FaucetTokenPage";
 import { getExtractAddress } from "./utils/Utils";
-import TransferNativePage from "./pages/TransferNativePage";
+import TransferNativePage from "./pages/CreateTransactionPage";
 import UtilsPage from "./pages/UtilsPage";
 import BurnTokenPage from "./pages/BurnTokenPage";
 import CrossChainBridgePage from "./pages/CrossChainBridgePage";
@@ -24,6 +24,7 @@ import SolanaLoginPage from "./pages/SolanaLoginPage";
 import BuyBlurNFTPage from "./pages/BuyBlurNFTPage";
 import ERC6551Page from "./pages/ERC6551Page";
 import EstimateTxFeePage from "./pages/EstimateTxFeePage";
+import CreateTransactionPage from "./pages/CreateTransactionPage";
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -154,7 +155,10 @@ function App() {
               <AccordionItem title="Login DApp" linkTo="/" />
               <AccordionItem title="Login Solana" linkTo="/loginSolana" />
               <AccordionItem title="Estimate TxFee" linkTo="/estimateTxFee" />
-              <AccordionItem title="Transfer Native" linkTo="/transfer" />
+              <AccordionItem
+                title="Create Transaction"
+                linkTo="/createTransaction"
+              />
               <AccordionItem title="Faucet Token" linkTo="/faucet" />
               <AccordionItem title="Burn Token" linkTo="/burn" />
               <AccordionItem title="Token Price" linkTo="/display" />
@@ -206,7 +210,10 @@ function App() {
           <Route path="/luckyBaby" element={<LuckyBabyPage />} />
           <Route path="/faucet" element={<FaucetTokenPage />} />
           <Route path="/burn" element={<BurnTokenPage />} />
-          <Route path="/transfer" element={<TransferNativePage />} />
+          <Route
+            path="/createTransaction"
+            element={<CreateTransactionPage />}
+          />
           <Route path="/utils" element={<UtilsPage />} />
           <Route path="/crossChainBridge" element={<CrossChainBridgePage />} />
           <Route path="/erc6551" element={<ERC6551Page />} />

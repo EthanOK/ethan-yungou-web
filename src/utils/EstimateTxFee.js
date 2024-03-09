@@ -8,7 +8,7 @@ const estimateTxFee = async (provider, from, to, data, value) => {
   // Query the blockchain (replace example parameters)
   const estGas = await provider.estimateGas({
     from: from,
-    to: to,
+    to: to == "" ? null : to,
     data: data,
     value: value,
     gasPrice: gasPrice,
