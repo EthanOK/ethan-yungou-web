@@ -89,9 +89,9 @@ const CreateTransactionPage = () => {
   const createTxHandler = async () => {
     const url = await getScanURL();
 
-    const to = document.getElementById("to").value;
+    const to = document.getElementById("to_tx").value;
 
-    const value_ = document.getElementById("amount").value;
+    const value_ = document.getElementById("value_tx").value;
 
     const data = document.getElementById("data_tx").value;
 
