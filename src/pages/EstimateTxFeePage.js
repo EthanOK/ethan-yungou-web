@@ -39,8 +39,14 @@ const EstimateTxFeePage = () => {
 
     const value_ = getDecimalBigNumber(value == "" ? "0" : value, 18);
 
-    if (!isAddress(from) || !isAddress(to)) {
-      alert("address is not valid");
+    if (!isAddress(from)) {
+      alert("from address is not valid");
+      return;
+    }
+
+    if (Number(to.length) != 0 && !isAddress(to)) {
+      console.log(to.length);
+      alert("to address is not valid");
       return;
     }
 
