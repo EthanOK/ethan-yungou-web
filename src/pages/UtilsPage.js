@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { getPriceBaseUSDT } from "../api/GetData.js";
+import { getPriceBaseUSDT, getPriceBaseUSDTByBinance } from "../api/GetData.js";
 import {
   caculatePriceBySqrtPriceX96,
   getAddressCreate,
@@ -48,7 +48,8 @@ const UtilsPage = () => {
         setCurrentAccount(account);
       }
 
-      let result = await getPriceBaseUSDT();
+      let result = await getPriceBaseUSDTByBinance();
+      console.log(result);
       if (result.code == 200) {
         let data = result.data;
         setEtherPrice(data.ethPrice);

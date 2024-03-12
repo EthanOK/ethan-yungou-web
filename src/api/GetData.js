@@ -291,6 +291,17 @@ const getPriceBaseUSDT = async () => {
   return result_json;
 };
 
+const getPriceBaseUSDTByBinance = async () => {
+  let result = await fetch(
+    `https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT`,
+    {
+      method: "GET",
+    }
+  );
+  let result_json = await result.json();
+  return { code: 200, data: { ethPrice: result_json.price } };
+};
+
 const getBlurLoginMessageByOpensea = async (userAddress) => {
   // 必须 后台访问，前端有跨域限制
   const postURL = "https://api.pro.opensea.io/blur/auth/challenge";
@@ -435,4 +446,5 @@ export {
   getBlurAccessTokenByNFTGO,
   getBlurLoginMessageByOpensea,
   getBlurAccessTokenByOpensea,
+  getPriceBaseUSDTByBinance,
 };
