@@ -35,6 +35,7 @@ import {
   chainName_G,
   YUNGOU_END,
   DefaultChainId,
+  chainName_S,
 } from "../utils/SystemConfiguration.js";
 
 const HomePage = () => {
@@ -278,14 +279,14 @@ const HomePage = () => {
           contractsValue,
           tokenIdsValue
         );
-      } else if (chainId == "5") {
+      } else if (chainId == "11155111") {
         orders = [order_data_t.order_data];
         for (let i = 0; i < orders.length; i++) {
           valueEth = valueEth.add(orders[i].totalPayment);
         }
         const Orders_datas =
           await OrdersTest.getFulfillAvailableAdvancedOrders_datas(
-            chainName_G,
+            chainName_S,
             currentAccount,
             contractsValue,
             tokenIdsValue

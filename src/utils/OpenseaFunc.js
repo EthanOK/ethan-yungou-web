@@ -11,6 +11,7 @@ import {
   suffixOfYunGou,
   chainName_TBSC,
   OPENSEA_MAIN_API,
+  chainName_S,
 } from "./SystemConfiguration";
 import {
   getSigner,
@@ -57,9 +58,9 @@ const fulfillBasicOrder = async (contract_, tokenId_, currentAccount) => {
       contract_,
       tokenId_
     );
-  } else if (chainId == 5) {
+  } else if (chainId == 11155111) {
     transactionData = await OrdersTest.getFulfillment_transaction(
-      chainName_G,
+      chainName_S,
       currentAccount,
       contract_,
       tokenId_
@@ -155,9 +156,9 @@ const fulfillOrder = async (contract_, tokenId_, currentAccount) => {
       contract_,
       tokenId_
     );
-  } else if (chainId == 5) {
+  } else if (chainId == 11155111) {
     orderdata = await OrdersTest.getFulfillment_order(
-      chainName_G,
+      chainName_S,
       currentAccount,
       contract_,
       tokenId_
@@ -230,9 +231,9 @@ const fulfillBasicOrder_efficient = async (
       contract_,
       tokenId_
     );
-  } else if (chainId == 5) {
+  } else if (chainId == 11155111) {
     transactionData = await OrdersTest.getFulfillment_transaction(
-      chainName_G,
+      chainName_S,
       currentAccount,
       contract_,
       tokenId_
@@ -338,7 +339,7 @@ const fulfillAvailableOrders = async (
       contracts_,
       tokenIds_
     );
-  } else if (chainId == 5) {
+  } else if (chainId == 11155111) {
     [
       protocolAddress,
       currentPriceSum,
@@ -348,7 +349,7 @@ const fulfillAvailableOrders = async (
       fulfillerConduitKey,
       maximumFulfilled,
     ] = await OrdersTest.getFulfillAvailableOrders_data(
-      chainName_G,
+      chainName_S,
       currentAccount,
       contracts_,
       tokenIds_
@@ -474,10 +475,10 @@ const fulfillAvailableAdvancedOrders = async (
       contracts_,
       tokenIds_
     );
-  } else if (chainId == 5) {
+  } else if (chainId == 11155111) {
     const Orders_datas =
       await OrdersTest.getFulfillAvailableAdvancedOrders_datas(
-        chainName_G,
+        chainName_S,
         currentAccount,
         contracts_,
         tokenIds_

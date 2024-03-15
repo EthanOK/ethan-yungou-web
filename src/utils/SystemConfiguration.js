@@ -3,6 +3,7 @@ import { BigNumber, ethers, providers, utils } from "ethers";
 const YunGouAggregatorsAddress_G = "0x5D5177aa0BD5ACeb22A249703DAe840667309F5d";
 
 const chainName_G = "goerli";
+const chainName_S = "sepolia";
 const chainName_TBSC = "bsctestnet";
 
 const main_url = "https://etherscan.io";
@@ -83,7 +84,7 @@ const UniswapRouter = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const React_Serve_Back = "http://localhost:3001";
 
-const DefaultChainId = "5";
+const DefaultChainId = "11155111";
 
 const EXPIRES_TIME = "7d";
 const SECRETKEY = "y0Gv3jsn8CnT!^4t$U2c9A@kR6*%PqLpQAWER";
@@ -95,6 +96,7 @@ export {
   PancakeRouter,
   UniswapRouter,
   chainName_G,
+  chainName_S,
   YUNGOU_END,
   hashYUNGOU,
   OPENSEA_MAIN_API,
