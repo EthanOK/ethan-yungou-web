@@ -46,6 +46,8 @@ const YunGouAggregators_bsc = "0x0000007eE460B0928c2119E3B9747454A10d1557";
 
 const nftMint_goerli = "0x71eE06999F6D5f66AcA3c12e45656362fD9D031f";
 
+const batchTransferToken_sepolia = "0x6e7f9fCcAdFD34689A9542534c25475B5FFB7282";
+
 const faucet_goerli = "0xC1f60B81c6dAb5BE517a53983708488F9978D0Eb";
 
 const faucet_tbsc = "0x1ef1b1405dCda2375Fc8430DE5560016F0D8DBe0";
@@ -145,4 +147,5 @@ export {
   SOLANA_DEV_RPC,
   ygme_sepolia,
   ygio_sepolia,
+  batchTransferToken_sepolia,
 };

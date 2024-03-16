@@ -1,8 +1,14 @@
 import { getSignerAndChainId } from "./GetProvider";
 import { ethers } from "ethers";
 import { signEIP712Message } from "./SignFunc";
-import erc721Aabi from "../contracts/erc721A.json";
-import { nftMint_goerli } from "./SystemConfiguration";
+import YGMEABI from "../contracts/YGMEABI.json";
+import BatchTransferTokenABI from "../contracts/BatchTransferTokenABI.json";
+import {
+  DefaultChainId,
+  batchTransferToken_sepolia,
+  nftMint_goerli,
+  ygme_sepolia,
+} from "./SystemConfiguration";
 import { getScanURL, equalityStringIgnoreCase } from "./Utils";
 
 const mintNFT = async (mintAmount) => {
@@ -10,22 +16,29 @@ const mintNFT = async (mintAmount) => {
 
   let [signer, chainId] = await getSignerAndChainId();
   let contractAddress;
-  if (chainId === 5) {
-    contractAddress = nftMint_goerli;
+  if (chainId === Number(DefaultChainId)) {
+    contractAddress = batchTransferToken_sepolia;
+    console.log(contractAddress);
   } else {
-    console.log("only goerli");
-    alert("only goerli");
+    alert("only sepolia");
     return [null, null];
   }
   try {
-    const nftcontract = new ethers.Contract(
+    const batchTransfer = new ethers.Contract(
       contractAddress,
-      erc721Aabi,
+      BatchTransferTokenABI,
       signer
     );
-    let result = await nftcontract.callStatic.mint(mintAmount);
-    console.log(result);
-    let preparetx = await nftcontract.populateTransaction.mint(mintAmount);
+    const account = await signer.getAddress();
+
+    const calls = [
+      {
+        target: ygme_sepolia,
+        callData: getSwapCallData(account, mintAmount),
+      },
+    ];
+
+    let preparetx = await batchTransfer.populateTransaction.aggregate(calls);
     console.log(preparetx.data);
     const tx = await signer.sendTransaction({
       to: contractAddress,
@@ -55,22 +68,27 @@ const signEIP712MessageMintNft = async (mintAmount) => {
 
     let [signer, chainId] = await getSignerAndChainId();
     let contractAddress;
-    if (chainId === 5) {
-      contractAddress = nftMint_goerli;
+    if (chainId === Number(DefaultChainId)) {
+      contractAddress = batchTransferToken_sepolia;
     } else {
-      console.log("only goerli");
+      console.log("only sepolia");
       return [null, null];
     }
     let signature = await signEIP712Message(signer, chainId);
     if (signature == null) return [null, null];
 
-    const nftcontract = new ethers.Contract(
+    const batchTransfer = new ethers.Contract(
       contractAddress,
-      erc721Aabi,
+      BatchTransferTokenABI,
       signer
     );
 
-    let tx = await nftcontract.mint(mintAmount);
+    let tx = await batchTransfer.aggregate([
+      {
+        target: ygme_sepolia,
+        callData: getSwapCallData(await signer.getAddress(), mintAmount),
+      },
+    ]);
     console.log(tx);
     console.log("Minting..please await");
     console.log(`Please See: ${etherscanURL}/tx/${tx.hash}`);
@@ -87,4 +105,15 @@ const signEIP712MessageMintNft = async (mintAmount) => {
     return [null, null];
   }
 };
+
+function getSwapCallData(account, amount) {
+  const YGMEInterface = new ethers.utils.Interface(YGMEABI);
+
+  let calldata = YGMEInterface.encodeFunctionData("swap", [
+    account,
+    "0x0000000000000000000000000000000000000000",
+    amount,
+  ]);
+  return calldata;
+}
 export { mintNFT, signEIP712MessageMintNft };
