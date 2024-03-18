@@ -12,12 +12,14 @@ import {
   YunGouAggregators_tbsc,
   YunGouAggregators_goerli,
   sepolia_url,
+  ALCHEMY_KEY_V3,
 } from "./SystemConfiguration";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { BigNumber, ethers, providers, utils } from "ethers";
 import { Decimal } from "decimal.js";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
+import { Alchemy, Network } from "alchemy-sdk";
 
 const equalityStringIgnoreCase = (string1, string2) => {
   if (string1.toLowerCase() === string2.toLowerCase()) {
@@ -186,6 +188,29 @@ async function getAssociatedAddress(mintAddress, ownerAddress) {
   ).toString();
 }
 
+function getAlchemyURL(chainId) {
+  if (Number(chainId) == 1) {
+    return `https://eth-mainnet.g.alchemy.com/nft/v3/${ALCHEMY_KEY_V3}/`;
+  } else if (Number(chainId) == 11155111) {
+    return `https://eth-sepolia.g.alchemy.com/nft/v3/${ALCHEMY_KEY_V3}/`;
+  }
+  return null;
+}
+function getAlchemy(chainId) {
+  if (Number(chainId) === 1) {
+    return new Alchemy({
+      apiKey: ALCHEMY_KEY_V3,
+      network: Network.ETH_MAINNET,
+    });
+  } else if (Number(chainId) === 11155111) {
+    return new Alchemy({
+      apiKey: ALCHEMY_KEY_V3,
+      network: Network.ETH_SEPOLIA,
+    });
+  }
+  return null;
+}
+
 export {
   equalityStringIgnoreCase,
   getScanURL,
@@ -203,4 +228,6 @@ export {
   getAddressCreate,
   getAssociatedAddress,
   isContract,
+  getAlchemyURL,
+  getAlchemy,
 };

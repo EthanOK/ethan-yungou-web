@@ -28,6 +28,8 @@ const goerli_rpc = process.env.REACT_APP_GOERLI_RPC;
 const bsc_rpc = "https://rpc.ankr.com/bsc";
 const projectId_walletconnect = process.env.REACT_APP_WALLETCONNECT_PROJECTID;
 
+const ALCHEMY_KEY_V3 = process.env.REACT_APP_ALCHEMY_KEY_V3;
+
 const YunGou2_0_main = "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd";
 
 const YunGou2_0_goerli = "0xb0E3773e3E02d0A1653F90345Bc8889fC820E230";
@@ -148,4 +150,5 @@ export {
   ygme_sepolia,
   ygio_sepolia,
   batchTransferToken_sepolia,
+  ALCHEMY_KEY_V3,
 };

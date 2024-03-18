@@ -68,7 +68,7 @@ const MintNFTPage = () => {
     if (type === 1) {
       return (
         <button onClick={mintNftHandler} className="cta-button mint-nft-button">
-          Mint YGME
+          Mint NFT
         </button>
       );
     }
@@ -92,7 +92,7 @@ const MintNFTPage = () => {
   return (
     <center>
       <div>
-        <h2>Mint NFT</h2>
+        <h2>Mint YGME</h2>
         <div>
           <label htmlFor="mintAmount">Mint amount: </label>
           <select

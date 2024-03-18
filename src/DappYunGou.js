@@ -25,6 +25,7 @@ import BuyBlurNFTPage from "./pages/BuyBlurNFTPage";
 import ERC6551Page from "./pages/ERC6551Page";
 import EstimateTxFeePage from "./pages/EstimateTxFeePage";
 import CreateTransactionPage from "./pages/CreateTransactionPage";
+import GetCollectionPage from "./pages/GetCollectionPage";
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {
@@ -164,6 +165,7 @@ function App() {
               <AccordionItem title="Token Price" linkTo="/display" />
               <AccordionItem title="ENS Service" linkTo="/ens" />
               <AccordionItem title="Mint NFT" linkTo="/mintnft" />
+              <AccordionItem title="Get Collection" linkTo="/getCollection" />
               <AccordionItem title="Sign EIP712" linkTo="/signEIP712" />
               <AccordionItem title="Get OpenSeaData" linkTo="/getOpenSeaData" />
               <AccordionItem title="Buy NFT (Y,O)" linkTo="/buyNFT" />
@@ -202,6 +204,7 @@ function App() {
           <Route path="/display" element={<DataDisplayPage />} />
           <Route path="/ens" element={<ENSPage />} />
           <Route path="/mintnft" element={<MintNFTPage />} />
+          <Route path="/getCollection" element={<GetCollectionPage />} />
           <Route path="/signEIP712" element={<SignEIP712Page />} />
           <Route path="/getOpenSeaData" element={<GetOpenSeaDataPage />} />
           <Route path="/buyNFT" element={<BuyNFTPage />} />
