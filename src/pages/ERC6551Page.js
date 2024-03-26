@@ -12,7 +12,8 @@ import {
   getSignerAndChainId,
 } from "../utils/GetProvider.js";
 
-import { TokenboundClient } from "@tokenbound/sdk";
+import { TBVersion, TokenboundClient } from "@tokenbound/sdk";
+import { Contract } from "ethers";
 
 let url_iframe = "https://iframe-tokenbound.vercel.app";
 
@@ -41,10 +42,25 @@ const ERC6551Page = () => {
     }
   }, [isMounted]);
 
-  const getTokenboundClient = async (signer, chainId) => {
-    const tokenboundClient = new TokenboundClient({ signer, chainId });
+  const getTokenboundClient = async (signer, chainId, isV2) => {
+    const tokenboundClient = new TokenboundClient({
+      signer,
+      chainId,
+      version: isV2 ? TBVersion.V2 : TBVersion.V3,
+    });
 
     return tokenboundClient;
+  };
+
+  const ERC6551_Is_V3 = async (signer, account) => {
+    const abi = [
+      "function supportsInterface(bytes4 interfaceId) external view returns (bool)",
+    ];
+
+    const erc6551 = new Contract(account, abi, signer);
+    // v3: 0x6faff5f1
+    const isV3 = await erc6551.supportsInterface("0x6faff5f1");
+    return isV3;
   };
 
   const updateData = async () => {
@@ -98,6 +114,11 @@ const ERC6551Page = () => {
       setCreated(String(isCreate));
 
       if (isCreate) {
+        console.log(
+          "ERC6551Account Version v3: ",
+          await ERC6551_Is_V3(signer, account)
+        );
+
         const iframe =
           url_iframe + "/" + contract + "/" + tokenId + "/" + chainId;
 
