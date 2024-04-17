@@ -28,6 +28,7 @@ const equalityStringIgnoreCase = (string1, string2) => {
     return false;
   }
 };
+
 const getScanURL = async () => {
   let chainId = localStorage.getItem("chainId");
   let scanurl;
@@ -43,6 +44,17 @@ const getScanURL = async () => {
     scanurl = sepolia_url;
   }
   return scanurl;
+};
+
+const getInfuraProvider = async () => {
+  let chainId = localStorage.getItem("chainId");
+  let provider;
+  if (chainId == 1) {
+    provider = new providers.JsonRpcProvider(process.env.REACT_APP_MAINNET_RPC);
+  } else if (chainId == 11155111) {
+    provider = new providers.JsonRpcProvider(process.env.REACT_APP_SEPOLIA_RPC);
+  }
+  return provider;
 };
 
 const getYunGouAddress = async () => {
@@ -230,4 +242,5 @@ export {
   isContract,
   getAlchemyURL,
   getAlchemy,
+  getInfuraProvider,
 };

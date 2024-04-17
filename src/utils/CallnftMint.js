@@ -9,10 +9,15 @@ import {
   nftMint_goerli,
   ygme_sepolia,
 } from "./SystemConfiguration";
-import { getScanURL, equalityStringIgnoreCase } from "./Utils";
+import {
+  getScanURL,
+  equalityStringIgnoreCase,
+  getInfuraProvider,
+} from "./Utils";
 
 const mintNFT = async (mintAmount) => {
   let etherscanURL = await getScanURL();
+  let provider = await getInfuraProvider();
 
   let [signer, chainId] = await getSignerAndChainId();
   let contractAddress;
@@ -40,10 +45,23 @@ const mintNFT = async (mintAmount) => {
 
     let preparetx = await batchTransfer.populateTransaction.aggregate(calls);
     console.log(preparetx.data);
+
+    const transaction = {
+      from: await signer.getAddress(),
+      to: contractAddress,
+      data: preparetx.data,
+    };
+    console.log(transaction);
+
+    const result = await provider.send("eth_createAccessList", [transaction]);
+
+    console.log("Access List:", result);
+
     const tx = await signer.sendTransaction({
       to: contractAddress,
       data: preparetx.data,
       value: "0",
+      accessList: result.accessList,
     });
     console.log("nft mint... please await");
 
