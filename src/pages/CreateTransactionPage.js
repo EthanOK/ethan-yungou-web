@@ -4,8 +4,10 @@ import {
   utf8ToHexBytes,
   getScanURL,
   getDecimalBigNumber,
+  getInfuraProvider,
 } from "../utils/Utils.js";
 import { getSigner } from "../utils/GetProvider.js";
+import { getAccessList } from "../utils/GetAccessListInTx.js";
 const CreateTransactionPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -88,6 +90,8 @@ const CreateTransactionPage = () => {
 
   const createTxHandler = async () => {
     const url = await getScanURL();
+    const signer = await getSigner();
+    const provider = await getInfuraProvider();
 
     const to = document.getElementById("to_tx").value;
 
@@ -108,9 +112,17 @@ const CreateTransactionPage = () => {
       alert("data is not valid");
       return;
     }
+    const transaction = {
+      from: await signer.getAddress(),
+      // to: to == "" ? null : to,
+      data: data,
+      // value: value.toHexString(),
+    };
+    const result = await getAccessList(provider, transaction);
+
+    console.log("Access List:", result);
 
     try {
-      const signer = await getSigner();
       const tx = await signer.sendTransaction({
         to: to == "" ? null : to,
         data: data,
@@ -199,7 +211,7 @@ const CreateTransactionPage = () => {
       <p></p>
 
       <div className="bordered-div">
-        <h2>Create Transaction</h2>
+        <h2>Create Transaction/Deploy Contract</h2>
         <div className="container">
           <div>
             <label className="label-6">To:</label>
