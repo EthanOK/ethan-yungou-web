@@ -34,6 +34,8 @@ const YunGou2_0_main = "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd";
 
 const YunGou2_0_goerli = "0xb0E3773e3E02d0A1653F90345Bc8889fC820E230";
 
+const YunGou2_0_sepolia = "0x72fc74cf6d6899b4a0083728664fe2706948dab0";
+
 const YunGou2_0_tbsc = "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd";
 
 const YunGou2_0_bsc = "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd";
@@ -112,6 +114,7 @@ export {
   projectId_walletconnect,
   YunGou2_0_main,
   YunGou2_0_goerli,
+  YunGou2_0_sepolia,
   YunGou2_0_tbsc,
   YunGou2_0_bsc,
   PRIVATEKEY_VERIFYER,
