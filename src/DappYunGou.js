@@ -26,6 +26,8 @@ import ERC6551Page from "./pages/ERC6551Page";
 import EstimateTxFeePage from "./pages/EstimateTxFeePage";
 import CreateTransactionPage from "./pages/CreateTransactionPage";
 import GetCollectionPage from "./pages/GetCollectionPage";
+
+window.Buffer = window.Buffer || require("buffer").Buffer;
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
 
 function App() {

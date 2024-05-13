@@ -5,6 +5,7 @@ import {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
+  signBulkOrderOpenSeaMessage,
 } from "../utils/SignFunc.js";
 import { getSignerAndChainId } from "../utils/GetProvider.js";
 import {
@@ -13,6 +14,7 @@ import {
   getBlurLoginMessage,
   getBlurLoginMessageByNFTGO,
 } from "../api/GetData.js";
+import { Seaport } from "@opensea/seaport-js";
 
 const SignEIP712Page = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -59,6 +61,13 @@ const SignEIP712Page = () => {
     if (result != false) {
       setMessage(JSON.stringify(result, null, "\t"));
     }
+  };
+
+  // TODO:signBulkOrderOpenSeaHandler
+  const signBulkOrderOpenSeaHandler = async () => {
+    const [signer, chainId] = await getSignerAndChainId();
+    const orders = await signBulkOrderOpenSeaMessage(signer, chainId);
+    console.log(orders);
   };
 
   // TODO:signLoginBlurHandler
@@ -123,6 +132,18 @@ const SignEIP712Page = () => {
     );
   };
 
+  // TODO:signBulkOrderOpenSeaButton
+  const signBulkOrderOpenSeaButton = () => {
+    return (
+      <button
+        onClick={signBulkOrderOpenSeaHandler}
+        className="cta-button mint-nft-button"
+      >
+        signBulkOrder OpenSea
+      </button>
+    );
+  };
+
   const signLoginBlurButton = () => {
     return (
       <button
@@ -142,6 +163,9 @@ const SignEIP712Page = () => {
 
         <p></p>
         {currentAccount ? signTypedDataOpenSeaButton() : PleaseLogin()}
+
+        <p></p>
+        {currentAccount ? signBulkOrderOpenSeaButton() : PleaseLogin()}
 
         <p></p>
         {/* {currentAccount ? signLoginBlurButton() : PleaseLogin()} */}

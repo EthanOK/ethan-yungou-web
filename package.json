@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@noble/ed25519": "^2.0.0",
+    "@opensea/seaport-js": "^2.0.8",
     "@solana/spl-token": "^0.2.0",
     "@solana/web3.js": "^1.87.6",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +15,7 @@
     "@walletconnect/ethereum-provider": "^2.8.0",
     "alchemy-sdk": "^3.2.0",
     "bs58": "^5.0.0",
+    "buffer": "^6.0.3",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "opensea-js": "6.1.4",

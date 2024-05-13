@@ -16,6 +16,7 @@ import {
   getSignerAndAccountAndChainId,
 } from "./GetProvider";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
+import { Seaport } from "@opensea/seaport-js";
 
 const signEIP712Message = async (signer, chainId) => {
   try {
@@ -208,6 +209,7 @@ const signEIP712YunGouMessage = async (signer, chainId) => {
     return false;
   }
 };
+
 const signEIP712OpenSeaMessage = async (signer, chainId) => {
   const domainData = {
     name: "Seaport",
@@ -404,6 +406,61 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
   }
 };
 
+const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
+  const seaport = new Seaport(signer);
+  const order = {
+    offerer: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
+    zone: "0x004C00500000aD104D7DBd00e3ae0A5C00560C00",
+    offer: [
+      {
+        itemType: 2,
+        token: "0x97f236E644db7Be9B8308525e6506E4B3304dA7B",
+        identifierOrCriteria: BigNumber.from("111"),
+        startAmount: BigNumber.from("1"),
+        endAmount: BigNumber.from("1"),
+      },
+    ],
+    consideration: [
+      {
+        itemType: 0,
+        token: "0x0000000000000000000000000000000000000000",
+        identifierOrCriteria: BigNumber.from("0"),
+        startAmount: BigNumber.from("1082250000000000000"),
+        endAmount: BigNumber.from("1082250000000000000"),
+        recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
+      },
+      {
+        itemType: 0,
+        token: "0x0000000000000000000000000000000000000000",
+        identifierOrCriteria: BigNumber.from("0"),
+        startAmount: BigNumber.from("27750000000000000"),
+        endAmount: BigNumber.from("27750000000000000"),
+        recipient: "0x0000a26b00c1F0DF003000390027140000fAa719",
+      },
+    ],
+    orderType: 0,
+    startTime: BigNumber.from("1686193412"),
+    endTime: BigNumber.from("1688785412"),
+    zoneHash:
+      "0x0000000000000000000000000000000000000000000000000000000000000000",
+    salt: BigNumber.from(
+      "24446860302761739304752683030156737591518664810215442929818227897836383814680"
+    ),
+    conduitKey:
+      "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+    counter: BigNumber.from("0"),
+  };
+  const orders = [];
+  orders.push(order);
+  orders.push(order);
+  let ordersWithSign;
+  try {
+    ordersWithSign = await seaport.signBulkOrder(orders);
+  } catch (error) {}
+
+  return ordersWithSign;
+};
+
 // getSystemSignature_YunGou
 const getSystemSignature = async (orderSignature, data) => {
   try {
@@ -486,4 +543,5 @@ export {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
+  signBulkOrderOpenSeaMessage,
 };
