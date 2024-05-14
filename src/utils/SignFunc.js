@@ -217,6 +217,8 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
     chainId: chainId,
     verifyingContract: "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC",
   };
+
+  console.log(domainData);
   //   struct BasicOrderParameters {
   //     OrderType orderType;
   //     address payable offerer;
@@ -408,6 +410,10 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
 
 const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   const seaport = new Seaport(signer);
+  const domainData=await seaport._getDomainData()
+ 
+  console.log(domainData);
+
   const order = {
     offerer: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
     zone: "0x004C00500000aD104D7DBd00e3ae0A5C00560C00",
@@ -452,10 +458,11 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   };
   const orders = [];
   orders.push(order);
-  orders.push(order);
   let ordersWithSign;
   try {
     ordersWithSign = await seaport.signBulkOrder(orders);
+
+    seaport.fulfillOrders
   } catch (error) {}
 
   return ordersWithSign;
