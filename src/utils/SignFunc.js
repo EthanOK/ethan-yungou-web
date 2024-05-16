@@ -463,7 +463,6 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   try {
     ordersWithSign = await seaport.signBulkOrder(orders);
 
-    seaport.fulfillOrders
   } catch (error) {}
 
   return ordersWithSign;
