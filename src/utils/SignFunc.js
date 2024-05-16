@@ -408,6 +408,7 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
   }
 };
 
+//TODO:OpenSea 的批量签名
 const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   const seaport = new Seaport(signer);
   const domainData=await seaport._getDomainData()
