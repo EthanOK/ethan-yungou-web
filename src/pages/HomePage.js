@@ -684,6 +684,12 @@ const HomePage = () => {
             <option value="97" style={{ textAlign: "center" }}>
               TBSC
             </option>
+            <option value="8453" style={{ textAlign: "center" }}>
+              Base
+            </option>
+            <option value="196" style={{ textAlign: "center" }}>
+              X Layer
+            </option>
           </select>
           {/* <p>Network ChainId: {selectedOption}</p> */}
         </div>
