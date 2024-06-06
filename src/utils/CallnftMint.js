@@ -53,15 +53,15 @@ const mintNFT = async (mintAmount) => {
     };
     console.log(transaction);
 
-    const result = await provider.send("eth_createAccessList", [transaction]);
+    // const result = await provider.send("eth_createAccessList", [transaction]);
 
-    console.log("Access List:", result);
+    // console.log("Access List:", result);
 
     const tx = await signer.sendTransaction({
       to: contractAddress,
       data: preparetx.data,
-      value: "0",
-      accessList: result.accessList,
+      // value: "0",
+      // accessList: result.accessList,
     });
     console.log("nft mint... please await");
 
