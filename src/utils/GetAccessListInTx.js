@@ -1,6 +1,10 @@
 const getAccessList = async (provider, transaction) => {
-  const result = await provider.send("eth_createAccessList", [transaction]);
-  return result;
+  try {
+    const result = await provider.send("eth_createAccessList", [transaction]);
+    return result;
+  } catch (error) {
+    return null;
+  }
 };
 
 export { getAccessList };
