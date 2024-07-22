@@ -204,10 +204,7 @@ const Web3AuthPage = () => {
     <center>
       <div>
         <h2>
-          <a
-            href="https://docs.tokenbound.org/contracts/deployments"
-            target="_blank"
-          >
+          <a href="https://web3auth.io/" target="_blank">
             Web3Auth
           </a>
         </h2>
