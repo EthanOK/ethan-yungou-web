@@ -23,6 +23,7 @@ import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
 import { sendTransactionOfPhantom } from "../utils/PhantomSendTransaction";
 import { getAssociatedAddress, stringToArray } from "../utils/Utils";
+import base58 from "bs58";
 
 const SolanaLoginPage = () => {
   window.Buffer = buffer.Buffer;
@@ -35,6 +36,7 @@ const SolanaLoginPage = () => {
   const [alertMessage, setAlertMessage] = useState("");
 
   const [associatedAddress, setAssociatedAddress] = useState("");
+  const [solPrivateKey, setSolPrivateKey] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -277,6 +279,13 @@ const SolanaLoginPage = () => {
     setAssociatedAddress(associatedAddress);
   };
 
+  const getSOLPrivatekeyHandler = async () => {
+    const keypair = document.getElementById("keypair").value;
+    const pair = JSON.parse(keypair);
+    const privateKey = base58.encode(pair);
+    setSolPrivateKey(privateKey);
+  };
+
   const loginSolanaButton = () => {
     return (
       <button
@@ -317,6 +326,17 @@ const SolanaLoginPage = () => {
         className="cta-button mint-nft-button"
       >
         getAssociatedAddress
+      </button>
+    );
+  };
+
+  const getSOLPrivatekeyButton = () => {
+    return (
+      <button
+        onClick={getSOLPrivatekeyHandler}
+        className="cta-button mint-nft-button"
+      >
+        getSolPrivatekey
       </button>
     );
   };
@@ -363,7 +383,9 @@ const SolanaLoginPage = () => {
         </h2>
       </div>
 
-      <div>
+      <p></p>
+
+      <div className="bordered-div">
         <h2>Batch Transfer SOL</h2>
         <label className="label">ToAddress:</label>
         <textarea
@@ -376,7 +398,9 @@ const SolanaLoginPage = () => {
         <p></p>
         {currentSolanaAccount ? transferSOLButton() : PleaseLogin()}
       </div>
-      <div>
+
+      <p></p>
+      <div className="bordered-div">
         <h2>Batch Transfer SOL</h2>
         <label className="label">ownerAddress:</label>
         <textarea
@@ -397,6 +421,24 @@ const SolanaLoginPage = () => {
         {getAssociatedAddressButton()}
         <p></p>
         Associated Address: {associatedAddress}
+      </div>
+
+      <p></p>
+      <div className="bordered-div">
+        <h3>Keypair To PrivateKey</h3>
+        <div>
+          <label className="label">keypair:</label>
+          <textarea
+            className="multiline-textarea"
+            id="keypair"
+            placeholder="[38,109,228,83,26,37,10,17,191,88,35,2,57,168,81,242,69,45,39,19,105,131,213,152,160,107,31,59,226,22,114,180,137,182,45,71,20,19,69,96,3,136,126,234,234,23,153,66,217,243,223,192,247,89,16,24,11,17,240,172,138,172,13,244]"
+            style={{ height: "70px", width: "500px", fontSize: "14px" }}
+          ></textarea>
+          <p></p>
+          {getSOLPrivatekeyButton()}
+          <p></p>
+          SOL PrivateKey: {solPrivateKey}
+        </div>
       </div>
     </center>
   );
