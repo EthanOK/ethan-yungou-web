@@ -27,6 +27,7 @@ import EstimateTxFeePage from "./pages/EstimateTxFeePage";
 import CreateTransactionPage from "./pages/CreateTransactionPage";
 import GetCollectionPage from "./pages/GetCollectionPage";
 import Web3AuthPage from "./pages/Web3AuthPage";
+import WethPage from "./pages/WethPage";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
@@ -145,6 +146,7 @@ function App() {
   };
   return (
     <Router>
+      <div></div>
       <div>
         <div className="floating-accordion">
           <div
@@ -156,36 +158,47 @@ function App() {
           </div>
           {isExpanded && (
             <div>
-              <AccordionItem title="Login DApp" linkTo="/" />
-              <AccordionItem title="Login Solana" linkTo="/loginSolana" />
-              <AccordionItem title="Estimate TxFee" linkTo="/estimateTxFee" />
-              <AccordionItem
-                title="Create Transaction"
-                linkTo="/createTransaction"
-              />
-              <AccordionItem title="Faucet Token" linkTo="/faucet" />
-              <AccordionItem title="Burn Token" linkTo="/burn" />
-              <AccordionItem title="Token Price" linkTo="/display" />
-              <AccordionItem title="ENS Service" linkTo="/ens" />
-              <AccordionItem title="Mint NFT" linkTo="/mintnft" />
-              <AccordionItem title="Get Collection" linkTo="/getCollection" />
-              <AccordionItem title="Sign EIP712" linkTo="/signEIP712" />
-              <AccordionItem title="Get OpenSeaData" linkTo="/getOpenSeaData" />
-              <AccordionItem title="Buy NFT (Y,O)" linkTo="/buyNFT" />
-              <AccordionItem title="Buy Blur NFT" linkTo="/buyBlurNFT" />
-              {/* <AccordionItem title="Get IPFS" linkTo="/getIPFS" /> */}
-              <AccordionItem title="Lucky Baby" linkTo="/luckyBaby" />
-              <AccordionItem title="Utils" linkTo="/utils" />
-              <AccordionItem
-                title="Cross-Chain Bridge"
-                linkTo="/crossChainBridge"
-              />{" "}
-              <AccordionItem title="ERC6551" linkTo="/erc6551" />
-              <AccordionItem title="Web3Auth" linkTo="/web3Auth" />
-              {/* ...添加更多的折叠项 */}
+              <h2>Ethereum:</h2>
+              <div style={{ height: "300px", overflowY: "auto" }}>
+                <AccordionItem title="Login DApp" linkTo="/" />
+                <AccordionItem title="Estimate TxFee" linkTo="/estimateTxFee" />
+                <AccordionItem
+                  title="Create Transaction"
+                  linkTo="/createTransaction"
+                />
+                <AccordionItem title="Faucet Token" linkTo="/faucet" />
+                <AccordionItem title="Burn Token" linkTo="/burn" />
+                <AccordionItem title="Token Price" linkTo="/display" />
+                <AccordionItem title="ENS Service" linkTo="/ens" />
+                <AccordionItem title="Mint NFT" linkTo="/mintnft" />
+                <AccordionItem title="Get Collection" linkTo="/getCollection" />
+                <AccordionItem title="Sign EIP712" linkTo="/signEIP712" />
+                <AccordionItem
+                  title="Get OpenSeaData"
+                  linkTo="/getOpenSeaData"
+                />
+                <AccordionItem title="Buy NFT (Y,O)" linkTo="/buyNFT" />
+                <AccordionItem title="Buy Blur NFT" linkTo="/buyBlurNFT" />
+                {/* <AccordionItem title="Get IPFS" linkTo="/getIPFS" /> */}
+                <AccordionItem title="Lucky Baby" linkTo="/luckyBaby" />
+                <AccordionItem title="Utils" linkTo="/utils" />
+                <AccordionItem
+                  title="Cross-Chain Bridge"
+                  linkTo="/crossChainBridge"
+                />{" "}
+                <AccordionItem title="ERC6551" linkTo="/erc6551" />
+                <AccordionItem title="Web3Auth" linkTo="/web3Auth" />
+                {/* ...添加更多的折叠项 */}
+              </div>
+              <h2>Solana:</h2>
+              <div style={{ height: "300px", overflowY: "auto" }}>
+                <AccordionItem title="Login Solana" linkTo="/loginSolana" />
+                <AccordionItem title="Weth Solana" linkTo="/wethSolana" />
+              </div>
             </div>
           )}
         </div>
+
         <div
           style={{
             textAlign: "right",
@@ -226,6 +239,7 @@ function App() {
           <Route path="/erc6551" element={<ERC6551Page />} />
           <Route path="/estimateTxFee" element={<EstimateTxFeePage />} />
           <Route path="/web3Auth" element={<Web3AuthPage />} />
+          <Route path="/wethSolana" element={<WethPage />} />
         </Routes>
       </div>
     </Router>
