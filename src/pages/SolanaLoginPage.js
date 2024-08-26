@@ -4,6 +4,7 @@ import * as buffer from "buffer";
 // import base58 from "bs58";
 
 import {
+  Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
   SYSVAR_RENT_PUBKEY,
@@ -37,6 +38,7 @@ const SolanaLoginPage = () => {
 
   const [associatedAddress, setAssociatedAddress] = useState("");
   const [solPrivateKey, setSolPrivateKey] = useState("");
+  const [solPublicKey, setSolPublicKey] = useState("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -284,6 +286,10 @@ const SolanaLoginPage = () => {
     const pair = JSON.parse(keypair);
     const privateKey = base58.encode(pair);
     setSolPrivateKey(privateKey);
+
+    setSolPublicKey(
+      Keypair.fromSecretKey(new Uint8Array(pair)).publicKey.toString()
+    );
   };
 
   const loginSolanaButton = () => {
@@ -437,7 +443,9 @@ const SolanaLoginPage = () => {
           <p></p>
           {getSOLPrivatekeyButton()}
           <p></p>
-          SOL PrivateKey: {solPrivateKey}
+          PrivateKey: {solPrivateKey}
+          <p></p>
+          PublicKey: {solPublicKey}
         </div>
       </div>
     </center>
