@@ -1,7 +1,9 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import weth_idl from "../idls/weth_idl.json";
-import { PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddress } from "@solana/spl-token";
+import { getAssociatedAddress } from "./Utils";
 
 const TOKEN_METADATA_PROGRAM_ID = new PublicKey(
   "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
@@ -28,6 +30,18 @@ export const getMetadataPDA = (mint) => {
     ],
     TOKEN_METADATA_PROGRAM_ID
   )[0];
+};
+
+export const getWethBalance = async (connection, owner) => {
+  let balance = "0";
+  try {
+    let ata = await getAssociatedAddress(getWethMintAddress(), owner);
+
+    const res = await connection.getTokenAccountBalance(new PublicKey(ata));
+    balance = res.value.amount;
+  } catch (error) {}
+
+  return balance;
 };
 
 export { getWethProgram };

@@ -29,7 +29,9 @@ import {
   getMetadataPDA,
   getWethMintAddress,
   getWethProgram,
+  getWethBalance,
 } from "../utils/GetWethProgram";
+import { BN } from "@coral-xyz/anchor";
 
 const WethPage = () => {
   window.Buffer = buffer.Buffer;
@@ -38,6 +40,7 @@ const WethPage = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [currentSolanaAccount, setCurrentSolanaAccount] = useState(null);
   const [accountSOLBalance, setAccountSOLBalance] = useState(null);
+  const [accountWethBalance, setAccountWethBalance] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -77,6 +80,10 @@ const WethPage = () => {
       const balance = await getSolBalance(connection, accountSolana);
 
       setAccountSOLBalance(balance / LAMPORTS_PER_SOL);
+
+      setAccountWethBalance(
+        (await getWethBalance(connection, accountSolana)) / LAMPORTS_PER_SOL
+      );
     } catch (error) {
       console.log(error);
     }
@@ -173,7 +180,7 @@ const WethPage = () => {
     }
 
     if (state) {
-      console.log("already initialized");
+      alert("already initialized");
     } else {
       const tx = await program.methods
         .initialize()
@@ -184,6 +191,52 @@ const WethPage = () => {
         // .signers([owner])
         .rpc();
       console.log(tx);
+    }
+  };
+
+  const depositHandler = async () => {
+    const connection = getDevConnection();
+    const provider = await getPhantomProvider();
+    const program = getWethProgram(connection, provider);
+
+    try {
+      const tx = await program.methods
+        .deposit(new BN(LAMPORTS_PER_SOL))
+        .accountsPartial({
+          signer: provider.publicKey,
+        })
+        // .signers([owner])
+        .rpc();
+      console.log(tx);
+      alert("deposit success");
+    } catch (error) {
+      console.log(error);
+      setAlertMessage("deposit failed");
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    }
+  };
+
+  const withdrwaHandler = async () => {
+    const connection = getDevConnection();
+    const provider = await getPhantomProvider();
+    const program = getWethProgram(connection, provider);
+
+    try {
+      const tx = await program.methods
+        .withdraw(new BN(LAMPORTS_PER_SOL))
+        .accountsPartial({
+          signer: provider.publicKey,
+        })
+        // .signers([owner])
+        .rpc();
+      console.log(tx);
+      alert("withdraw success");
+    } catch (error) {
+      console.log(error);
+      alert("withdraw failed");
     }
   };
 
@@ -218,6 +271,22 @@ const WethPage = () => {
         className="cta-button mint-nft-button"
       >
         initialize
+      </button>
+    );
+  };
+
+  const depositButton = () => {
+    return (
+      <button onClick={depositHandler} className="cta-button mint-nft-button">
+        deposit 1 SOL
+      </button>
+    );
+  };
+
+  const withdrawButton = () => {
+    return (
+      <button onClick={withdrwaHandler} className="cta-button mint-nft-button">
+        withdraw 1 weth
       </button>
     );
   };
@@ -266,10 +335,24 @@ const WethPage = () => {
       </div>
       <h2>Weth</h2>
       <p>address: {getWethMintAddress()}</p>
+      <p>balance: {accountWethBalance} WETH</p>
       <div className="bordered-div">
         <h3>Initialize</h3>
         <p></p>
         {currentSolanaAccount ? initializeButton() : PleaseLogin()}
+      </div>
+      <p></p>
+      <div className="bordered-div">
+        <h3>Deposit</h3>
+        <p></p>
+        {currentSolanaAccount ? depositButton() : PleaseLogin()}
+      </div>
+
+      <p></p>
+      <div className="bordered-div">
+        <h3>Withdraw</h3>
+        <p></p>
+        {currentSolanaAccount ? withdrawButton() : PleaseLogin()}
       </div>
     </center>
   );
