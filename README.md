@@ -74,9 +74,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 # Docker
 
 拉取已有 images，并运行容器
-`docker pull ethan01/ethan-yungou:v2.0.1`
+`docker pull ethan01/ethan-yungou:v2.0.6`
 
-`docker run -p 8888:3000 --name  web01 ethan01/ethan-yungou:v2.0.1`
+`docker run -p 8888:3000 --name ethan-yungou-web ethan01/ethan-yungou:v2.0.6`
 
 ## build images
 
@@ -84,7 +84,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## run container
 
-`docker run -p 8080:3000 --name yungou-web ethan-yungou:v2`
+`docker run -p 8888:3000 --name yungou-web ethan-yungou:v2`
 
 ## push
 
@@ -96,9 +96,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 `docker pull ethan01/ethan-yungou:v2`
 
-`docker run -p 8080:3000 --name yungou-web ethan01/ethan-yungou:v2`
+`docker run -p 8888:3000 --name yungou-web ethan01/ethan-yungou:v2`
 
 ## docker-compose
+
+运行 docker-compose.yml
 
 `docker-compose up`
 
@@ -106,12 +108,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # docker Multi-platform build
 
-<!-- `docker buildx build -t ethan01/ethan-yungou:v2.0.1 . --platform linux/amd64,linux/arm64 --load` -->
+<!-- load image to docker -->
 
-<!-- build and push -->
+`docker buildx build -t ethan01/ethan-yungou:v2.0.6 . --platform linux/arm64 --load`
 
-`docker buildx build -t ethan01/ethan-yungou:v2.0.1 . --platform linux/amd64,linux/arm64 --push`
+<!-- push -->
 
-<!-- Windows -->
-
-`docker buildx build -t ethan01/ethan-yungou:v2.0.3 . --platform linux/amd64 --push`
+`docker buildx build -t ethan01/ethan-yungou:v2.0.6 . --platform linux/amd64,linux/arm64 --push`
