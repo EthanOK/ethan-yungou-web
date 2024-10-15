@@ -23,9 +23,13 @@ import { PublicKey } from "@solana/web3.js";
 import { Alchemy, Network } from "alchemy-sdk";
 
 const equalityStringIgnoreCase = (string1, string2) => {
-  if (string1.toLowerCase() === string2.toLowerCase()) {
-    return true;
-  } else {
+  try {
+    if (string1.toLowerCase() === string2.toLowerCase()) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
     return false;
   }
 };
@@ -103,10 +107,10 @@ const getYunGouAddressAndParameters = async (chainId) => {
   } else if (chainId == 56) {
     YG_Address = YunGou2_0_tbsc;
     parameters = order_data_tbsc.parameters;
-  }else if (chainId == 11155111) {
+  } else if (chainId == 11155111) {
     YG_Address = YunGou2_0_sepolia;
     parameters = order_data.parameters;
-  }else{
+  } else {
     YG_Address = YunGou2_0_main;
     parameters = order_data.parameters;
   }
