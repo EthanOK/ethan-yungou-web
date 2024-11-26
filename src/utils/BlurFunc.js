@@ -38,7 +38,7 @@ const onlyBuyBlurNFT = async (
     const tx = await signer.sendTransaction({
       to: blurData.to,
       data: latestData,
-      value: blurData.value,
+      value: blurData.value
     });
 
     if (tx != null) {

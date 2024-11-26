@@ -8,7 +8,7 @@ import {
   faucet_goerli,
   ygio_goerli,
   faucet_tbsc,
-  faucet_sepolia,
+  faucet_sepolia
 } from "./SystemConfiguration";
 const getContract = async (contractAddress, abi, signer) => {
   let contract = new ethers.Contract(contractAddress, abi, signer);
@@ -53,5 +53,5 @@ export {
   getFaucetContract,
   getERC20Contract,
   getCrossChainContract,
-  getERC721Contract,
+  getERC721Contract
 };

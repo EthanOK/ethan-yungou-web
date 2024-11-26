@@ -26,7 +26,7 @@ export const getMetadataPDA = (mint) => {
     [
       Buffer.from("metadata"),
       TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-      mint.toBuffer(),
+      mint.toBuffer()
     ],
     TOKEN_METADATA_PROGRAM_ID
   )[0];

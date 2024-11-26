@@ -4,7 +4,7 @@ import { EthereumProvider } from "@walletconnect/ethereum-provider";
 import {
   main_rpc,
   goerli_rpc,
-  projectId_walletconnect,
+  projectId_walletconnect
 } from "./SystemConfiguration";
 
 const switchChain = async (chainId) => {
@@ -13,7 +13,7 @@ const switchChain = async (chainId) => {
     let chainIdHEX = "0x" + number.toString(16);
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: chainIdHEX }],
+      params: [{ chainId: chainIdHEX }]
     });
 
     return true;
@@ -64,15 +64,15 @@ const getProvider = async () => {
           "eth_sendTransaction",
           "personal_sign",
           "eth_signTypedData",
-          "eth_signTypedData_v4",
+          "eth_signTypedData_v4"
         ],
         optionalMethods: [
           "eth_sendTransaction",
           "personal_sign",
           "eth_signTypedData",
-          "eth_signTypedData_v4",
+          "eth_signTypedData_v4"
         ],
-        showQrModal: "true",
+        showQrModal: "true"
       });
       // await provider.connector.killSession();
       //  Enable session (triggers QR Code modal)
@@ -205,5 +205,5 @@ export {
   getChainIdAndBalanceETHAndTransactionCount,
   getSignerAndAccountAndChainId,
   switchChain,
-  getAccount,
+  getAccount
 };

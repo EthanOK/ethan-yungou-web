@@ -10,7 +10,7 @@ import {
   getENSOfAddressByContract,
   getENSUniversalResolver,
   getENSByTokenId,
-  getPriceBaseUSDT,
+  getPriceBaseUSDT
 } from "../api/GetData.js";
 import { isAddress } from "../utils/Utils.js";
 import { logDOM } from "@testing-library/react";

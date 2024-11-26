@@ -5,7 +5,7 @@ import { getSignerAndChainId } from "../utils/GetProvider.js";
 
 import {
   getContractsForOwner,
-  getNFTListByOwnerAndContract,
+  getNFTListByOwnerAndContract
 } from "../utils/GetNFTListByOwner.js";
 
 const GetCollectionPage = () => {

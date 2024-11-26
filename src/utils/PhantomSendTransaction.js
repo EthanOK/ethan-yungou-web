@@ -5,7 +5,7 @@ const sendTransactionOfPhantom = async (connection, provider, transaction) => {
     transaction.recentBlockhash = blockhash;
 
     const { signature } = await provider.signAndSendTransaction(transaction);
-   
+
     await connection.getSignatureStatus(signature);
     return signature;
   } catch (error) {
@@ -13,4 +13,4 @@ const sendTransactionOfPhantom = async (connection, provider, transaction) => {
   }
 };
 
-module.exports = {sendTransactionOfPhantom};
+module.exports = { sendTransactionOfPhantom };

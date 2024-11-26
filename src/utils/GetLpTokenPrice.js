@@ -3,7 +3,7 @@ import {
   PancakeRouter,
   UniswapRouter,
   bsc_rpc,
-  main_rpc,
+  main_rpc
 } from "./SystemConfiguration";
 
 import routerABI from "../contracts/UniswapV2RouterABI.json";

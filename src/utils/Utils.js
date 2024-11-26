@@ -13,7 +13,7 @@ import {
   YunGouAggregators_goerli,
   sepolia_url,
   ALCHEMY_KEY_V3,
-  YunGou2_0_sepolia,
+  YunGou2_0_sepolia
 } from "./SystemConfiguration";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { BigNumber, ethers, providers, utils } from "ethers";
@@ -223,12 +223,12 @@ function getAlchemy(chainId) {
   if (Number(chainId) === 1) {
     return new Alchemy({
       apiKey: ALCHEMY_KEY_V3,
-      network: Network.ETH_MAINNET,
+      network: Network.ETH_MAINNET
     });
   } else if (Number(chainId) === 11155111) {
     return new Alchemy({
       apiKey: ALCHEMY_KEY_V3,
-      network: Network.ETH_SEPOLIA,
+      network: Network.ETH_SEPOLIA
     });
   }
   return null;
@@ -253,5 +253,5 @@ export {
   isContract,
   getAlchemyURL,
   getAlchemy,
-  getInfuraProvider,
+  getInfuraProvider
 };

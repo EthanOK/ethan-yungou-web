@@ -17,7 +17,7 @@ import {
   getProvider,
   getChainIdAndBalanceETHAndTransactionCount,
   getSignerAndChainId,
-  switchChain,
+  switchChain
 } from "../utils/GetProvider.js";
 
 import {
@@ -25,7 +25,7 @@ import {
   getScanURL,
   getYunGouAddressAndOrder,
   stringToArray,
-  getYunGouAggregatorsAddress,
+  getYunGouAggregatorsAddress
 } from "../utils/Utils.js";
 import Web3 from "web3";
 import Orders from "../utils/GetOrder.js";
@@ -35,7 +35,7 @@ import {
   chainName_G,
   YUNGOU_END,
   DefaultChainId,
-  chainName_S,
+  chainName_S
 } from "../utils/SystemConfiguration.js";
 
 const HomePage = () => {
@@ -242,7 +242,7 @@ const HomePage = () => {
       if (chainId == "1") {
         const openseaSDK = new OpenSeaSDK(provider, {
           chain: Chain.Mainnet,
-          apiKey: OPENSEA_MAIN_API,
+          apiKey: OPENSEA_MAIN_API
         });
         [
           protocolAddress,
@@ -252,7 +252,7 @@ const HomePage = () => {
           offerFulfillments,
           considerationFulfillments,
           fulfillerConduitKey,
-          maximumFulfilled,
+          maximumFulfilled
         ] = await Orders.getFulfillAvailableAdvancedOrders_datas(
           openseaSDK,
           currentAccount,
@@ -262,7 +262,7 @@ const HomePage = () => {
       } else if (chainId == "56") {
         const openseaSDK = new OpenSeaSDK(provider, {
           chain: Chain.BNB,
-          apiKey: OPENSEA_MAIN_API,
+          apiKey: OPENSEA_MAIN_API
         });
         [
           protocolAddress,
@@ -272,7 +272,7 @@ const HomePage = () => {
           offerFulfillments,
           considerationFulfillments,
           fulfillerConduitKey,
-          maximumFulfilled,
+          maximumFulfilled
         ] = await Orders.getFulfillAvailableAdvancedOrders_datas(
           openseaSDK,
           currentAccount,
@@ -303,7 +303,7 @@ const HomePage = () => {
           offerFulfillments,
           considerationFulfillments,
           fulfillerConduitKey,
-          maximumFulfilled,
+          maximumFulfilled
         ] = Orders_datas;
       }
       const YunGouAggregatorsAddress_ = await getYunGouAggregatorsAddress();
@@ -365,7 +365,7 @@ const HomePage = () => {
       const tradeDetail_opensea = {
         marketId: 2,
         value: currentPriceSumOpensea,
-        tradeData: inputDataWithExtra,
+        tradeData: inputDataWithExtra
       };
 
       tradeDetails.push(tradeDetail_opensea);
@@ -381,13 +381,13 @@ const HomePage = () => {
       const inputData_yg = result_ygAggregators.data;
       const inputDataWithExtra_YG = ethers.utils.hexConcat([
         inputData_yg,
-        extraData,
+        extraData
       ]);
       // console.log(inputDataWithExtra_YG);
       const tx = await signer.sendTransaction({
         to: ygAggregators.address,
         data: inputDataWithExtra_YG,
-        value: _sumValue,
+        value: _sumValue
       });
 
       // let tx = await ygAggregators.batchBuyWithETH(tradeDetails, {
@@ -431,7 +431,7 @@ const HomePage = () => {
       const tx = await signer.sendTransaction({
         to: result_.to,
         data: inputDataWithExtra,
-        value: order.totalPayment,
+        value: order.totalPayment
       });
       // 直接调用合约
       // let tx = await yungou1_5.excuteWithETH(order, currentAccount, {
@@ -488,7 +488,7 @@ const HomePage = () => {
       const tx = await signer.sendTransaction({
         to: result_.to,
         data: inputDataWithExtra,
-        value: valueEth,
+        value: valueEth
         // value: "100000000000000000",
       });
       // 直接调用合约;

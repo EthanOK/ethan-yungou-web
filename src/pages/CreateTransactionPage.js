@@ -4,7 +4,7 @@ import {
   utf8ToHexBytes,
   getScanURL,
   getDecimalBigNumber,
-  getInfuraProvider,
+  getInfuraProvider
 } from "../utils/Utils.js";
 import { getSigner } from "../utils/GetProvider.js";
 import { getAccessList } from "../utils/GetAccessListInTx.js";
@@ -70,7 +70,7 @@ const CreateTransactionPage = () => {
       const tx = await signer.sendTransaction({
         to: toValue,
         data: hexInputData,
-        value: amountBigNumber,
+        value: amountBigNumber
       });
       setMessage(`${url}/tx/${tx.hash}`);
       let txReceipt = await tx.wait();
@@ -115,7 +115,7 @@ const CreateTransactionPage = () => {
     const transaction = {
       from: await signer.getAddress(),
       // to: to == "" ? null : to,
-      data: data,
+      data: data
       // value: value.toHexString(),
     };
     const result = await getAccessList(provider, transaction);
@@ -126,7 +126,7 @@ const CreateTransactionPage = () => {
       const tx = await signer.sendTransaction({
         to: to == "" ? null : to,
         data: data,
-        value: value,
+        value: value
       });
       setMessage(`${url}/tx/${tx.hash}`);
       let txReceipt = await tx.wait();

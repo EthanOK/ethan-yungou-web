@@ -9,7 +9,7 @@ const getFulfillment_transaction = async (
   const order = await openseaSDK.api.getOrder({
     side: "ask",
     assetContractAddress: tokenAddress,
-    tokenId: tokenId,
+    tokenId: tokenId
   });
 
   if (order.orderHash == null) {
@@ -41,7 +41,7 @@ const getFulfillment_order = async (
   const order = await openseaSDK.api.getOrder({
     side: "ask",
     assetContractAddress: tokenAddress,
-    tokenId: tokenId,
+    tokenId: tokenId
   });
 
   if (order.orderHash == null) {
@@ -61,7 +61,7 @@ const getFulfillment_order = async (
   return [
     order.protocolAddress,
     order.currentPrice,
-    fulfillment.fulfillment_data.orders[0],
+    fulfillment.fulfillment_data.orders[0]
   ];
 };
 
@@ -84,7 +84,7 @@ const getFulfillAvailableOrders_data = async (
     const order = await openseaSDK.api.getOrder({
       side: "ask",
       assetContractAddress: tokenAddress_s[i],
-      tokenId: tokenIds[i],
+      tokenId: tokenIds[i]
     });
 
     if (order.orderHash == null) {
@@ -115,7 +115,7 @@ const getFulfillAvailableOrders_data = async (
     for (let j = 0; j < length_offer; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       offerFulfillments.push([fulfillmentComponent]);
     }
@@ -126,7 +126,7 @@ const getFulfillAvailableOrders_data = async (
     for (let j = 0; j < length_consideration; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       considerationFulfillments.push([fulfillmentComponent]);
     }
@@ -146,7 +146,7 @@ const getFulfillAvailableOrders_data = async (
     offerFulfillments,
     considerationFulfillments,
     fulfillerConduitKey,
-    maximumFulfilled,
+    maximumFulfilled
   ];
 };
 // getFulfillAvailableAdvancedOrders_datas
@@ -169,7 +169,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     const order = await openseaSDK.api.getOrder({
       side: "ask",
       assetContractAddress: tokenAddress_s[i],
-      tokenId: tokenIds[i],
+      tokenId: tokenIds[i]
     });
 
     if (order.orderHash == null) {
@@ -200,7 +200,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     for (let j = 0; j < length_offer; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       offerFulfillments.push([fulfillmentComponent]);
     }
@@ -211,7 +211,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     for (let j = 0; j < length_consideration; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       //   considerationFulfillments.push([fulfillmentComponent]);
       considerationFulfillments.push([fulfillmentComponent]);
@@ -229,7 +229,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
       numerator: 1,
       denominator: 1,
       signature: fulfillment.fulfillment_data.orders[0].signature,
-      extraData: "0x",
+      extraData: "0x"
     };
     advancedOrders.push(advancedOrder);
     // offerFulfillments.push(offerFulfillments_i);
@@ -244,14 +244,14 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     offerFulfillments,
     considerationFulfillments,
     fulfillerConduitKey,
-    maximumFulfilled,
+    maximumFulfilled
   ];
 };
 export default {
   getFulfillment_transaction,
   getFulfillment_order,
   getFulfillAvailableOrders_data,
-  getFulfillAvailableAdvancedOrders_datas,
+  getFulfillAvailableAdvancedOrders_datas
 };
 
 const json_generateFulfillmentData_demo = {
@@ -287,17 +287,17 @@ const json_generateFulfillmentData_demo = {
           additionalRecipients: [
             {
               amount: "3500000000000000",
-              recipient: "0x0000a26b00c1f0df003000390027140000faa719",
+              recipient: "0x0000a26b00c1f0df003000390027140000faa719"
             },
             {
               amount: "7000000000000000",
-              recipient: "0x56d4101f5ee2e5f253aa9e3471a5c08c0ffc87d5",
-            },
+              recipient: "0x56d4101f5ee2e5f253aa9e3471a5c08c0ffc87d5"
+            }
           ],
           signature:
-            "0xb211d281217a7e1ecb72049e42f6251ceeff32b43b6013d0bace0f24551abd1ddf856fd24d099f73e24e2d9b65f90b9186fe51bb431d3175d7b151fc0f862151",
-        },
-      },
+            "0xb211d281217a7e1ecb72049e42f6251ceeff32b43b6013d0bace0f24551abd1ddf856fd24d099f73e24e2d9b65f90b9186fe51bb431d3175d7b151fc0f862151"
+        }
+      }
     },
     orders: [
       {
@@ -309,8 +309,8 @@ const json_generateFulfillmentData_demo = {
               token: "0x0FCBD68251819928C8f6D182fC04bE733fA94170",
               identifierOrCriteria: "6539",
               startAmount: "1",
-              endAmount: "1",
-            },
+              endAmount: "1"
+            }
           ],
           consideration: [
             {
@@ -319,7 +319,7 @@ const json_generateFulfillmentData_demo = {
               identifierOrCriteria: "0",
               startAmount: "129500000000000000",
               endAmount: "129500000000000000",
-              recipient: "0x02881F93dbe585Be933A672f4dA8f9973c1d9fB1",
+              recipient: "0x02881F93dbe585Be933A672f4dA8f9973c1d9fB1"
             },
             {
               itemType: 0,
@@ -327,7 +327,7 @@ const json_generateFulfillmentData_demo = {
               identifierOrCriteria: "0",
               startAmount: "3500000000000000",
               endAmount: "3500000000000000",
-              recipient: "0x0000a26b00c1F0DF003000390027140000fAa719",
+              recipient: "0x0000a26b00c1F0DF003000390027140000fAa719"
             },
             {
               itemType: 0,
@@ -335,8 +335,8 @@ const json_generateFulfillmentData_demo = {
               identifierOrCriteria: "0",
               startAmount: "7000000000000000",
               endAmount: "7000000000000000",
-              recipient: "0x56d4101F5Ee2E5F253aA9e3471a5C08C0fFC87D5",
-            },
+              recipient: "0x56d4101F5Ee2E5F253aA9e3471a5C08C0fFC87D5"
+            }
           ],
           startTime: "1683688595",
           endTime: "1686366995",
@@ -348,13 +348,13 @@ const json_generateFulfillmentData_demo = {
           conduitKey:
             "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
           totalOriginalConsiderationItems: 3,
-          counter: 0,
+          counter: 0
         },
         signature:
-          "0xb211d281217a7e1ecb72049e42f6251ceeff32b43b6013d0bace0f24551abd1ddf856fd24d099f73e24e2d9b65f90b9186fe51bb431d3175d7b151fc0f862151",
-      },
-    ],
-  },
+          "0xb211d281217a7e1ecb72049e42f6251ceeff32b43b6013d0bace0f24551abd1ddf856fd24d099f73e24e2d9b65f90b9186fe51bb431d3175d7b151fc0f862151"
+      }
+    ]
+  }
 };
 const json_orderData_demo = {
   createdDate: "2023-05-12T06:21:05.456227",
@@ -368,7 +368,7 @@ const json_orderData_demo = {
     config: "",
     profileImgUrl:
       "https://storage.googleapis.com/opensea-static/opensea-profile/7.png",
-    user: {},
+    user: {}
   },
   taker: null,
   protocolData: {
@@ -380,8 +380,8 @@ const json_orderData_demo = {
           token: "0xc9A51f72e2fe2Fb74CccCd760b929019F680467a",
           identifierOrCriteria: "1959",
           startAmount: "1",
-          endAmount: "1",
-        },
+          endAmount: "1"
+        }
       ],
       consideration: [
         {
@@ -390,7 +390,7 @@ const json_orderData_demo = {
           identifierOrCriteria: "0",
           startAmount: "68250000000000000",
           endAmount: "68250000000000000",
-          recipient: "0x5AeF7F04fF4aB2D3048a8b07CB7e1CDc0Fc2e053",
+          recipient: "0x5AeF7F04fF4aB2D3048a8b07CB7e1CDc0Fc2e053"
         },
         {
           itemType: 0,
@@ -398,8 +398,8 @@ const json_orderData_demo = {
           identifierOrCriteria: "0",
           startAmount: "1750000000000000",
           endAmount: "1750000000000000",
-          recipient: "0x0000a26b00c1F0DF003000390027140000fAa719",
-        },
+          recipient: "0x0000a26b00c1F0DF003000390027140000fAa719"
+        }
       ],
       startTime: "1683872461",
       endTime: "1684477261",
@@ -411,9 +411,9 @@ const json_orderData_demo = {
       conduitKey:
         "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
       totalOriginalConsiderationItems: 2,
-      counter: 0,
+      counter: 0
     },
-    signature: null,
+    signature: null
   },
   protocolAddress: "0x00000000000000adc04c56bf30ac9d3c0aaf14dc",
   currentPrice: "70000000000000000",
@@ -424,10 +424,10 @@ const json_orderData_demo = {
         config: "",
         profileImgUrl:
           "https://storage.googleapis.com/opensea-static/opensea-profile/29.png",
-        user: null,
+        user: null
       },
-      basisPoints: "250",
-    },
+      basisPoints: "250"
+    }
   ],
   takerFees: [],
   side: "ask",
@@ -459,7 +459,7 @@ const json_orderData_demo = {
           devSellerFeeBasisPoints: 500,
           imageUrl:
             "https://i.seadn.io/gcs/files/ccd8cf058003d71c4e7cbbff1ecd2283.png?w=500&auto=format",
-          externalLink: null,
+          externalLink: null
         },
         collection: {
           createdDate: null,
@@ -483,7 +483,7 @@ const json_orderData_demo = {
             "https://i.seadn.io/gcs/files/ccd8cf058003d71c4e7cbbff1ecd2283.png?w=500&auto=format",
           externalLink: null,
           wikiLink: null,
-          fees: { openseaFees: {}, sellerFees: {} },
+          fees: { openseaFees: {}, sellerFees: {} }
         },
         orders: null,
         sellOrders: null,
@@ -501,15 +501,15 @@ const json_orderData_demo = {
           "https://opensea.io/assets/ethereum/0xc9a51f72e2fe2fb74ccccd760b929019f680467a/1959",
         numSales: 0,
         lastSale: null,
-        backgroundColor: null,
-      },
+        backgroundColor: null
+      }
     ],
     name: null,
     slug: null,
     description: null,
     externalLink: null,
     permalink: null,
-    sellOrders: null,
+    sellOrders: null
   },
   takerAssetBundle: {
     maker: null,
@@ -534,7 +534,7 @@ const json_orderData_demo = {
           devBuyerFeeBasisPoints: 0,
           devSellerFeeBasisPoints: 0,
           imageUrl: null,
-          externalLink: null,
+          externalLink: null
         },
         collection: {
           createdDate: null,
@@ -555,7 +555,7 @@ const json_orderData_demo = {
           largeImageUrl: null,
           externalLink: null,
           wikiLink: null,
-          fees: { openseaFees: {}, sellerFees: {} },
+          fees: { openseaFees: {}, sellerFees: {} }
         },
         orders: null,
         sellOrders: null,
@@ -573,14 +573,14 @@ const json_orderData_demo = {
           "https://opensea.io/assets/ethereum/0x0000000000000000000000000000000000000000/0",
         numSales: 4,
         lastSale: null,
-        backgroundColor: null,
-      },
+        backgroundColor: null
+      }
     ],
     name: null,
     slug: null,
     description: null,
     externalLink: null,
     permalink: null,
-    sellOrders: null,
-  },
+    sellOrders: null
+  }
 };

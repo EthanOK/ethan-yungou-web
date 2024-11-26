@@ -3,13 +3,13 @@ import {
   getScanURL,
   isAddress,
   isContract,
-  stringToArray,
+  stringToArray
 } from "../utils/Utils.js";
 
 import {
   getSigner,
   getSignerAndAccountAndChainId,
-  getSignerAndChainId,
+  getSignerAndChainId
 } from "../utils/GetProvider.js";
 
 import { TBVersion, TokenboundClient } from "@tokenbound/sdk";
@@ -46,7 +46,7 @@ const ERC6551Page = () => {
     const tokenboundClient = new TokenboundClient({
       signer,
       chainId,
-      version: isV2 ? TBVersion.V2 : TBVersion.V3,
+      version: isV2 ? TBVersion.V2 : TBVersion.V3
     });
 
     return tokenboundClient;
@@ -54,7 +54,7 @@ const ERC6551Page = () => {
 
   const ERC6551_Is_V3 = async (signer, account) => {
     const abi = [
-      "function supportsInterface(bytes4 interfaceId) external view returns (bool)",
+      "function supportsInterface(bytes4 interfaceId) external view returns (bool)"
     ];
 
     const erc6551 = new Contract(account, abi, signer);
@@ -104,12 +104,12 @@ const ERC6551Page = () => {
 
       const account = tokenboundClient.getAccount({
         tokenContract: contract,
-        tokenId: tokenId,
+        tokenId: tokenId
       });
 
       setTbAccount(account);
       const isCreate = await tokenboundClient.checkAccountDeployment({
-        accountAddress: account,
+        accountAddress: account
       });
       setCreated(String(isCreate));
 
@@ -150,12 +150,12 @@ const ERC6551Page = () => {
 
       const account = tokenboundClient.getAccount({
         tokenContract: contract,
-        tokenId: tokenId,
+        tokenId: tokenId
       });
 
       setTbAccount(account);
       const isCreate = await tokenboundClient.checkAccountDeployment({
-        accountAddress: account,
+        accountAddress: account
       });
 
       setCreated(String(isCreate));
@@ -173,12 +173,11 @@ const ERC6551Page = () => {
 
       const multiCallTx_data = await tokenboundClient.prepareCreateAccount({
         tokenContract: contract,
-        tokenId: tokenId,
+        tokenId: tokenId
       });
 
-      const tx = await tokenboundClient.signer.sendTransaction(
-        multiCallTx_data
-      );
+      const tx =
+        await tokenboundClient.signer.sendTransaction(multiCallTx_data);
       console.log(tx);
 
       if (tx.hash != null) {

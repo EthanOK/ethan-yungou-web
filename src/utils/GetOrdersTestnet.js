@@ -114,7 +114,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     for (let j = 0; j < length_offer; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       offerFulfillments.push([fulfillmentComponent]);
     }
@@ -125,7 +125,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     for (let j = 0; j < length_consideration; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       //   considerationFulfillments.push([fulfillmentComponent]);
       considerationFulfillments.push([fulfillmentComponent]);
@@ -142,7 +142,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
       numerator: 1,
       denominator: 1,
       signature: fulfillment.fulfillment_data.orders[0].signature,
-      extraData: "0x",
+      extraData: "0x"
     };
     advancedOrders.push(advancedOrder);
     // offerFulfillments.push(offerFulfillments_i);
@@ -157,7 +157,7 @@ const getFulfillAvailableAdvancedOrders_datas = async (
     offerFulfillments,
     considerationFulfillments,
     fulfillerConduitKey,
-    maximumFulfilled,
+    maximumFulfilled
   ];
 };
 // getFulfillAvailableOrders_datas
@@ -217,7 +217,7 @@ const getFulfillAvailableOrders_data = async (
     for (let j = 0; j < length_offer; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       offerFulfillments.push([fulfillmentComponent]);
     }
@@ -228,7 +228,7 @@ const getFulfillAvailableOrders_data = async (
     for (let j = 0; j < length_consideration; j++) {
       const fulfillmentComponent = {
         orderIndex: i,
-        itemIndex: j,
+        itemIndex: j
       };
       //   considerationFulfillments.push([fulfillmentComponent]);
       considerationFulfillments.push([fulfillmentComponent]);
@@ -240,7 +240,7 @@ const getFulfillAvailableOrders_data = async (
 
     let order = {
       parameters: fulfillment.fulfillment_data.orders[0].parameters,
-      signature: fulfillment.fulfillment_data.orders[0].signature,
+      signature: fulfillment.fulfillment_data.orders[0].signature
     };
 
     orders.push(order);
@@ -256,7 +256,7 @@ const getFulfillAvailableOrders_data = async (
     offerFulfillments,
     considerationFulfillments,
     fulfillerConduitKey,
-    maximumFulfilled,
+    maximumFulfilled
   ];
 };
 // getFulfillment_order
@@ -289,7 +289,7 @@ const getFulfillment_order = async (
   return [
     protocolAddress,
     currentPrice,
-    fulfillment.fulfillment_data.orders[0],
+    fulfillment.fulfillment_data.orders[0]
   ];
 };
 export default {
@@ -297,7 +297,7 @@ export default {
   getFulfillment_transaction,
   getFulfillAvailableAdvancedOrders_datas,
   getFulfillment_order,
-  getFulfillAvailableOrders_data,
+  getFulfillAvailableOrders_data
 };
 
 async function waitOneSecond() {
@@ -349,7 +349,7 @@ async function getOrderHash(chainName, contract_address, token_id) {
   return [
     orders[0].order_hash,
     orders[0].protocol_address,
-    orders[0].current_price,
+    orders[0].current_price
   ];
 }
 async function getOrder(contract_address, token_id) {
@@ -378,10 +378,10 @@ async function getFulfillmentData(hash, chain, protocol_address, fulfiller) {
       listing: {
         hash: hash,
         chain: chain,
-        protocol_address: protocol_address,
+        protocol_address: protocol_address
       },
-      fulfiller: { address: fulfiller },
-    }),
+      fulfiller: { address: fulfiller }
+    })
   };
 
   const response_data = await fetch(
@@ -409,10 +409,10 @@ async function getFulfillmentData_transaction(
       listing: {
         hash: hash,
         chain: chain,
-        protocol_address: protocol_address,
+        protocol_address: protocol_address
       },
-      fulfiller: { address: fulfiller },
-    }),
+      fulfiller: { address: fulfiller }
+    })
   };
 
   const response_data = await fetch(

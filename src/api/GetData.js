@@ -10,10 +10,10 @@ const getSystemData = async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = await result.json();
 
@@ -34,10 +34,10 @@ const getUserToken = async (params) => {
   let result = await fetch(`${url}/api/login`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
 
@@ -50,16 +50,16 @@ const getOrderHashSignatureOpenSea = async (chainId, contract, tokenId) => {
   let requestParameters = {
     chainId: chainId,
     tokenAddress: contract,
-    tokenId: tokenId,
+    tokenId: tokenId
   };
   let result = await fetch(`${url}/api/getOrderHashSignatureOpenSea`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -68,16 +68,16 @@ const getOrderHashSignatureOpenSea = async (chainId, contract, tokenId) => {
 const getENSOfAddress = async (address) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    address: address,
+    address: address
   };
   let result = await fetch(`${url}/api/getENSOfAddress`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -86,16 +86,16 @@ const getENSOfAddress = async (address) => {
 const getENSOfAddressTheGraph = async (address) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    address: address,
+    address: address
   };
   let result = await fetch(`${url}/api/getENSOfAddressTheGraph`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -104,16 +104,16 @@ const getENSOfAddressTheGraph = async (address) => {
 const getAddressOfENS = async (ens) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    ens: ens,
+    ens: ens
   };
   let result = await fetch(`${url}/api/getAddressOfENS`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -122,16 +122,16 @@ const getAddressOfENS = async (ens) => {
 const getAddressOfENSTheGraph = async (ens) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    ens: ens,
+    ens: ens
   };
   let result = await fetch(`${url}/api/getAddressOfENSTheGraph`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -140,16 +140,16 @@ const getAddressOfENSTheGraph = async (ens) => {
 const getNameByTokenIdTheGraph = async (tokenId) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    tokenId: tokenId,
+    tokenId: tokenId
   };
   let result = await fetch(`${url}/api/getENSByTokenIdTheGraph`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -158,16 +158,16 @@ const getNameByTokenIdTheGraph = async (tokenId) => {
 const getENSByTokenId = async (tokenId) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    tokenId: tokenId,
+    tokenId: tokenId
   };
   let result = await fetch(`${url}/api/getENSByTokenId`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -176,16 +176,16 @@ const getENSByTokenId = async (tokenId) => {
 const getENSOfAddressByContract = async (address) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    address: address,
+    address: address
   };
   let result = await fetch(`${url}/api/getENSOfAddressByContract`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -196,16 +196,16 @@ const getCrossChainSignature = async (chainId, ccType, amount) => {
   let requestParameters = {
     chainId: chainId,
     ccType: ccType,
-    amount: amount,
+    amount: amount
   };
   let result = await fetch(`${url}/api/getCrossChainSignature`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -214,16 +214,16 @@ const getCrossChainSignature = async (chainId, ccType, amount) => {
 const getClaimYGIOBalance = async (chainId) => {
   let userToken = localStorage.getItem("token") || "";
   let requestParameters = {
-    chainId: chainId,
+    chainId: chainId
   };
   let result = await fetch(`${url}/api/getClaimYGIOBalance`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;
@@ -235,7 +235,7 @@ const getENSUniversalResolver = async (address) => {
   const reverseName = utils.dnsEncode(dnsName);
   console.log(reverseName);
   let contractABI = [
-    "function reverse(bytes reverseName) view returns (string, address, address, address)",
+    "function reverse(bytes reverseName) view returns (string, address, address, address)"
   ];
   const contractInterface = new ethers.utils.Interface(contractABI);
   const data = contractInterface.encodeFunctionData("reverse", [reverseName]);
@@ -245,22 +245,22 @@ const getENSUniversalResolver = async (address) => {
     params: [
       {
         to: "0xc0497e381f536be9ce14b0dd3817cbcae57d2f62",
-        data: data,
+        data: data
       },
-      "latest",
+      "latest"
     ],
     id: 44,
-    jsonrpc: "2.0",
+    jsonrpc: "2.0"
   };
   console.log(JSON.stringify(requestParameters));
   try {
     let result = await fetch(main_rpc, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
 
-      body: JSON.stringify(requestParameters),
+      body: JSON.stringify(requestParameters)
     });
     let result_json = await result.json();
     console.log(result_json);
@@ -284,8 +284,8 @@ const getPriceBaseUSDT = async () => {
   let result = await fetch(`${url}/api/getPriceBaseUSDT`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-    },
+      "Content-Type": "application/json"
+    }
   });
   let result_json = result.json();
   return result_json;
@@ -295,7 +295,7 @@ const getPriceBaseUSDTByBinance = async () => {
   let result = await fetch(
     `https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT`,
     {
-      method: "GET",
+      method: "GET"
     }
   );
   let result_json = await result.json();
@@ -311,9 +311,9 @@ const getBlurLoginMessageByOpensea = async (userAddress) => {
     const response = await fetch(postURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     // console.log(response);
     if (response.ok) {
@@ -343,9 +343,9 @@ const getBlurLoginMessageByNFTGO = async (userAddress) => {
     const response = await fetch(postURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     // console.log(response);
     if (response.ok) {
@@ -373,9 +373,9 @@ const getBlurAccessTokenByOpensea = async (requestData) => {
     const response = await fetch(postURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     // console.log(response);
     if (response.ok) {
@@ -404,9 +404,9 @@ const getBlurAccessTokenByNFTGO = async (requestData) => {
     const response = await fetch(postURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     // console.log(response);
     if (response.ok) {
@@ -446,5 +446,5 @@ export {
   getBlurAccessTokenByNFTGO,
   getBlurLoginMessageByOpensea,
   getBlurAccessTokenByOpensea,
-  getPriceBaseUSDTByBinance,
+  getPriceBaseUSDTByBinance
 };

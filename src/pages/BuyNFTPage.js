@@ -6,7 +6,7 @@ import {
   fulfillOrder,
   fulfillBasicOrder_efficient,
   fulfillAvailableAdvancedOrders,
-  fulfillAvailableOrders,
+  fulfillAvailableOrders
 } from "../utils/OpenseaFunc.js";
 
 const BuyNFTPage = () => {

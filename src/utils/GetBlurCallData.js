@@ -32,16 +32,16 @@ const getBlurCalldata = async (
     buyer: buyerAddress,
     safeMode: false,
     // accessToken 是登陆 blur 获得的token
-    accessToken: buyerBlurAccessToken,
+    accessToken: buyerBlurAccessToken
   };
   try {
     // Make the POST request using the fetch API
     const response = await fetch(postURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     // console.log(response);
     if (response.ok) {
@@ -75,8 +75,8 @@ const getNFTGoBlurOrderInfos = async (contractAddress, tokenId) => {
     const response = await fetch(postURL, {
       method: "GET",
       headers: {
-        accept: "application/json",
-      },
+        accept: "application/json"
+      }
     });
 
     if (response.ok) {
@@ -94,7 +94,7 @@ const getNFTGoBlurOrderInfos = async (contractAddress, tokenId) => {
               maker: order.maker,
               orderId: order.id,
               tokenId: order.tokenId,
-              tokenPrice: order.tokenPrice,
+              tokenPrice: order.tokenPrice
             };
             orderInfos.push(orderInfo);
           }

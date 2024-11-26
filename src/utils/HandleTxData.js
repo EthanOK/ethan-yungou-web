@@ -20,7 +20,7 @@ const getNewTx = async (
     const tx = await signer.sendTransaction({
       to: contractAddress,
       data: newTXData,
-      value: value_wei,
+      value: value_wei
     });
     return tx;
   } catch (error) {

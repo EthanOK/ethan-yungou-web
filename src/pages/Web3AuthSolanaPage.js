@@ -4,7 +4,7 @@ import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import {
   SolanaPrivateKeyProvider,
-  SolanaWallet,
+  SolanaWallet
 } from "@web3auth/solana-provider";
 import { ethers } from "ethers";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
@@ -23,7 +23,7 @@ const chainConfig = {
   blockExplorerUrl: "https://sepolia.etherscan.io",
   ticker: "ETH",
   tickerName: "Ethereum",
-  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
 };
 
 const chainConfig_solana = {
@@ -34,14 +34,14 @@ const chainConfig_solana = {
   blockExplorerUrl: "https://explorer.solana.com",
   ticker: "SOL",
   tickerName: "Solana",
-  logo: "https://images.toruswallet.io/solana.svg",
+  logo: "https://images.toruswallet.io/solana.svg"
 };
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig: chainConfig },
+  config: { chainConfig: chainConfig }
 });
 const privateKeyProvider_solana = new SolanaPrivateKeyProvider({
-  config: { chainConfig: chainConfig_solana },
+  config: { chainConfig: chainConfig_solana }
 });
 
 // const web3auth = new Web3Auth({
@@ -53,7 +53,7 @@ const privateKeyProvider_solana = new SolanaPrivateKeyProvider({
 const web3auth = new Web3Auth({
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
-  privateKeyProvider: privateKeyProvider_solana,
+  privateKeyProvider: privateKeyProvider_solana
 });
 
 const Web3AuthSolanaPage = () => {
@@ -111,7 +111,7 @@ const Web3AuthSolanaPage = () => {
   const getConnnection = async (solanaWallet) => {
     const connectionConfig = await solanaWallet.request({
       method: "solana_provider_config",
-      params: [],
+      params: []
     });
     const connection = new Connection(connectionConfig.rpcTarget);
     return connection;
@@ -207,7 +207,7 @@ const Web3AuthSolanaPage = () => {
     //   method: "eth_private_key",
     // });
     const privateKey = await web3auth.provider.request({
-      method: "solanaPrivateKey",
+      method: "solanaPrivateKey"
     });
 
     const buffer = Buffer.from(privateKey, "hex");

@@ -134,7 +134,7 @@ function App() {
         style={{
           color: "red",
           fontSize: "10px",
-          padding: "10px 20px",
+          padding: "10px 20px"
         }}
       >
         DisConnect
@@ -189,7 +189,10 @@ function App() {
                 />{" "}
                 <AccordionItem title="ERC6551" linkTo="/erc6551" />
                 <AccordionItem title="Web3Auth" linkTo="/web3Auth" />
-                <AccordionItem title="Web3Auth Solana" linkTo="/web3AuthSolana" />
+                <AccordionItem
+                  title="Web3Auth Solana"
+                  linkTo="/web3AuthSolana"
+                />
                 {/* ...添加更多的折叠项 */}
               </div>
               <h2>Solana:</h2>
@@ -203,7 +206,7 @@ function App() {
 
         <div
           style={{
-            textAlign: "right",
+            textAlign: "right"
           }}
         >
           <p></p>

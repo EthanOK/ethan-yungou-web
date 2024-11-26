@@ -3,17 +3,17 @@ import { getSigner } from "./GetProvider";
 import { _TypedDataEncoder, TypedDataEncoder } from "@ethersproject/hash";
 import {
   equalityStringIgnoreCase,
-  getYunGouAddressAndParameters,
+  getYunGouAddressAndParameters
 } from "./Utils";
 import {
   YunGou2_0_main,
   YunGou2_0_goerli,
   YunGou2_0_tbsc,
-  PRIVATEKEY_VERIFYER,
+  PRIVATEKEY_VERIFYER
 } from "./SystemConfiguration";
 import {
   getSignerAndChainId,
-  getSignerAndAccountAndChainId,
+  getSignerAndAccountAndChainId
 } from "./GetProvider";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { Seaport } from "@opensea/seaport-js";
@@ -25,14 +25,14 @@ const signEIP712Message = async (signer, chainId) => {
       VerifyClaim: [
         { name: "userAddress", type: "address" },
         { name: "randNo", type: "uint256" },
-        { name: "amount", type: "uint256" },
-      ],
+        { name: "amount", type: "uint256" }
+      ]
     };
     const domainData = {
       name: "YunGou DApp",
       version: "2",
       chainId: parseInt(chainId_, 10),
-      verifyingContract: "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd",
+      verifyingContract: "0x0000006c517ed32ff128b33f137bb4ac31b0c6dd"
     };
     const randNo = utils.hexlify(utils.randomBytes(8));
     const amount = utils.hexlify(utils.randomBytes(1));
@@ -43,7 +43,7 @@ const signEIP712Message = async (signer, chainId) => {
     var message = {
       userAddress: signerAddress,
       randNo: randNo,
-      amount: amount,
+      amount: amount
     };
 
     // TODO:_signTypedData
@@ -143,7 +143,7 @@ const signEIP712YunGouMessage = async (signer, chainId) => {
     name: "YunGou",
     version: "2.0",
     chainId: chainId,
-    verifyingContract: YG_Address,
+    verifyingContract: YG_Address
   };
 
   const types = {
@@ -161,8 +161,8 @@ const signEIP712YunGouMessage = async (signer, chainId) => {
       { name: "salt", type: "uint256" },
       { name: "royaltyFee", type: "uint256" },
       { name: "platformFee", type: "uint256" },
-      { name: "afterTaxPrice", type: "uint256" },
-    ],
+      { name: "afterTaxPrice", type: "uint256" }
+    ]
   };
 
   console.log(message);
@@ -193,7 +193,7 @@ const signEIP712YunGouMessage = async (signer, chainId) => {
     let result = {
       orderHash: orderHash,
       orderSignature: orderSignature,
-      systemSignature: systemSignature,
+      systemSignature: systemSignature
     };
     return result;
   } catch (error) {
@@ -215,7 +215,7 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
     name: "Seaport",
     version: "1.5",
     chainId: chainId,
-    verifyingContract: "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC",
+    verifyingContract: "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC"
   };
 
   console.log(domainData);
@@ -239,97 +239,97 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
     OrderComponents: [
       {
         name: "offerer",
-        type: "address",
+        type: "address"
       },
       {
         name: "zone",
-        type: "address",
+        type: "address"
       },
       {
         name: "offer",
-        type: "OfferItem[]",
+        type: "OfferItem[]"
       },
       {
         name: "consideration",
-        type: "ConsiderationItem[]",
+        type: "ConsiderationItem[]"
       },
       {
         name: "orderType",
-        type: "uint8",
+        type: "uint8"
       },
       {
         name: "startTime",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "endTime",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "zoneHash",
-        type: "bytes32",
+        type: "bytes32"
       },
       {
         name: "salt",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "conduitKey",
-        type: "bytes32",
+        type: "bytes32"
       },
       {
         name: "counter",
-        type: "uint256",
-      },
+        type: "uint256"
+      }
     ],
     OfferItem: [
       {
         name: "itemType",
-        type: "uint8",
+        type: "uint8"
       },
       {
         name: "token",
-        type: "address",
+        type: "address"
       },
       {
         name: "identifierOrCriteria",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "startAmount",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "endAmount",
-        type: "uint256",
-      },
+        type: "uint256"
+      }
     ],
     ConsiderationItem: [
       {
         name: "itemType",
-        type: "uint8",
+        type: "uint8"
       },
       {
         name: "token",
-        type: "address",
+        type: "address"
       },
       {
         name: "identifierOrCriteria",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "startAmount",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "endAmount",
-        type: "uint256",
+        type: "uint256"
       },
       {
         name: "recipient",
-        type: "address",
-      },
-    ],
+        type: "address"
+      }
+    ]
   };
 
   let message = {
@@ -341,8 +341,8 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
         token: "0x97f236E644db7Be9B8308525e6506E4B3304dA7B",
         identifierOrCriteria: BigNumber.from("111"),
         startAmount: BigNumber.from("1"),
-        endAmount: BigNumber.from("1"),
-      },
+        endAmount: BigNumber.from("1")
+      }
     ],
     consideration: [
       {
@@ -351,7 +351,7 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
         identifierOrCriteria: BigNumber.from("0"),
         startAmount: BigNumber.from("1082250000000000000"),
         endAmount: BigNumber.from("1082250000000000000"),
-        recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
+        recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2"
       },
       {
         itemType: 0,
@@ -359,8 +359,8 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
         identifierOrCriteria: BigNumber.from("0"),
         startAmount: BigNumber.from("27750000000000000"),
         endAmount: BigNumber.from("27750000000000000"),
-        recipient: "0x0000a26b00c1F0DF003000390027140000fAa719",
-      },
+        recipient: "0x0000a26b00c1F0DF003000390027140000fAa719"
+      }
     ],
     orderType: 0,
     startTime: BigNumber.from("1686193412"),
@@ -372,7 +372,7 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
     ),
     conduitKey:
       "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
-    counter: BigNumber.from("0"),
+    counter: BigNumber.from("0")
   };
   console.log(message);
 
@@ -393,7 +393,7 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
     console.log("orderHash: " + orderHash);
     let result = {
       orderHash: orderHash,
-      orderSignature: orderSignature,
+      orderSignature: orderSignature
     };
     return result;
   } catch (error) {
@@ -411,8 +411,8 @@ const signEIP712OpenSeaMessage = async (signer, chainId) => {
 //TODO:OpenSea 的批量签名
 const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   const seaport = new Seaport(signer);
-  const domainData=await seaport._getDomainData()
- 
+  const domainData = await seaport._getDomainData();
+
   console.log(domainData);
 
   const order = {
@@ -424,8 +424,8 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
         token: "0x97f236E644db7Be9B8308525e6506E4B3304dA7B",
         identifierOrCriteria: BigNumber.from("111"),
         startAmount: BigNumber.from("1"),
-        endAmount: BigNumber.from("1"),
-      },
+        endAmount: BigNumber.from("1")
+      }
     ],
     consideration: [
       {
@@ -434,7 +434,7 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
         identifierOrCriteria: BigNumber.from("0"),
         startAmount: BigNumber.from("1082250000000000000"),
         endAmount: BigNumber.from("1082250000000000000"),
-        recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
+        recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2"
       },
       {
         itemType: 0,
@@ -442,8 +442,8 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
         identifierOrCriteria: BigNumber.from("0"),
         startAmount: BigNumber.from("27750000000000000"),
         endAmount: BigNumber.from("27750000000000000"),
-        recipient: "0x0000a26b00c1F0DF003000390027140000fAa719",
-      },
+        recipient: "0x0000a26b00c1F0DF003000390027140000fAa719"
+      }
     ],
     orderType: 0,
     startTime: BigNumber.from("1686193412"),
@@ -455,14 +455,13 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
     ),
     conduitKey:
       "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
-    counter: BigNumber.from("0"),
+    counter: BigNumber.from("0")
   };
   const orders = [];
   orders.push(order);
   let ordersWithSign;
   try {
     ordersWithSign = await seaport.signBulkOrder(orders);
-
   } catch (error) {}
 
   return ordersWithSign;
@@ -481,7 +480,7 @@ const getSystemSignature = async (orderSignature, data) => {
       "uint256",
       "uint256",
       "uint256",
-      "uint256",
+      "uint256"
     ];
     const args = [
       orderSignature,
@@ -490,7 +489,7 @@ const getSystemSignature = async (orderSignature, data) => {
       data.totalPlatformFee,
       data.totalAfterTaxIncome,
       data.totalPayment,
-      data.expiryDate,
+      data.expiryDate
     ];
 
     const encodedData = ethers.utils.defaultAbiCoder.encode(type, args);
@@ -550,5 +549,5 @@ export {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
-  signBulkOrderOpenSeaMessage,
+  signBulkOrderOpenSeaMessage
 };

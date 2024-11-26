@@ -17,17 +17,17 @@ const chainConfig = {
   blockExplorerUrl: "https://sepolia.etherscan.io",
   ticker: "ETH",
   tickerName: "Ethereum",
-  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
 };
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig: chainConfig },
+  config: { chainConfig: chainConfig }
 });
 
 const web3auth = new Web3Auth({
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
-  privateKeyProvider: privateKeyProvider,
+  privateKeyProvider: privateKeyProvider
 });
 
 const Web3AuthPage = () => {
@@ -149,7 +149,7 @@ const Web3AuthPage = () => {
     }
 
     const privateKey = await provider.request({
-      method: "eth_private_key",
+      method: "eth_private_key"
     });
     uiConsole(privateKey);
   };
