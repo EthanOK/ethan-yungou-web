@@ -28,6 +28,7 @@ import CreateTransactionPage from "./pages/CreateTransactionPage";
 import GetCollectionPage from "./pages/GetCollectionPage";
 import Web3AuthPage from "./pages/Web3AuthPage";
 import WethPage from "./pages/WethPage";
+import Web3AuthSolanaPage from "./pages/Web3AuthSolanaPage";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 // hardhat: 31337 tbsc: 97 0x61 goerli： 0x5
@@ -188,6 +189,7 @@ function App() {
                 />{" "}
                 <AccordionItem title="ERC6551" linkTo="/erc6551" />
                 <AccordionItem title="Web3Auth" linkTo="/web3Auth" />
+                <AccordionItem title="Web3Auth Solana" linkTo="/web3AuthSolana" />
                 {/* ...添加更多的折叠项 */}
               </div>
               <h2>Solana:</h2>
@@ -239,6 +241,7 @@ function App() {
           <Route path="/erc6551" element={<ERC6551Page />} />
           <Route path="/estimateTxFee" element={<EstimateTxFeePage />} />
           <Route path="/web3Auth" element={<Web3AuthPage />} />
+          <Route path="/web3AuthSolana" element={<Web3AuthSolanaPage />} />
           <Route path="/wethSolana" element={<WethPage />} />
         </Routes>
       </div>
