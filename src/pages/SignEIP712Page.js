@@ -5,14 +5,14 @@ import {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
-  signBulkOrderOpenSeaMessage,
+  signBulkOrderOpenSeaMessage
 } from "../utils/SignFunc.js";
 import { getSignerAndChainId } from "../utils/GetProvider.js";
 import {
   getBlurAccessToken,
   getBlurAccessTokenByNFTGO,
   getBlurLoginMessage,
-  getBlurLoginMessageByNFTGO,
+  getBlurLoginMessageByNFTGO
 } from "../api/GetData.js";
 import { Seaport } from "@opensea/seaport-js";
 
@@ -96,7 +96,7 @@ const SignEIP712Page = () => {
       walletAddress: loginData.walletAddress,
       expiresOn: loginData.expiresOn,
       hmac: loginData.hmac,
-      signature: result,
+      signature: result
     };
 
     const blurAccessToken = await getBlurAccessTokenByNFTGO(requestData);

@@ -10,7 +10,7 @@ import {
   SYSVAR_RENT_PUBKEY,
   SystemProgram,
   Transaction,
-  clusterApiUrl,
+  clusterApiUrl
 } from "@solana/web3.js";
 import { LOGIN_SOLANA_MESSAGE } from "../utils/SystemConfiguration";
 
@@ -18,7 +18,7 @@ import { getPhantomProvider } from "../utils/GetPhantomProvider";
 import {
   signSolanaMessage,
   verifySolanaSignature,
-  verifySolanaSignatureV2,
+  verifySolanaSignatureV2
 } from "../utils/SolanaSignAndVerify";
 import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
@@ -234,7 +234,7 @@ const SolanaLoginPage = () => {
           SystemProgram.transfer({
             fromPubkey: provider.publicKey,
             toPubkey: new PublicKey(toAddress),
-            lamports: 0.5 * LAMPORTS_PER_SOL,
+            lamports: 0.5 * LAMPORTS_PER_SOL
           })
         );
       });

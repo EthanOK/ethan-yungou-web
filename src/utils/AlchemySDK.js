@@ -3,12 +3,12 @@ import { ALCHEMY_KEY_V3 } from "./SystemConfiguration";
 
 const alchemy_mainnet = new Alchemy({
   apiKey: ALCHEMY_KEY_V3,
-  network: Network.ETH_MAINNET,
+  network: Network.ETH_MAINNET
 });
 
 const alchemy_sepolia = new Alchemy({
   apiKey: ALCHEMY_KEY_V3,
-  network: Network.ETH_SEPOLIA,
+  network: Network.ETH_SEPOLIA
 });
 
 const getAlchemy = (chainId) => {

@@ -28,7 +28,7 @@ let parameters_8 = {
   salt: 88,
   royaltyFee: royaltyFee,
   platformFee: platformFee,
-  afterTaxPrice: afterTaxPrice,
+  afterTaxPrice: afterTaxPrice
 };
 let parameters_7 = {
   orderType: orderType,
@@ -44,7 +44,7 @@ let parameters_7 = {
   salt: 77,
   royaltyFee: royaltyFee,
   platformFee: platformFee,
-  afterTaxPrice: afterTaxPrice,
+  afterTaxPrice: afterTaxPrice
 };
 
 // // buy it now
@@ -87,7 +87,7 @@ let order_7 = {
   totalAfterTaxIncome: totalAfterTaxIncome,
   totalPayment: totalPayment,
   expiryDate: expiryDate,
-  systemSignature: systemSignature_7,
+  systemSignature: systemSignature_7
 };
 let order_8 = {
   parameters: parameters_8,
@@ -98,7 +98,7 @@ let order_8 = {
   totalAfterTaxIncome: totalAfterTaxIncome,
   totalPayment: totalPayment,
   expiryDate: expiryDate,
-  systemSignature: systemSignature_8,
+  systemSignature: systemSignature_8
 };
 
 let orders = [];

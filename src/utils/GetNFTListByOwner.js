@@ -61,7 +61,7 @@ const getNFTListByOwnerAndContract = async (chainId, owner, contract) => {
   return {
     contract: contract,
     tokenIds: Array.from(tokenIds),
-    totalCount: tokenIds.size,
+    totalCount: tokenIds.size
   };
 };
 
@@ -93,12 +93,12 @@ const getContractsForOwner = async (chainId, owner) => {
 
   return {
     contracts: contracts,
-    totalCount: contracts.length,
+    totalCount: contracts.length
   };
 };
 
 export {
   getNFTListByOwner,
   getNFTListByOwnerAndContract,
-  getContractsForOwner,
+  getContractsForOwner
 };

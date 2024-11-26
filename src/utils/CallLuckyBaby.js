@@ -282,5 +282,5 @@ export {
   getNumberParticipants,
   getCurrentIssueIdOpenState,
   openPrizePool,
-  incrementNewIssue,
+  incrementNewIssue
 };

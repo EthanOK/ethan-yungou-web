@@ -11,7 +11,7 @@ const estimateTxFee = async (provider, from, to, data, value) => {
     to: to == "" ? null : to,
     data: data,
     value: value,
-    gasPrice: gasPrice,
+    gasPrice: gasPrice
   });
 
   // Print the output to console
@@ -24,7 +24,7 @@ const estimateTxFee = async (provider, from, to, data, value) => {
   return {
     gasPrice: formatUnits(gasPrice, 9),
     gasUsed: estGas.toString(),
-    fee: formatEther(estFees.toBigInt()),
+    fee: formatEther(estFees.toBigInt())
   };
 };
 

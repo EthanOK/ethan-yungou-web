@@ -153,5 +153,5 @@ export {
   ygme_sepolia,
   ygio_sepolia,
   batchTransferToken_sepolia,
-  ALCHEMY_KEY_V3,
+  ALCHEMY_KEY_V3
 };

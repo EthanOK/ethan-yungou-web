@@ -10,7 +10,7 @@ import {
   SYSVAR_RENT_PUBKEY,
   SystemProgram,
   Transaction,
-  clusterApiUrl,
+  clusterApiUrl
 } from "@solana/web3.js";
 import { LOGIN_SOLANA_MESSAGE } from "../utils/SystemConfiguration";
 
@@ -18,7 +18,7 @@ import { getPhantomProvider } from "../utils/GetPhantomProvider";
 import {
   signSolanaMessage,
   verifySolanaSignature,
-  verifySolanaSignatureV2,
+  verifySolanaSignatureV2
 } from "../utils/SolanaSignAndVerify";
 import { getDevConnection } from "../utils/GetSolanaConnection";
 import { getSolBalance } from "../utils/SolanaGetBalance";
@@ -29,7 +29,7 @@ import {
   getMetadataPDA,
   getWethMintAddress,
   getWethProgram,
-  getWethBalance,
+  getWethBalance
 } from "../utils/GetWethProgram";
 import { BN } from "@coral-xyz/anchor";
 
@@ -186,7 +186,7 @@ const WethPage = () => {
         .initialize()
         .accountsPartial({
           signer: provider.publicKey,
-          wethMetadata: weth_mint_metadata,
+          wethMetadata: weth_mint_metadata
         })
         // .signers([owner])
         .rpc();
@@ -203,7 +203,7 @@ const WethPage = () => {
       const tx = await program.methods
         .deposit(new BN(LAMPORTS_PER_SOL))
         .accountsPartial({
-          signer: provider.publicKey,
+          signer: provider.publicKey
         })
         // .signers([owner])
         .rpc();
@@ -228,7 +228,7 @@ const WethPage = () => {
       const tx = await program.methods
         .withdraw(new BN(LAMPORTS_PER_SOL))
         .accountsPartial({
-          signer: provider.publicKey,
+          signer: provider.publicKey
         })
         // .signers([owner])
         .rpc();

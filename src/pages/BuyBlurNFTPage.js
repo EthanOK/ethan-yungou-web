@@ -4,12 +4,12 @@ import {
   getBlurAccessTokenByNFTGO,
   getBlurAccessTokenByOpensea,
   getBlurLoginMessageByNFTGO,
-  getBlurLoginMessageByOpensea,
+  getBlurLoginMessageByOpensea
 } from "../api/GetData.js";
 import { signBlurLoginMessage } from "../utils/SignFunc.js";
 import {
   getSignerAndAccountAndChainId,
-  getSignerAndChainId,
+  getSignerAndChainId
 } from "../utils/GetProvider.js";
 import { getBlurCalldata } from "../utils/GetBlurCallData.js";
 import { onlyBuyBlurNFT } from "../utils/BlurFunc.js";
@@ -93,7 +93,7 @@ const BuyBlurNFTPage = () => {
       walletAddress: loginData.walletAddress,
       expiresOn: loginData.expiresOn,
       hmac: loginData.hmac,
-      signature: result,
+      signature: result
     };
     // // TODO:getBlurAccessTokenByNFTGO
     // const blurAccessToken = await getBlurAccessTokenByOpensea(requestData);

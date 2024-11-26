@@ -11,14 +11,14 @@ import {
   suffixOfYunGou,
   chainName_TBSC,
   OPENSEA_MAIN_API,
-  chainName_S,
+  chainName_S
 } from "./SystemConfiguration";
 import {
   getSigner,
   getProvider,
   getProviderWeb3,
   getChainId,
-  getBalance,
+  getBalance
 } from "./GetProvider";
 import { getScanURL } from "./Utils";
 
@@ -37,7 +37,7 @@ const fulfillBasicOrder = async (contract_, tokenId_, currentAccount) => {
   if (chainId == 1) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.Mainnet,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
 
     transactionData = await Orders.getFulfillment_transaction(
@@ -49,7 +49,7 @@ const fulfillBasicOrder = async (contract_, tokenId_, currentAccount) => {
   } else if (chainId == 56) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.BNB,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
 
     transactionData = await Orders.getFulfillment_transaction(
@@ -90,13 +90,12 @@ const fulfillBasicOrder = async (contract_, tokenId_, currentAccount) => {
   );
   const value = transactionData.value;
   console.log(parameters);
-  let result = await nftcontract.populateTransaction.fulfillBasicOrder(
-    parameters
-  );
+  let result =
+    await nftcontract.populateTransaction.fulfillBasicOrder(parameters);
   const inputData = result.data;
 
   let resultData = await nftcontract.callStatic.fulfillBasicOrder(parameters, {
-    value: ethers.BigNumber.from(value.toString()),
+    value: ethers.BigNumber.from(value.toString())
   });
   console.log(resultData);
 
@@ -135,7 +134,7 @@ const fulfillOrder = async (contract_, tokenId_, currentAccount) => {
   if (chainId == 1) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.Mainnet,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     // [protocolAddress, value_wei, order]
     orderdata = await Orders.getFulfillment_order(
@@ -147,7 +146,7 @@ const fulfillOrder = async (contract_, tokenId_, currentAccount) => {
   } else if (chainId == 56) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.BNB,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     // [protocolAddress, value_wei, order]
     orderdata = await Orders.getFulfillment_order(
@@ -183,13 +182,13 @@ const fulfillOrder = async (contract_, tokenId_, currentAccount) => {
     order,
     fulfillerConduitKey,
     {
-      value: ethers.BigNumber.from(value_wei.toString()),
+      value: ethers.BigNumber.from(value_wei.toString())
     }
   );
   console.log("call fulfillOrder result: " + callStaticReturn);
 
   let tx = await nftcontract.fulfillOrder(order, fulfillerConduitKey, {
-    value: ethers.BigNumber.from(value_wei.toString()),
+    value: ethers.BigNumber.from(value_wei.toString())
   });
 
   console.log("fulfillOrder... please await");
@@ -212,7 +211,7 @@ const fulfillBasicOrder_efficient = async (
   if (chainId == 1) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.Mainnet,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     transactionData = await Orders.getFulfillment_transaction(
       openseaSDK,
@@ -223,7 +222,7 @@ const fulfillBasicOrder_efficient = async (
   } else if (chainId == 56) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.BNB,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     transactionData = await Orders.getFulfillment_transaction(
       openseaSDK,
@@ -265,12 +264,12 @@ const fulfillBasicOrder_efficient = async (
     await nftcontract.callStatic.fulfillBasicOrder_efficient_6GL6yc(
       parameters,
       {
-        value: ethers.BigNumber.from(value.toString()),
+        value: ethers.BigNumber.from(value.toString())
       }
     );
   console.log(resultData);
   let tx = await nftcontract.fulfillBasicOrder_efficient_6GL6yc(parameters, {
-    value: ethers.BigNumber.from(value.toString()),
+    value: ethers.BigNumber.from(value.toString())
   });
 
   console.log("fulfillBasicOrder_efficient... please await");
@@ -304,7 +303,7 @@ const fulfillAvailableOrders = async (
   if (chainId == 1) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.Mainnet,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     [
       protocolAddress,
@@ -313,7 +312,7 @@ const fulfillAvailableOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await Orders.getFulfillAvailableOrders_data(
       openseaSDK,
       currentAccount,
@@ -323,7 +322,7 @@ const fulfillAvailableOrders = async (
   } else if (chainId == 56) {
     const openseaSDK = new OpenSeaSDK(providerWeb3, {
       chain: Chain.BNB,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     [
       protocolAddress,
@@ -332,7 +331,7 @@ const fulfillAvailableOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await Orders.getFulfillAvailableOrders_data(
       openseaSDK,
       currentAccount,
@@ -347,7 +346,7 @@ const fulfillAvailableOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await OrdersTest.getFulfillAvailableOrders_data(
       chainName_S,
       currentAccount,
@@ -363,7 +362,7 @@ const fulfillAvailableOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await OrdersTest.getFulfillAvailableOrders_data(
       chainName_TBSC,
       currentAccount,
@@ -389,7 +388,7 @@ const fulfillAvailableOrders = async (
     fulfillerConduitKey,
     maximumFulfilled,
     {
-      value: ethers.BigNumber.from(currentPriceSum.toString()),
+      value: ethers.BigNumber.from(currentPriceSum.toString())
     }
   );
   console.log("callstaticResult: " + callstaticResult);
@@ -400,7 +399,7 @@ const fulfillAvailableOrders = async (
     fulfillerConduitKey,
     maximumFulfilled,
     {
-      value: ethers.BigNumber.from(currentPriceSum.toString()),
+      value: ethers.BigNumber.from(currentPriceSum.toString())
     }
   );
   console.log("fulfillAvailableOrders... please await");
@@ -438,7 +437,7 @@ const fulfillAvailableAdvancedOrders = async (
   if (chainId == 1) {
     const openseaSDK = new OpenSeaSDK(provider, {
       chain: Chain.Mainnet,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     [
       protocolAddress,
@@ -448,7 +447,7 @@ const fulfillAvailableAdvancedOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await Orders.getFulfillAvailableAdvancedOrders_datas(
       openseaSDK,
       currentAccount,
@@ -458,7 +457,7 @@ const fulfillAvailableAdvancedOrders = async (
   } else if (chainId == 56) {
     const openseaSDK = new OpenSeaSDK(provider, {
       chain: Chain.BNB,
-      apiKey: OPENSEA_MAIN_API,
+      apiKey: OPENSEA_MAIN_API
     });
     [
       protocolAddress,
@@ -468,7 +467,7 @@ const fulfillAvailableAdvancedOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = await Orders.getFulfillAvailableAdvancedOrders_datas(
       openseaSDK,
       currentAccount,
@@ -495,7 +494,7 @@ const fulfillAvailableAdvancedOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = Orders_datas;
   } else if (chainId == 97) {
     const Orders_datas =
@@ -517,7 +516,7 @@ const fulfillAvailableAdvancedOrders = async (
       offerFulfillments,
       considerationFulfillments,
       fulfillerConduitKey,
-      maximumFulfilled,
+      maximumFulfilled
     ] = Orders_datas;
   }
 
@@ -566,7 +565,7 @@ const fulfillAvailableAdvancedOrders = async (
       currentAccount,
       maximumFulfilled,
       {
-        value: ethers.BigNumber.from(currentPriceSum.toString()),
+        value: ethers.BigNumber.from(currentPriceSum.toString())
       }
     );
   console.log("callstaticResult: " + callstaticResult);
@@ -574,7 +573,7 @@ const fulfillAvailableAdvancedOrders = async (
   const tx = await signer.sendTransaction({
     to: nftcontract.address,
     data: inputDataWithExtra,
-    value: ethers.BigNumber.from(currentPriceSum.toString()),
+    value: ethers.BigNumber.from(currentPriceSum.toString())
   });
 
   console.log("fulfillAvailableAdvancedOrders... please await");
@@ -589,5 +588,5 @@ export {
   fulfillOrder,
   fulfillBasicOrder_efficient,
   fulfillAvailableAdvancedOrders,
-  fulfillAvailableOrders,
+  fulfillAvailableOrders
 };

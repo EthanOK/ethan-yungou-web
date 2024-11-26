@@ -136,7 +136,7 @@ const BurnTokenPage = () => {
               height: "20px",
               color: "red",
               fontSize: "16px",
-              textAlign: "center",
+              textAlign: "center"
             }}
           />
           <p></p>

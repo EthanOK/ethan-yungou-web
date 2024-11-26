@@ -4,7 +4,7 @@ import { getPriceBaseUSDT, getPriceBaseUSDTByBinance } from "../api/GetData.js";
 import {
   caculatePriceBySqrtPriceX96,
   getAddressCreate,
-  isAddress,
+  isAddress
 } from "../utils/Utils.js";
 import { getTokenPrice } from "../utils/GetLpTokenPrice.js";
 import { signHexDataMessage } from "../utils/SignFunc.js";

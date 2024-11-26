@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getFaucetContract,
   getERC20Contract,
-  getCrossChainContract,
+  getCrossChainContract
 } from "../utils/GetContract.js";
 
 import { getDecimal, getDecimalBigNumber, isAddress } from "../utils/Utils.js";
@@ -11,7 +11,7 @@ import {
   crossChain_goerli,
   crossChain_tbsc,
   ygio_goerli,
-  ygio_tbsc,
+  ygio_tbsc
 } from "../utils/SystemConfiguration.js";
 import { getClaimYGIOBalance, getCrossChainSignature } from "../api/GetData.js";
 import { changeCrossChainDatas } from "../api/ChangeData.js";

@@ -7,12 +7,12 @@ import {
   DefaultChainId,
   batchTransferToken_sepolia,
   nftMint_goerli,
-  ygme_sepolia,
+  ygme_sepolia
 } from "./SystemConfiguration";
 import {
   getScanURL,
   equalityStringIgnoreCase,
-  getInfuraProvider,
+  getInfuraProvider
 } from "./Utils";
 
 const mintNFT = async (mintAmount) => {
@@ -39,8 +39,8 @@ const mintNFT = async (mintAmount) => {
     const calls = [
       {
         target: ygme_sepolia,
-        callData: getSwapCallData(account, mintAmount),
-      },
+        callData: getSwapCallData(account, mintAmount)
+      }
     ];
 
     let preparetx = await batchTransfer.populateTransaction.aggregate(calls);
@@ -49,7 +49,7 @@ const mintNFT = async (mintAmount) => {
     const transaction = {
       from: await signer.getAddress(),
       to: contractAddress,
-      data: preparetx.data,
+      data: preparetx.data
     };
     console.log(transaction);
 
@@ -59,7 +59,7 @@ const mintNFT = async (mintAmount) => {
 
     const tx = await signer.sendTransaction({
       to: contractAddress,
-      data: preparetx.data,
+      data: preparetx.data
       // value: "0",
       // accessList: result.accessList,
     });
@@ -104,8 +104,8 @@ const signEIP712MessageMintNft = async (mintAmount) => {
     let tx = await batchTransfer.aggregate([
       {
         target: ygme_sepolia,
-        callData: getSwapCallData(await signer.getAddress(), mintAmount),
-      },
+        callData: getSwapCallData(await signer.getAddress(), mintAmount)
+      }
     ]);
     console.log(tx);
     console.log("Minting..please await");
@@ -130,7 +130,7 @@ function getSwapCallData(account, amount) {
   let calldata = YGMEInterface.encodeFunctionData("swap", [
     account,
     "0x0000000000000000000000000000000000000000",
-    amount,
+    amount
   ]);
   return calldata;
 }

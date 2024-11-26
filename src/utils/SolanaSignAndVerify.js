@@ -34,7 +34,7 @@ const verifySolanaSignatureV2 = async (
   signature_string,
   message_string,
   account_string
-) => { 
+) => {
   // (Uint8Array, Uint8Array, PublicKey)
   const signature = base58.decode(signature_string);
   const message = new TextEncoder().encode(message_string);

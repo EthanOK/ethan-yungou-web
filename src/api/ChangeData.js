@@ -9,16 +9,16 @@ const changeCrossChainDatas = async (chainId, ccType, amount, toChainId) => {
     chainId: chainId,
     ccType: ccType,
     amount: amount,
-    toChainId: toChainId,
+    toChainId: toChainId
   };
   let result = await fetch(`${url}/api/changeCrossChainDatas`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Token": userToken,
+      "User-Token": userToken
     },
 
-    body: JSON.stringify(requestParameters),
+    body: JSON.stringify(requestParameters)
   });
   let result_json = result.json();
   return result_json;

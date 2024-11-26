@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import {
+  SolanaPrivateKeyProvider,
+  SolanaWallet
+} from "@web3auth/solana-provider";
 import { ethers } from "ethers";
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import bs58 from "bs58";
 
 const clientId =
   "BGaYve_5NaFEkrmlHuvoCcTA9Lj0DJV2JoOOyJyGA2Ch3q6KjPV7olKu1CU03zOmTJ0eLrr0ErEvZbGRlXs6Ju4"; // get from https://dashboard.web3auth.io
 
 const chainConfig = {
-  chainNamespace: "eip155",
+  chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0xaa36a7",
   rpcTarget: "https://rpc.ankr.com/eth_sepolia",
   // Avoid using public rpcTarget in production.
@@ -20,19 +26,41 @@ const chainConfig = {
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
 };
 
+const chainConfig_solana = {
+  chainNamespace: CHAIN_NAMESPACES.SOLANA,
+  chainId: "0x3", // Please use 0x1 for Mainnet, 0x2 for Testnet, 0x3 for Devnet
+  rpcTarget: "https://api.devnet.solana.com",
+  displayName: "Solana Testnet",
+  blockExplorerUrl: "https://explorer.solana.com",
+  ticker: "SOL",
+  tickerName: "Solana",
+  logo: "https://images.toruswallet.io/solana.svg"
+};
+
 const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: { chainConfig: chainConfig }
 });
+const privateKeyProvider_solana = new SolanaPrivateKeyProvider({
+  config: { chainConfig: chainConfig_solana }
+});
+
+// const web3auth = new Web3Auth({
+//   clientId,
+//   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
+//   privateKeyProvider: privateKeyProvider,
+// });
 
 const web3auth = new Web3Auth({
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
-  privateKeyProvider: privateKeyProvider
+  privateKeyProvider: privateKeyProvider_solana
 });
 
-const Web3AuthPage = () => {
+const Web3AuthSolanaPage = () => {
   const [provider, setProvider] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [solanaWallet, setSolanaWallet] = useState(null);
+  const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     const init = async () => {
@@ -41,6 +69,11 @@ const Web3AuthPage = () => {
         await web3auth.initModal();
         // IMP END - SDK Initialization
         setProvider(web3auth.provider);
+        const solanaWallet = new SolanaWallet(web3auth.provider);
+        setSolanaWallet(solanaWallet);
+
+        const connection = await getConnnection(solanaWallet);
+        setConnection(connection);
 
         if (web3auth.connected) {
           setLoggedIn(true);
@@ -58,8 +91,11 @@ const Web3AuthPage = () => {
     const web3authProvider = await web3auth.connect();
     // IMP END - Login
     setProvider(web3authProvider);
-
-    console.log(web3authProvider);
+    const solanaWallet = new SolanaWallet(web3auth.provider);
+    setSolanaWallet(solanaWallet);
+    const connection = await getConnnection(solanaWallet);
+    setConnection(connection);
+    console.log("solanaWallet", solanaWallet);
 
     if (web3auth.connected) {
       setLoggedIn(true);
@@ -71,6 +107,15 @@ const Web3AuthPage = () => {
       Login
     </button>
   );
+
+  const getConnnection = async (solanaWallet) => {
+    const connectionConfig = await solanaWallet.request({
+      method: "solana_provider_config",
+      params: []
+    });
+    const connection = new Connection(connectionConfig.rpcTarget);
+    return connection;
+  };
 
   const getUserInfo = async () => {
     // IMP START - Get User Information
@@ -102,11 +147,13 @@ const Web3AuthPage = () => {
     }
 
     // Get user's Ethereum public address
+    // const signer = await getSigner();
+    // const accounts = await signer.getAddress();
 
-    const signer = await getSigner();
-
-    const address = await signer.getAddress();
-    uiConsole(address);
+    // Get user's Solana public address
+    const accounts = await solanaWallet.requestAccounts();
+    uiConsole(accounts);
+    return accounts;
   };
 
   const getBalance = async () => {
@@ -114,16 +161,21 @@ const Web3AuthPage = () => {
       uiConsole("provider not initialized yet");
       return;
     }
-    const signer = await getSigner();
+    // const signer = await getSigner();
+    // // Get user's Ethereum public address
+    // const address = await signer.getAddress();
+    // // Get user's balance in ether
+    // const balance = ethers.utils.formatEther(
+    //   await signer.provider.getBalance(address)
+    // );
 
-    // Get user's Ethereum public address
-    const address = await signer.getAddress();
+    const accounts = await getAccounts();
+    const balance = await connection.getBalance(new PublicKey(accounts[0]));
 
-    // Get user's balance in ether
-    const balance = ethers.utils.formatEther(
-      await signer.provider.getBalance(address)
-    );
-    uiConsole(balance);
+    // solana  format balance
+    const balance_sol = balance / LAMPORTS_PER_SOL;
+
+    uiConsole(balance_sol + " SOL");
   };
 
   const signMessage = async () => {
@@ -131,14 +183,17 @@ const Web3AuthPage = () => {
       uiConsole("provider not initialized yet");
       return;
     }
+    const originalMessage = "This is Web3Auth";
 
-    const signer = await getSigner();
-
-    const originalMessage = "YOUR_MESSAGE";
+    // const signer = await getSigner();
 
     // Sign the message
-    const signedMessage = await signer.signMessage(originalMessage);
-    uiConsole(signedMessage);
+    // const signedMessage = await signer.signMessage(originalMessage);
+
+    const signedMessage = await solanaWallet.signMessage(
+      Buffer.from(originalMessage, "utf8")
+    );
+    uiConsole(bs58.encode(signedMessage));
   };
   // IMP END - Blockchain Calls
 
@@ -148,17 +203,28 @@ const Web3AuthPage = () => {
       return;
     }
 
-    const privateKey = await provider.request({
-      method: "eth_private_key"
+    // const privateKey = await provider.request({
+    //   method: "eth_private_key",
+    // });
+    const privateKey = await web3auth.provider.request({
+      method: "solanaPrivateKey"
     });
-    uiConsole(privateKey);
+
+    const buffer = Buffer.from(privateKey, "hex");
+
+    const privateKey_base58 = bs58.encode(buffer);
+
+    uiConsole(privateKey_base58);
   };
 
   function uiConsole(...args) {
     const el = document.querySelector("#console>p");
-    if (el) {
-      el.innerHTML = JSON.stringify(args || {}, null, 2);
+    if (Array.isArray(args) && args.length === 1) {
+      el.innerHTML = JSON.stringify(args[0], null, 2);
+    } else {
+      el.innerHTML = JSON.stringify(args, null, 2);
     }
+
     console.log(...args);
   }
 
@@ -205,7 +271,7 @@ const Web3AuthPage = () => {
       <div>
         <h2>
           <a href="https://web3auth.io/" target="_blank">
-            Web3Auth
+            Web3Auth Solana
           </a>
         </h2>
 
@@ -214,6 +280,9 @@ const Web3AuthPage = () => {
             <p></p>
             <div className="grid">
               {loggedIn ? loggedInView : unloggedInView}
+            </div>
+            <div id="console">
+              <p></p>
             </div>
           </div>
 
@@ -225,4 +294,4 @@ const Web3AuthPage = () => {
   );
 };
 
-export default Web3AuthPage;
+export default Web3AuthSolanaPage;

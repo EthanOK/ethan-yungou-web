@@ -6,7 +6,7 @@ import {
   getNumberParticipants,
   getCurrentIssueIdOpenState,
   openPrizePool,
-  incrementNewIssue,
+  incrementNewIssue
 } from "../utils/CallLuckyBaby.js";
 
 import { stringToArray } from "../utils/Utils.js";
@@ -206,7 +206,7 @@ const LuckyBabyPage = () => {
       const payToken = {
         payType: payTokenType,
         token: payTokenAddressValue,
-        amount: payTokenAmountValue,
+        amount: payTokenAmountValue
       };
 
       const prize = {
@@ -218,7 +218,7 @@ const LuckyBabyPage = () => {
         // Amount or quantity per winner
         amounts: stringToArray(prizeAmountsValue),
         // If PrizeType = ERC721, NFT tokenIds
-        tokenIds: stringToArray(prizeTokenIdsValue),
+        tokenIds: stringToArray(prizeTokenIdsValue)
       };
 
       if (prizeType == 2 && stringToArray(prizeTokenIdsValue).length == 0) {
@@ -297,7 +297,7 @@ const LuckyBabyPage = () => {
           backgroundColor: "red",
           border: "none",
           padding: "10px",
-          borderRadius: "10px",
+          borderRadius: "10px"
         }}
       >
         Create New Issue
@@ -327,7 +327,7 @@ const LuckyBabyPage = () => {
               backgroundColor: "red",
               border: "none",
               padding: "10px",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
           >
             Open PrizePool

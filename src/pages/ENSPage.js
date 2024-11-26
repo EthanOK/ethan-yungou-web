@@ -10,7 +10,7 @@ import {
   getENSOfAddressByContract,
   getENSUniversalResolver,
   getENSByTokenId,
-  getPriceBaseUSDT,
+  getPriceBaseUSDT
 } from "../api/GetData.js";
 import { isAddress } from "../utils/Utils.js";
 import { logDOM } from "@testing-library/react";
@@ -198,7 +198,7 @@ const ENSPage = () => {
                   height: "20px",
                   color: "red",
                   fontSize: "16px",
-                  textAlign: "center",
+                  textAlign: "center"
                 }}
               ></textarea>
             </div>
@@ -229,7 +229,7 @@ const ENSPage = () => {
                   height: "24px",
                   color: "red",
                   fontSize: "16px",
-                  textAlign: "center",
+                  textAlign: "center"
                 }}
               ></textarea>
               <p></p>
@@ -260,7 +260,7 @@ const ENSPage = () => {
                   height: "24px",
                   color: "red",
                   fontSize: "16px",
-                  textAlign: "center",
+                  textAlign: "center"
                 }}
               ></textarea>
               <p></p>

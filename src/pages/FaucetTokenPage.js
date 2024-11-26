@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getFaucetContract,
   getERC20Contract,
-  getERC721Contract,
+  getERC721Contract
 } from "../utils/GetContract.js";
 import {
   faucet_goerli,
@@ -18,7 +18,7 @@ import {
   faucet_sepolia,
   usdt_sepolia,
   ygme_sepolia,
-  ygio_sepolia,
+  ygio_sepolia
 } from "../utils/SystemConfiguration.js";
 import { getDecimal, getDecimalBigNumber } from "../utils/Utils.js";
 import { ethers } from "ethers";

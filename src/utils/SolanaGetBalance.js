@@ -9,6 +9,5 @@ const getSolBalance = async (connection, ownerAddress) => {
   } catch (error) {
     return balance;
   }
-  
 };
 module.exports = { getSolBalance };

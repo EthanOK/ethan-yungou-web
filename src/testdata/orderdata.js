@@ -29,7 +29,7 @@ let parameters = {
   salt: salt,
   royaltyFee: royaltyFee,
   platformFee: platformFee,
-  afterTaxPrice: afterTaxPrice,
+  afterTaxPrice: afterTaxPrice
 };
 
 // // buy it now
@@ -72,7 +72,7 @@ let order_data = {
   totalAfterTaxIncome: totalAfterTaxIncome,
   totalPayment: totalPayment,
   expiryDate: expiryDate,
-  systemSignature: systemSignature,
+  systemSignature: systemSignature
 };
 
 let parameters_tbsc = {
@@ -89,7 +89,7 @@ let parameters_tbsc = {
   salt: "8",
   royaltyFee: royaltyFee,
   platformFee: platformFee,
-  afterTaxPrice: afterTaxPrice,
+  afterTaxPrice: afterTaxPrice
 };
 let order_data_tbsc = {
   parameters: parameters_tbsc,
@@ -102,7 +102,7 @@ let order_data_tbsc = {
   totalPayment: totalPayment,
   expiryDate: expiryDate,
   systemSignature:
-    "0xfc9220d8c74f8c0ff27d88b370aacf15e8ad281699cbc08641b80166bdc6c14674324fc1d798351d4fc20c325f47f1762b39dcf807355a1715c32201134f7b211c",
+    "0xfc9220d8c74f8c0ff27d88b370aacf15e8ad281699cbc08641b80166bdc6c14674324fc1d798351d4fc20c325f47f1762b39dcf807355a1715c32201134f7b211c"
 };
 
 export default { order_data, order_data_tbsc };

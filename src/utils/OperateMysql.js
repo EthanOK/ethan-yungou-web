@@ -7,7 +7,7 @@ const getResultSelectDB = async (sql) => {
       user: "root",
       password: "root",
       port: "3306",
-      database: "aggregator_ethan",
+      database: "aggregator_ethan"
     });
 
     const queryPromise = () => {
