@@ -219,12 +219,9 @@ const Web3AuthSolanaPage = () => {
 
   function uiConsole(...args) {
     const el = document.querySelector("#console>p");
-    if (Array.isArray(args) && args.length === 1) {
-      el.innerHTML = JSON.stringify(args[0], null, 2);
-    } else {
-      el.innerHTML = JSON.stringify(args, null, 2);
+    if (el) {
+      el.innerHTML = JSON.stringify(args || {}, null, 2);
     }
-
     console.log(...args);
   }
 
@@ -281,8 +278,11 @@ const Web3AuthSolanaPage = () => {
             <div className="grid">
               {loggedIn ? loggedInView : unloggedInView}
             </div>
-            <div id="console">
-              <p></p>
+
+            <div>
+              <div id="console" style={{ whiteSpace: "pre-line" }}>
+                <p style={{ whiteSpace: "pre-line" }}></p>
+              </div>
             </div>
           </div>
 

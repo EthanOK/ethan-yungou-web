@@ -3,6 +3,9 @@ import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { ethers } from "ethers";
+import { signSetAlias } from "../utils/SignsnapsShot";
+import { Wallet } from "@ethersproject/wallet";
+import { Web3Provider } from "@ethersproject/providers";
 
 const clientId =
   "BGaYve_5NaFEkrmlHuvoCcTA9Lj0DJV2JoOOyJyGA2Ch3q6KjPV7olKu1CU03zOmTJ0eLrr0ErEvZbGRlXs6Ju4"; // get from https://dashboard.web3auth.io
@@ -162,6 +165,20 @@ const Web3AuthPage = () => {
     console.log(...args);
   }
 
+  const signSnapShot = async () => {
+    if (!web3auth) {
+      uiConsole("web3auth not initialized yet");
+      return;
+    }
+
+    const web3Provider = new Web3Provider(provider);
+    const account = await web3Provider.getSigner().getAddress();
+    const randomAddress = Wallet.createRandom().address;
+    const result = await signSetAlias(web3Provider, account, randomAddress);
+
+    uiConsole(result);
+  };
+
   const loggedInView = (
     <>
       <div className="flex-container">
@@ -192,6 +209,11 @@ const Web3AuthPage = () => {
           </button>
         </div>
         <div>
+          <button onClick={signSnapShot} className="card">
+            Sign SnapShot
+          </button>
+        </div>
+        <div>
           <button onClick={logout} className="card">
             Log Out
           </button>
@@ -216,9 +238,12 @@ const Web3AuthPage = () => {
               {loggedIn ? loggedInView : unloggedInView}
             </div>
           </div>
+        </div>
 
-          <p></p>
-          <p></p>
+        <div>
+          <div id="console" style={{ whiteSpace: "pre-line" }}>
+            <p style={{ whiteSpace: "pre-line" }}></p>
+          </div>
         </div>
       </div>
     </center>
