@@ -13,7 +13,8 @@ import {
   YunGouAggregators_goerli,
   sepolia_url,
   ALCHEMY_KEY_V3,
-  YunGou2_0_sepolia
+  YunGou2_0_sepolia,
+  YunGouAggregators_sepolia
 } from "./SystemConfiguration";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { BigNumber, ethers, providers, utils } from "ethers";
@@ -88,6 +89,10 @@ const getYunGouAggregatorsAddress = async () => {
     address = YunGouAggregators_tbsc;
   } else if (chainId == 56) {
     address = YunGouAggregators_bsc;
+  } else if (chainId == 11155111) {
+    address = YunGouAggregators_sepolia;
+  } else {
+    address = YunGouAggregators_main;
   }
   return address;
 };
