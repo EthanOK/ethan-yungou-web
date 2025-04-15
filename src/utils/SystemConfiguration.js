@@ -48,6 +48,8 @@ const YunGouAggregators_tbsc = "0x0000A8086590DD83c8bd58A787412026B86eB772";
 
 const YunGouAggregators_bsc = "0x0000007eE460B0928c2119E3B9747454A10d1557";
 
+const YunGouAggregators_sepolia = "0x596Aa28bB2ca2D29E352bC21600DB5ECe3E69797";
+
 const nftMint_goerli = "0x71eE06999F6D5f66AcA3c12e45656362fD9D031f";
 
 const batchTransferToken_sepolia = "0x6e7f9fCcAdFD34689A9542534c25475B5FFB7282";
@@ -131,6 +133,7 @@ export {
   YunGouAggregators_bsc,
   YunGouAggregators_goerli,
   YunGouAggregators_tbsc,
+  YunGouAggregators_sepolia,
   faucet_goerli,
   faucet_sepolia,
   ygio_goerli,
