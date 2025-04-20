@@ -68,6 +68,19 @@ const SignEIP712Page = () => {
     const [signer, chainId] = await getSignerAndChainId();
     const orders = await signBulkOrderOpenSeaMessage(signer, chainId);
     console.log(orders);
+    if (orders.length > 0) {
+      setMessage(JSON.stringify(orders, null, "\t"));
+    }
+  };
+
+  // TODO:
+  const signBulkOrdersHandler = async () => {
+    const [signer, chainId] = await getSignerAndChainId();
+    const orders = await signBulkOrderOpenSeaMessage(signer, chainId);
+    console.log(orders);
+    if (orders.length > 0) {
+      setMessage(JSON.stringify(orders, null, "\t"));
+    }
   };
 
   // TODO:signLoginBlurHandler
@@ -144,6 +157,17 @@ const SignEIP712Page = () => {
     );
   };
 
+  const signBulkOrdersButton = () => {
+    return (
+      <button
+        onClick={signBulkOrdersHandler}
+        className="cta-button mint-nft-button"
+      >
+        signBulkOrders
+      </button>
+    );
+  };
+
   const signLoginBlurButton = () => {
     return (
       <button
@@ -168,6 +192,9 @@ const SignEIP712Page = () => {
         {currentAccount ? signBulkOrderOpenSeaButton() : PleaseLogin()}
 
         <p></p>
+        {currentAccount ? signBulkOrdersButton() : PleaseLogin()}
+
+        <p></p>
         {/* {currentAccount ? signLoginBlurButton() : PleaseLogin()} */}
       </div>
       <div>
@@ -178,7 +205,7 @@ const SignEIP712Page = () => {
             type="text"
             value={message}
             readOnly
-            style={{ width: "1200px", height: "100px" }}
+            style={{ width: "1200px", height: "280px" }}
           ></textarea>
         </h2>
       </div>
