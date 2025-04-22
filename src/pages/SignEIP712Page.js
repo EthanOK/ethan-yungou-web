@@ -5,7 +5,8 @@ import {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
-  signBulkOrderOpenSeaMessage
+  signBulkOrderOpenSeaMessage,
+  signCustomBulkOrderMessage
 } from "../utils/SignFunc.js";
 import { getSignerAndChainId } from "../utils/GetProvider.js";
 import {
@@ -76,7 +77,7 @@ const SignEIP712Page = () => {
   // TODO:
   const signBulkOrdersHandler = async () => {
     const [signer, chainId] = await getSignerAndChainId();
-    const orders = await signBulkOrderOpenSeaMessage(signer, chainId);
+    const orders = await signCustomBulkOrderMessage(signer, chainId);
     console.log(orders);
     if (orders.length > 0) {
       setMessage(JSON.stringify(orders, null, "\t"));
@@ -163,7 +164,7 @@ const SignEIP712Page = () => {
         onClick={signBulkOrdersHandler}
         className="cta-button mint-nft-button"
       >
-        signBulkOrders
+        signCustomBulkOrders
       </button>
     );
   };

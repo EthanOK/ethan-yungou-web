@@ -17,6 +17,7 @@ import {
 } from "./GetProvider";
 import { order_data, order_data_tbsc } from "../testdata/orderdata_yungou";
 import { Seaport } from "@opensea/seaport-js";
+import { BulkOrder, EIP_712_BULK_ORDER_TYPE_DEMO } from "signbulkorder-sdk";
 
 const signEIP712Message = async (signer, chainId) => {
   try {
@@ -474,6 +475,71 @@ const signBulkOrderOpenSeaMessage = async (signer, chainId) => {
   return ordersWithSign;
 };
 
+// TODO: Custom Bulk Order Signature
+const signCustomBulkOrderMessage = async (signer, chainId) => {
+  const seaport = new Seaport(signer);
+  const domainData = await seaport._getDomainData();
+  const bulkOrder = new BulkOrder(signer, domainData);
+
+  const orders = [];
+  for (let i = 1; i <= 4; i++) {
+    const order = {
+      offerer: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2",
+      zone: "0x004C00500000aD104D7DBd00e3ae0A5C00560C00",
+      offer: [
+        {
+          itemType: 2,
+          token: "0x97f236E644db7Be9B8308525e6506E4B3304dA7B",
+          identifierOrCriteria: "111",
+          startAmount: "1",
+          endAmount: "1"
+        }
+      ],
+      consideration: [
+        {
+          itemType: 0,
+          token: "0x0000000000000000000000000000000000000000",
+          identifierOrCriteria: "0",
+          startAmount: "1082250000000000000",
+          endAmount: "1082250000000000000",
+          recipient: "0x6278A1E803A76796a3A1f7F6344fE874ebfe94B2"
+        },
+        {
+          itemType: 0,
+          token: "0x0000000000000000000000000000000000000000",
+          identifierOrCriteria: "0",
+          startAmount: "27750000000000000",
+          endAmount: "27750000000000000",
+          recipient: "0x0000a26b00c1F0DF003000390027140000fAa719"
+        }
+      ],
+      orderType: 0,
+      startTime: "1686193412",
+      endTime: "1688785412",
+      zoneHash:
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+      salt: "24446860302761739304752683030156737591518664810215442929818227897836383814680",
+      conduitKey:
+        "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000",
+      counter: "0"
+    };
+    order.offer[0].identifierOrCriteria = i;
+    orders.push(order);
+  }
+
+  let ordersWithSign = [];
+  try {
+    ordersWithSign = await bulkOrder.signBulkOrder(
+      orders,
+      EIP_712_BULK_ORDER_TYPE_DEMO
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  return ordersWithSign;
+};
+
 // getSystemSignature_YunGou
 const getSystemSignature = async (orderSignature, data) => {
   try {
@@ -556,5 +622,6 @@ export {
   signEIP712YunGouMessage,
   signEIP712OpenSeaMessage,
   signBlurLoginMessage,
-  signBulkOrderOpenSeaMessage
+  signBulkOrderOpenSeaMessage,
+  signCustomBulkOrderMessage
 };
